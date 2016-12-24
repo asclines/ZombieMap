@@ -11,6 +11,9 @@
     <script src="js/jquery-jvectormap-2.0.3.min.js"></script>
     <script src="js/jquery-jvectormap-us-aea.js"></script>
 
+    <script src="/js/zombies.js"></script>
+
+
 </head>
 
 <body>
@@ -18,101 +21,6 @@
     <button id="setdata" class="autocompare">Calculate</button>
 
     <div id="slider" style="width: 280px; margin: 10px;display: none"></div>
-
-    <script>
-        $(function() {
-            $.getJSON('./data/data.json', function(data) {
-                var val = 2009;
-                statesValues = jvm.values.apply({}, jvm.values(data.states)),
-                    metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
-                    metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
-
-                $('#map').vectorMap({
-                    map: 'us_aea',
-                    // markers: data.metro.coords,
-                    series: {
-                        // markers: [{
-                        //   attribute: 'fill',
-                        //   scale: ['#FEE5D9', '#A50F15'],
-                        //   values: data.metro.unemployment[val],
-                        //   min: jvm.min(metroUnemplValues),
-                        //   max: jvm.max(metroUnemplValues)
-                        // },{
-                        //   attribute: 'r',
-                        //   scale: [5, 20],
-                        //   values: data.metro.population[val],
-                        //   min: jvm.min(metroPopValues),
-                        //   max: jvm.max(metroPopValues)
-                        // }],
-                        regions: [{
-                            scale: ['#99ff99.', '#990000'],
-                            attribute: 'fill',
-                            values: data.states[val],
-                            min: 0,//jvm.min(statesValues),
-                            max: 100//jvm.max(statesValues)
-                        }]
-                    },
-                    onMarkerTipShow: function(event, label, index) {
-                        label.html(
-                            '<b>' + data.metro.names[index] + '</b><br/>' +
-                            '<b>Population: </b>' + data.metro.population[val][index] + '</br>' +
-                            '<b>Unemployment rate: </b>' + data.metro.unemployment[val][index] + '%'
-                        );
-                    },
-                    onRegionTipShow: function(event, label, code) {
-                        label.html(
-                            '<b>' + label.html() + '</b></br>' +
-                            '<b>Unemployment rate: </b>' + data.states[val][code] + '%'
-                        );
-                    }
-                });
-
-                var mapObject = $('#map').vectorMap('get', 'mapObject');
-
-                $("#slider").slider({
-                    value: val,
-                    min: 0,
-                    max: 4,
-                    step: 1,
-                    slide: function(event, ui) {
-                        val = ui.value;
-                        mapObject.series.regions[0].setValues(data.states[ui.value]);
-                        // mapObject.series.markers[0].setValues(data.metro.unemployment[ui.value]);
-                        // mapObject.series.markers[1].setValues(data.metro.population[ui.value]);
-                    }
-                });
-                $('#setdata').click(function() {
-                    console.log("Click");
-
-
-                    var slider = document.getElementById('slider');
-                    console.log(slider);
-                    slider.style.display = 'block'
-
-                    for (var year in data.states){
-                      yearData = data.states[year]
-                      for (var state in data.states[year]){
-                        var value = year/4 * 100;
-                        console.log(value);
-                         data.states[year][state]=value;
-                      }
-                    }
-
-                    for (var i =0; i <data.states.length; i++){
-                      console.log(data.states[i]);
-                    }
-
-                    // var mapObject = $('#map').vectorMap('get', 'mapObject');
-                    // console.log(mapObject);
-                    // mapObject.series.regions[0].values.forEach(function(entry){
-                    //   console.log(entry);
-                    // });
-
-                });
-
-            });
-        });
-    </script>
 
 </body>
 
