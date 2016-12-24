@@ -41,7 +41,7 @@ $(function() {
             for(var year in data.states) {
                 yearData = data.states[year]
                 for(var state in data.states[year]) {
-                    var value = year / 4 * 100;
+                    var value = year / document.getElementById('timeMax').value * 100;
                     data.states[year][state] = value;
                 }
             }
