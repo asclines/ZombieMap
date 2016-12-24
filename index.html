@@ -2,46 +2,117 @@
 <html>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.js"></script>
-
-    <style type="text/css">
-        #container {
-            height: 500px;
-            min-width: 310px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .loading {
-            margin-top: 10em;
-            text-align: center;
-            color: gray;
-        }
-    </style>
-
     <title>Zombie Map!</title>
+    <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
+    <link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
+    <script src="/js/jquery-1.8.2.min.js"></script>
+    <script src="/js/jquery-ui-1.8.22.custom.min.js"></script>
 
-
+    <script src="js/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="js/jquery-jvectormap-us-aea.js"></script>
 
 </head>
 
 <body>
-    <div id="container"></div>
-    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/mapdata/countries/us/custom/us-113-congress.js"></script>
+    <div id="map" style="width: 600px; height: 400px"></div>
+    <button id="setdata" class="autocompare">Calculate</button>
 
-    <script type='text/javascript' src="js/data.js"></script>
-    <script type='text/javascript' src="js/zombie.js"></script>
-    <!-- <script type='text/javascript' src="js/highmaps.js"></script>
-    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-    <script src="us-113-congress.js"></script> -->
+    <div id="slider" style="width: 280px; margin: 10px;display: none"></div>
+
+    <script>
+        $(function() {
+            $.getJSON('./data/data.json', function(data) {
+                var val = 2009;
+                statesValues = jvm.values.apply({}, jvm.values(data.states)),
+                    metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
+                    metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
+
+                $('#map').vectorMap({
+                    map: 'us_aea',
+                    // markers: data.metro.coords,
+                    series: {
+                        // markers: [{
+                        //   attribute: 'fill',
+                        //   scale: ['#FEE5D9', '#A50F15'],
+                        //   values: data.metro.unemployment[val],
+                        //   min: jvm.min(metroUnemplValues),
+                        //   max: jvm.max(metroUnemplValues)
+                        // },{
+                        //   attribute: 'r',
+                        //   scale: [5, 20],
+                        //   values: data.metro.population[val],
+                        //   min: jvm.min(metroPopValues),
+                        //   max: jvm.max(metroPopValues)
+                        // }],
+                        regions: [{
+                            scale: ['#99ff99.', '#990000'],
+                            attribute: 'fill',
+                            values: data.states[val],
+                            min: 0,//jvm.min(statesValues),
+                            max: 100//jvm.max(statesValues)
+                        }]
+                    },
+                    onMarkerTipShow: function(event, label, index) {
+                        label.html(
+                            '<b>' + data.metro.names[index] + '</b><br/>' +
+                            '<b>Population: </b>' + data.metro.population[val][index] + '</br>' +
+                            '<b>Unemployment rate: </b>' + data.metro.unemployment[val][index] + '%'
+                        );
+                    },
+                    onRegionTipShow: function(event, label, code) {
+                        label.html(
+                            '<b>' + label.html() + '</b></br>' +
+                            '<b>Unemployment rate: </b>' + data.states[val][code] + '%'
+                        );
+                    }
+                });
+
+                var mapObject = $('#map').vectorMap('get', 'mapObject');
+
+                $("#slider").slider({
+                    value: val,
+                    min: 0,
+                    max: 4,
+                    step: 1,
+                    slide: function(event, ui) {
+                        val = ui.value;
+                        mapObject.series.regions[0].setValues(data.states[ui.value]);
+                        // mapObject.series.markers[0].setValues(data.metro.unemployment[ui.value]);
+                        // mapObject.series.markers[1].setValues(data.metro.population[ui.value]);
+                    }
+                });
+                $('#setdata').click(function() {
+                    console.log("Click");
 
 
-    <button id="setdata" class="autocompare">Set random data</button>
+                    var slider = document.getElementById('slider');
+                    console.log(slider);
+                    slider.style.display = 'block'
 
+                    for (var year in data.states){
+                      yearData = data.states[year]
+                      for (var state in data.states[year]){
+                        var value = year/4 * 100;
+                        console.log(value);
+                         data.states[year][state]=value;
+                      }
+                    }
+
+                    for (var i =0; i <data.states.length; i++){
+                      console.log(data.states[i]);
+                    }
+
+                    // var mapObject = $('#map').vectorMap('get', 'mapObject');
+                    // console.log(mapObject);
+                    // mapObject.series.regions[0].values.forEach(function(entry){
+                    //   console.log(entry);
+                    // });
+
+                });
+
+            });
+        });
+    </script>
 
 </body>
 
