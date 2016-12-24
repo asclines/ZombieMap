@@ -9,11 +9,15 @@ $(function() {
             map: 'us_aea',
             series: {
                 regions: [{
-                    scale: ['#99ff99.', '#990000'],
+                    scale: ['#99ff99', '#990000'],
                     attribute: 'fill',
                     values: data.states[val],
                     min: 0,
-                    max: 100
+                    max: 100,
+                    legend: {
+                        horizontal: true,
+                        title: 'Percentage taken over by zombies'
+                    }
                 }]
             },
 
@@ -27,16 +31,7 @@ $(function() {
 
         var mapObject = $('#map').vectorMap('get', 'mapObject');
 
-        $("#slider").slider({
-            value: val,
-            min: 0,
-            max: 4,
-            step: 1,
-            slide: function(event, ui) {
-                val = ui.value;
-                mapObject.series.regions[0].setValues(data.states[ui.value]);
-            }
-        });
+
         $('#setdata').click(function() {
             console.log("Click");
 
@@ -50,6 +45,18 @@ $(function() {
                     data.states[year][state] = value;
                 }
             }
+
+            $("#slider").slider({
+                value: val,
+                min: 0,
+                max: document.getElementById('timeMax').value,
+                step: 1,
+                slide: function(event, ui) {
+                    val = ui.value;
+                    document.getElementById('curTimeValue').innerHTML = val;
+                    mapObject.series.regions[0].setValues(data.states[ui.value]);
+                }
+            });
         });
 
     });
