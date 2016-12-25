@@ -21,7 +21,7 @@ function performCalc(properties, cb){
         var neighborCode = stateNeighbors[state][neighborIndex];
         newPop += properties.data.states[i][neighborCode];
       }
-      newPop = newPop%101;
+      if(newPop>100) newPop = 100;
       properties.data.states[i+1][state] = newPop;
       console.log("NewPop: " + newPop);
     }
