@@ -40,6 +40,7 @@ $(function() {
             calcApocalypse(
               {
                 maxIterations : document.getElementById('timeMax').value,
+                biteChance : document.getElementById('biteChance').value,
                 data : data
               }, function(results){
                 console.log(results);

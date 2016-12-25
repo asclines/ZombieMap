@@ -12,18 +12,41 @@ function calcApocalypse(properties, cb) {
 }
 
 function performCalc(properties, cb){
+  console.log(properties);
   for(var i = 0; i < properties.maxIterations; i++){
     properties.data.states[i+1] = {};
     for(var state in properties.data.states[i]){
       console.log("State: " + state);
-      var newPop = properties.data.states[i][state];
+      var zombiePop = properties.data.states[i][state];
+      var humanPop = 100 - zombiePop;
+      console.log(zombiePop);
+      var biteChance =  properties.biteChance / 100;
+
+      var newZombiePop = zombiePop * biteChance;
+      newZombiePop = (newZombiePop > humanPop ? humanPop:newZombiePop);
+
+      var totalZombiePop = zombiePop + newZombiePop;
+      console.log("\t Total before neighbor: " + totalZombiePop);
+
       for(var neighborIndex in stateNeighbors[state]){
         var neighborCode = stateNeighbors[state][neighborIndex];
-        newPop += properties.data.states[i][neighborCode];
+        var neighborZombiePop = properties.data.states[i][neighborCode];
+        var neighborHumanPop = 100 - neighborZombiePop;
+        newZombiePop = neighborZombiePop * biteChance;
+        newZombiePop = (newZombiePop > neighborHumanPop ? humanPop:newZombiePop);
+
+        totalZombiePop+=newZombiePop;
       }
-      if(newPop>100) newPop = 100;
-      properties.data.states[i+1][state] = newPop;
-      console.log("NewPop: " + newPop);
+      totalZombiePop = (totalZombiePop > 100 ? 100:totalZombiePop);
+
+    //   if(humanPop>100) humanPop = 100;
+    //   if(humanPop<0) humanPop = 0;
+    //
+    //   var zombiePop = 100 - humanPop;
+    //   if(zombiePop>100) zombiePop = 100;
+    //   if(zombiePop<0) zombiePop = 0;
+      properties.data.states[i+1][state] = totalZombiePop;
+      console.log("NewPop: " + totalZombiePop);
     }
   }
 
