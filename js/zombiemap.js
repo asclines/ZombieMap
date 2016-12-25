@@ -2,6 +2,7 @@ $(function() {
     calcApocalypse({
     default: true}, function(data){
         var val = 0;
+        var status = 0; // 0 = Adding input , 1 = Not 0
         $('#map').vectorMap({
             map: 'us_aea',
             series: {
@@ -25,8 +26,8 @@ $(function() {
                 );
             },
             onRegionClick: function(event, code){
-              console.log(event);
-              console.log(code);
+              if (status!=0) return;
+              data.states["0"][code]++;
             }
         });
 
@@ -34,10 +35,12 @@ $(function() {
 
 
         $('#calculateSubmit').click(function() {
+            status = 1;
             console.log("Click");
             calcApocalypse(
               {
-                maxIterations:document.getElementById('timeMax').value
+                maxIterations : document.getElementById('timeMax').value,
+                data : data
               }, function(results){
                 console.log(results);
                 data = results;
