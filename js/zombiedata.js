@@ -57,7 +57,7 @@ var defaultZombieStateData = {
 };
 
 
-var stateNeigthbors = {
+var stateNeighbors = {
     "US-WA": ["US-ID", "US-OR"],
     "US-DE": ["US-MD", "US-NJ", "US-PA"],
     "US-DC": ["US-MD", "US-VA"],
