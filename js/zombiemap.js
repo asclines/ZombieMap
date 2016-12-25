@@ -1,10 +1,7 @@
 $(function() {
-    $.getJSON('./data/data.json', function(data) {
+    calcApocalypse({
+    default: true}, function(data){
         var val = 0;
-        statesValues = jvm.values.apply({}, jvm.values(data.states)),
-            metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
-            metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
-
         $('#map').vectorMap({
             map: 'us_aea',
             series: {
@@ -26,6 +23,10 @@ $(function() {
                     '<b>' + label.html() + '</b></br>' +
                     '<b>Zombie takeover: </b>' + data.states[val][code] + '%'
                 );
+            },
+            onRegionClick: function(event, code){
+              console.log(event);
+              console.log(code);
             }
         });
 
