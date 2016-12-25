@@ -33,20 +33,18 @@ $(function() {
         var mapObject = $('#map').vectorMap('get', 'mapObject');
 
 
-        $('#setdata').click(function() {
+        $('#calculateSubmit').click(function() {
             console.log("Click");
-
+            calcApocalypse(
+              {
+                maxIterations:document.getElementById('timeMax').value
+              }, function(results){
+                console.log(results);
+                data = results;
+              }
+            );
             var slider = document.getElementById('slider');
             slider.style.display = 'block'
-
-            for(var year in data.states) {
-                yearData = data.states[year]
-                for(var state in data.states[year]) {
-                    var value = year / document.getElementById('timeMax').value * 100;
-                    data.states[year][state] = value;
-                }
-            }
-
             $("#slider").slider({
                 value: val,
                 min: 0,
