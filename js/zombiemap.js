@@ -5,7 +5,6 @@ $(function() {
         default: true
     }, function(data) {
         var val = 0;
-        var status = 0; // 0 = Adding input , 1 = Not 0
         $('#map').vectorMap({
             map: 'us_aea',
             series: {
@@ -40,14 +39,19 @@ $(function() {
 
 
         $('#calculateSubmit').click(function() {
-            status = 1;
-            console.log("Click");
+          $("#form-params").addClass('loading')
+          $("#form-map").addClass('loading')
+          $("#form-calc").addClass('loading')
+
             calcApocalypse({
                 maxIterations: document.getElementById('timeMax').value,
                 biteChance: document.getElementById('biteChance').value,
                 data: data
             }, function(results) {
-                console.log(results);
+              $("#form-params").removeClass('loading')
+              $("#form-map").removeClass('loading')
+              $("#form-calc").removeClass('loading')
+
                 data = results;
             });
             var slider = document.getElementById('slider');
