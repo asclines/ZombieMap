@@ -1,8 +1,10 @@
 $(function() {
+    $('.menu .item')
+        .tab();
     calcApocalypse({
-    default: true}, function(data){
+        default: true
+    }, function(data) {
         var val = 0;
-        var status = 0; // 0 = Adding input , 1 = Not 0
         $('#map').vectorMap({
             map: 'us_aea',
             series: {
@@ -25,9 +27,11 @@ $(function() {
                     '<b>Zombie takeover: </b>' + data.states[val][code] + '%'
                 );
             },
-            onRegionClick: function(event, code){
-              if (status!=0) return;
-              data.states["0"][code]++;
+            onRegionClick: function(event, code) {
+                //Only increment if the "Set Map" tab is loaded
+                if(document.getElementById('status-setmap').classList.contains("active")) {
+                    data.states["0"][code]++;
+                }
             }
         });
 
@@ -35,18 +39,21 @@ $(function() {
 
 
         $('#calculateSubmit').click(function() {
-            status = 1;
-            console.log("Click");
-            calcApocalypse(
-              {
-                maxIterations : document.getElementById('timeMax').value,
-                biteChance : document.getElementById('biteChance').value,
-                data : data
-              }, function(results){
-                console.log(results);
+          $("#form-params").addClass('loading')
+          $("#form-map").addClass('loading')
+          $("#form-calc").addClass('loading')
+
+            calcApocalypse({
+                maxIterations: document.getElementById('timeMax').value,
+                biteChance: document.getElementById('biteChance').value,
+                data: data
+            }, function(results) {
+              $("#form-params").removeClass('loading')
+              $("#form-map").removeClass('loading')
+              $("#form-calc").removeClass('loading')
+
                 data = results;
-              }
-            );
+            });
             var slider = document.getElementById('slider');
             slider.style.display = 'block'
             $("#slider").slider({
