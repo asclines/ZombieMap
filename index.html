@@ -26,10 +26,10 @@
 </head>
 
 <body>
-    <h2>Zombie Map!</h2>
+    <h2 class="ui header">Zombie Map!</h2>
     <div id="map" style="width: 100vh; height: 50vh"></div>
 
-    <div id = "tabs-main" class="ui top attached tabular menu">
+    <div id="tabs-main" class="ui top attached tabular menu">
         <a class="active item" data-tab="params">Set Parameters</a>
         <a class="item" data-tab="map">Set Map</a>
         <a class="item" data-tab="calc">Calculate</a>
@@ -66,9 +66,14 @@
     <div class="ui bottom attached tab segment" data-tab="calc">
         <div id="form-calc" class="ui form">
             <button id="calculateSubmit" class="autocompare">Launch</button>
-            <h3>Current Time: <span id="curTimeValue">0</span> </h3>
+            <div id="div-runtime" style="margin: 10px; display: none">
+              <div class="ui label">
+                  Current Time
+                  <div class="detail"><span id="curTimeValue">0</span></div>
+              </div>
+              <div id="slider" style="width: 280px; margin-top: 10px"></div>
 
-            <div id="slider" style="width: 280px; margin: 10px;display: none"></div>
+            </div>
 
         </div>
 

@@ -54,8 +54,8 @@ $(function() {
 
                 data = results;
             });
-            var slider = document.getElementById('slider');
-            slider.style.display = 'block'
+          //  var slider = document.getElementById('slider');
+            document.getElementById('div-runtime').style.display = 'block'
             $("#slider").slider({
                 value: val,
                 min: 0,
