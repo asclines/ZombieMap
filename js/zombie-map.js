@@ -1,9 +1,13 @@
+/**
+File: zombie-map.js
+
+Manages the map object.
+**/
+
 $(function() {
-    $('.menu .item')
-        .tab();
-    calcApocalypse({
-        default: true
-    }, function(data) {
+    $('.menu .item').tab();
+
+    getInitialData(function(data) {
         var val = 0;
         $('#map').vectorMap({
             map: 'us_aea',
@@ -39,22 +43,22 @@ $(function() {
 
 
         $('#calculateSubmit').click(function() {
-          $("#form-params").addClass('loading')
-          $("#form-map").addClass('loading')
-          $("#form-calc").addClass('loading')
+            $("#form-params").addClass('loading')
+            $("#form-map").addClass('loading')
+            $("#form-calc").addClass('loading')
 
             calcApocalypse({
                 maxIterations: document.getElementById('timeMax').value,
                 biteChance: document.getElementById('biteChance').value,
                 data: data
             }, function(results) {
-              $("#form-params").removeClass('loading')
-              $("#form-map").removeClass('loading')
-              $("#form-calc").removeClass('loading')
+                $("#form-params").removeClass('loading')
+                $("#form-map").removeClass('loading')
+                $("#form-calc").removeClass('loading')
 
                 data = results;
             });
-          //  var slider = document.getElementById('slider');
+            //  var slider = document.getElementById('slider');
             document.getElementById('div-runtime').style.display = 'block'
             $("#slider").slider({
                 value: val,
