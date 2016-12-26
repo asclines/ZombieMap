@@ -23,20 +23,23 @@ function performCalc(properties, cb) {
             newZombiePop = (newZombiePop > humanPop ? humanPop : newZombiePop);
 
             var totalZombiePop = zombiePop + newZombiePop;
+            getStateNeighbors(function(stateNeighbors){
+              for(var neighborIndex in stateNeighbors[state]) {
+                  var neighborCode = stateNeighbors[state][neighborIndex];
+                  var neighborZombiePop = properties.data.states[i][neighborCode];
+                  var neighborHumanPop = 100 - neighborZombiePop;
+                  newZombiePop = neighborZombiePop * biteChance;
+                  newZombiePop = (newZombiePop > neighborHumanPop ? humanPop : newZombiePop);
 
-            for(var neighborIndex in stateNeighbors[state]) {
-                var neighborCode = stateNeighbors[state][neighborIndex];
-                var neighborZombiePop = properties.data.states[i][neighborCode];
-                var neighborHumanPop = 100 - neighborZombiePop;
-                newZombiePop = neighborZombiePop * biteChance;
-                newZombiePop = (newZombiePop > neighborHumanPop ? humanPop : newZombiePop);
+                  totalZombiePop += newZombiePop;
+                  //console.log("Something");//This log statement is used to force slower loading to test the loading bars
+              }
+              totalZombiePop = (totalZombiePop > 100 ? 100 : totalZombiePop);
 
-                totalZombiePop += newZombiePop;
-                //console.log("Something");//This log statement is used to force slower loading to test the loading bars
-            }
-            totalZombiePop = (totalZombiePop > 100 ? 100 : totalZombiePop);
+              properties.data.states[i + 1][state] = totalZombiePop;
+            })
 
-            properties.data.states[i + 1][state] = totalZombiePop;
+
         }
     }
 
