@@ -1,6 +1,8 @@
 function calcApocalypse(properties, cb) {
     if(properties.default) {
-        cb(defaultZombieStateData);
+      getInitialData(function(data){
+        cb(data)
+      })
     } else {
         performCalc(properties, function(results) {
             cb(results);
