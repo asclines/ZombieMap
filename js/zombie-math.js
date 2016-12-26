@@ -58,7 +58,4 @@ function calcApocalypse(properties, cb) {
     }, function(err) {
         console.log(err);
     })
-
-
-
 }
