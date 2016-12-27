@@ -17,6 +17,7 @@
     <script src="semantic/out/semantic.min.js"></script>
 
     <script src="/js/zombie-map.js"></script>
+    <script src="/js/zombie-controls.js"></script>
     <script src="/js/zombie-data.js"></script>
     <script src="/js/zombie-math.js"></script>
 
@@ -40,7 +41,7 @@
                 </div>
                 <div class="field">
                     <label>Population Growth Rate (Percent %)</label>
-                    <input type="number" id="growthRate" name="growthRate" min="1" max="100" value="10">
+                    <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
                 </div>
             </div>
         </div>
@@ -48,7 +49,7 @@
     </div>
     <div id="status-setmap" class="ui bottom attached tab segment" data-tab="map">
         <p>
-            Click on the states above to increse the initial zombie population.
+            Click on the states above to increase the initial zombie population.
         </p>
         <div id="form-map" class="ui form">
             <div class="fields">
@@ -63,6 +64,7 @@
     <div class="ui bottom attached tab segment" data-tab="calc">
         <div id="form-calc" class="ui form">
             <button id="calculateSubmit" class="ui button">Launch</button>
+            <button id="calculateReset" class="ui button">Reset</button>
             <div id="div-runtime" style="margin: 10px; display: none">
                 <div class="ui label">
                     Current Time
