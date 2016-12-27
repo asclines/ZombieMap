@@ -50,6 +50,7 @@ $(function() {
             calcApocalypse({
                 maxIterations: document.getElementById('timeMax').value,
                 biteChance: document.getElementById('biteChance').value,
+                growthRate: document.getElementById('growthRate').value,
                 data: data
             }, function(results) {
                 $("#form-params").removeClass('loading')

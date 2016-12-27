@@ -9,11 +9,13 @@ Handles calculating the actual apocalypse
   - data: Dataset
   - biteChance
   - maxIterations
+  - growthRate
 
   Callback returns an object of time intervals and the status of each state
   at each time interval.
 **/
 function calcApocalypse(properties, cb) {
+  console.log(properties);
     var promise = new Promise(function(resolve, reject) {
         getStateNeighbors(function(stateNeighbors) {
             var stateNeighbors = stateNeighbors;
@@ -31,6 +33,8 @@ function calcApocalypse(properties, cb) {
                 var zombiePop = properties.data.states[i][state];
                 var humanPop = 100 - zombiePop;
                 var biteChance = properties.biteChance / 100;
+                var growthRate = properties.growthRate / 100;
+                console.log(growthRate);
 
                 var newZombiePop = zombiePop * biteChance;
                 newZombiePop = (newZombiePop > humanPop ? humanPop : newZombiePop);
@@ -48,6 +52,11 @@ function calcApocalypse(properties, cb) {
                     //console.log("Something");//This log statement is used to force slower loading to test the loading bars
                 }
                 totalZombiePop = (totalZombiePop > 100 ? 100 : totalZombiePop);
+                humanPop = 100 - totalZombiePop;
+                humanPop = humanPop + humanPop*growthRate;
+                humanPop = (humanPop > 100 ? 100 : humanPop);
+                totalZombiePop = 100 - humanPop;
+                console.log(humanPop);
 
                 properties.data.states[i + 1][state] = totalZombiePop;
             }
