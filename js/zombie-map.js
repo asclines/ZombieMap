@@ -43,30 +43,21 @@ function setupMap() {
 
 $( function () {
   $( '.menu .item' ).tab();
-  new Promise( function ( resolve, reject ) {
-    getInitialData( function ( data ) {
-      if ( data != null ) {
-        resolve( data )
-      } else {
-        reject( Error( "Could not load initial data." ) )
-      }
-    } )
-  } ).then( function ( data ) {
-    zombieMapData.data = data;
-    setupMap();
-    setupControls();
-  } );
+  initData();
+  setupControls();
+  // new Promise( function ( resolve, reject ) {
+  //   getInitialData( function ( data ) {
+  //     if ( data != null ) {
+  //       resolve( data )
+  //     } else {
+  //       reject( Error( "Could not load initial data." ) )
+  //     }
+  //   } )
+  // } ).then( function ( data ) {
+  //   zombieMapData.data = data;
+  //   setupMap();
+  //   setupControls();
+  // } ).catch(function(err){
+  //   console.log(err);
+  // });
 } );
-
-
-
-
-
-// $( '#calculateReset' ).click( function () {
-//     new Promise( function ( resolve, reject ) {
-//         getInitialData( function ( data ) {
-//
-//           }
-//         } )
-//     } );
-// } );
