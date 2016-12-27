@@ -40,7 +40,7 @@
                 </div>
                 <div class="field">
                     <label>Population Growth Rate (Percent %)</label>
-                    <input type="number" id="growthRate" name="growthRate" min="1" max="100" value="10">
+                    <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
                 </div>
             </div>
         </div>
@@ -63,6 +63,7 @@
     <div class="ui bottom attached tab segment" data-tab="calc">
         <div id="form-calc" class="ui form">
             <button id="calculateSubmit" class="ui button">Launch</button>
+            <button id="calculateReset" class="ui button">Reset</button>
             <div id="div-runtime" style="margin: 10px; display: none">
                 <div class="ui label">
                     Current Time

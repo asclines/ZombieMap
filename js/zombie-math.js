@@ -16,7 +16,7 @@ Handles calculating the actual apocalypse
 **/
 function calcApocalypse(properties, cb) {
   console.log(properties);
-    var promise = new Promise(function(resolve, reject) {
+    new Promise(function(resolve, reject) {
         getStateNeighbors(function(stateNeighbors) {
             var stateNeighbors = stateNeighbors;
             if(stateNeighbors != null) {
