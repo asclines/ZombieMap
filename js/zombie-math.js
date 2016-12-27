@@ -20,7 +20,7 @@ function calcApocalypse(properties, cb) {
   new Promise(function(resolve, reject) {
     getStateNeighbors(function(stateNeighbors) {
       var stateNeighbors = stateNeighbors;
-      if (stateNeighbors != null) {
+      if(stateNeighbors != null) {
         resolve(stateNeighbors);
       } else {
         reject(Error("Could not load state neighbors data."));
@@ -28,9 +28,9 @@ function calcApocalypse(properties, cb) {
     })
 
   }).then(function(stateNeighbors) {
-    for (var i = 0; i < properties.maxIterations; i++) {
+    for(var i = 0; i < properties.maxIterations; i++) {
       properties.data.states[i + 1] = {};
-      for (var state in properties.data.states[i]) {
+      for(var state in properties.data.states[i]) {
         var zombiePop = properties.data.states[i][state];
         var humanPop = 100 - zombiePop;
         var biteChance = properties.biteChance / 100;
@@ -41,7 +41,7 @@ function calcApocalypse(properties, cb) {
 
         var totalZombiePop = zombiePop + newZombiePop;
 
-        for (var neighborIndex in stateNeighbors[state]) {
+        for(var neighborIndex in stateNeighbors[state]) {
           var neighborCode = stateNeighbors[state][neighborIndex];
           var neighborZombiePop = properties.data.states[i][neighborCode];
           var neighborHumanPop = 100 - neighborZombiePop;

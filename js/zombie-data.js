@@ -11,14 +11,14 @@ Handles loading all data from JSON files
  Callback returns the data
 **/
 function getInitialData(cb) {
-    $.getJSON('data/zombie-initial-states.json', function(emptyData) {
-        data = {
-            "states": {
-                "0": emptyData
-            }
-        }
-        cb(data);
-    })
+  $.getJSON('data/zombie-initial-states.json', function(emptyData) {
+    data = {
+      "states": {
+        "0": emptyData
+      }
+    }
+    cb(data);
+  })
 }
 
 /**
@@ -26,7 +26,7 @@ function getInitialData(cb) {
  value is a list of ISO codes of the neighboring states.
 **/
 function getStateNeighbors(cb) {
-    $.getJSON('data/states-neighbors.json', function(data) {
-        cb(data);
-    })
+  $.getJSON('data/states-neighbors.json', function(data) {
+    cb(data);
+  })
 }
