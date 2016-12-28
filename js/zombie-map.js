@@ -24,10 +24,24 @@ function setupMap() {
               }]
     },
     onRegionTipShow: function(event, label, code) {
-      label.html(
-        '<b>' + label.html() + '</b></br>' +
-        '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
-      );
+      if(document.getElementById('status-setparams').classList.contains("active")) {
+        label.html(
+          '<b>' + label.html() + '</b></br>' +
+          '<b>Population: </b>' + zombieMapData.data.humanpop[zombieMapData.val][code].toLocaleString()
+        );
+      } else if(document.getElementById('status-setmap').classList.contains("active")) {
+        label.html(
+          '<b>' + label.html() + '</b></br>' +
+          '<b>Population: </b>' + zombieMapData.data.humanpop[zombieMapData.val][code].toLocaleString() + '</b></br>' +
+          '<b>Initial Zombies </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
+        );
+      } else if(document.getElementById('status-calc').classList.contains("active")) {
+        label.html(
+          '<b>' + label.html() + '</b></br>' +
+          '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
+        );
+      }
+
     },
     onRegionClick: function(event, code) {
       //Only increment if the "Set Map" tab is loaded

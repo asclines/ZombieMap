@@ -11,14 +11,21 @@ Handles loading all data from JSON files
  Callback returns the data
 **/
 function getInitialData(cb) {
-  $.getJSON('data/zombie-initial-states.json', function(emptyData) {
+  $.when(
+    $.getJSON('data/zombie-initial-states.json'),
+    $.getJSON('data/states-pops.json')
+  ).done(function(initPercentage, initPop) {
     data = {
       "percentage": {
-        "0": emptyData
+        "0": initPercentage["0"]
+      },
+      "humanpop":{
+        "0": initPop["0"]
       }
     }
     cb(data);
-  })
+
+  });
 }
 
 /**
