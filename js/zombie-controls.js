@@ -34,18 +34,17 @@ function initData(cb) {
 var zombieControls = {
   submit: function() {
     $('#calculateSubmit').click(function() {
+      document.getElementById('calculateSubmit').style.display = 'none'
 
       $("#form-params").addClass('loading')
       $("#form-map").addClass('loading')
       $("#form-calc").addClass('loading')
 
       new Promise(function(resolve, reject) {
-        calcApocalypse({
-          maxIterations: document.getElementById('timeMax').value,
-          biteChance: document.getElementById('biteChance').value,
-          growthRate: document.getElementById('growthRate').value,
-          data: zombieMapData.data
-        }, function(results) {
+        zombieMapData.maxIterations = document.getElementById('timeMax').value;
+        zombieMapData.biteChance = document.getElementById('biteChance').value;
+        zombieMapData.growthRate = document.getElementById('growthRate').value;
+        calcApocalypse(function(results) {
           $("#form-params").removeClass('loading')
           $("#form-map").removeClass('loading')
           $("#form-calc").removeClass('loading')
@@ -83,6 +82,8 @@ var zombieControls = {
   reset: function() {
     $('#calculateReset').click(function() {
       initData(function(err) {
+        document.getElementById('calculateSubmit').style.display = 'block'
+
         if(err == null) {
           zombieMapData.val = 0;
           document.getElementById('div-runtime').style.display = 'none'

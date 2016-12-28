@@ -53,7 +53,7 @@
         </p>
         <div id="form-map" class="ui form">
             <div class="fields">
-                <div class="field">
+                <div id="field-max-time" class="field">
                     <label>Max Time (0 < t < 100)</label>
                     <input type="number" id="timeMax" name="timeMax" min="1" max="100" value="4">
                 </div>
@@ -64,8 +64,8 @@
     <div class="ui bottom attached tab segment" data-tab="calc">
         <div id="form-calc" class="ui form">
             <button id="calculateSubmit" class="ui button">Launch</button>
-            <button id="calculateReset" class="ui button">Reset</button>
             <div id="div-runtime" style="margin: 10px; display: none">
+              <button id="calculateReset" class="ui button">Reset</button>
                 <div class="ui label">
                     Current Time
                     <div class="detail"><span id="curTimeValue">0</span></div>
