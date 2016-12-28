@@ -9,7 +9,6 @@ Handles calculating the actual apocalypse
   at each time interval.
 **/
 function calcApocalypse(cb) {
-  console.log(zombieMapData);
   new Promise(function(resolve, reject) {
     getStateNeighbors(function(stateNeighbors) {
       var stateNeighbors = stateNeighbors;
