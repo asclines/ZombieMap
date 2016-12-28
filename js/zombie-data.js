@@ -15,12 +15,18 @@ function getInitialData(cb) {
     $.getJSON('data/zombie-initial-states.json'),
     $.getJSON('data/states-pops.json')
   ).done(function(initPercentage, initPop) {
+    var newPercentage = JSON.parse(JSON.stringify(initPercentage));
+    var newZombiePop = JSON.parse(JSON.stringify(initPercentage));
+
     data = {
       "percentage": {
-        "0": initPercentage["0"]
+        "0": newPercentage["0"]
       },
       "humanpop":{
         "0": initPop["0"]
+      },
+      "zombiepop":{
+        "0": newZombiePop["0"]
       }
     }
     cb(data);

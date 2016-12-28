@@ -27,18 +27,21 @@ function setupMap() {
       if(document.getElementById('status-setparams').classList.contains("active")) {
         label.html(
           '<b>' + label.html() + '</b></br>' +
-          '<b>Population: </b>' + zombieMapData.data.humanpop[zombieMapData.val][code].toLocaleString()
+          '<b>Population: </b>' + Number(zombieMapData.data.humanpop[zombieMapData.val][code]).toLocaleString()
         );
       } else if(document.getElementById('status-setmap').classList.contains("active")) {
         label.html(
           '<b>' + label.html() + '</b></br>' +
-          '<b>Population: </b>' + zombieMapData.data.humanpop[zombieMapData.val][code].toLocaleString() + '</b></br>' +
+          '<b>Population: </b>' + Number(zombieMapData.data.humanpop[zombieMapData.val][code]).toLocaleString() + '</b></br>' +
           '<b>Initial Zombies </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
         );
       } else if(document.getElementById('status-calc').classList.contains("active")) {
         label.html(
           '<b>' + label.html() + '</b></br>' +
-          '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
+          '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '% </b></br>' +
+          '<b>Human Population: </b>' + Number(zombieMapData.data.humanpop[zombieMapData.val][code]).toLocaleString() + '</b></br>' +
+          '<b>Zombie Population: </b>' + Number(zombieMapData.data.zombiepop[zombieMapData.val][code]).toLocaleString()
+
         );
       }
 

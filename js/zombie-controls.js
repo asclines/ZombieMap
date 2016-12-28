@@ -45,6 +45,7 @@ var zombieControls = {
         zombieMapData.biteChance = document.getElementById('biteChance').value;
         zombieMapData.growthRate = document.getElementById('growthRate').value;
         calcApocalypse(function(results) {
+          console.log(results);
           $("#form-params").removeClass('loading')
           $("#form-map").removeClass('loading')
           $("#form-calc").removeClass('loading')
@@ -74,7 +75,7 @@ var zombieControls = {
       slide: function(event, ui) {
         zombieMapData.val = ui.value;
         document.getElementById('curTimeValue').innerHTML = zombieMapData.val;
-        zombieMapData.mapObject.series.regions[0].setValues(zombieMapData.data.states[ui.value]);
+        zombieMapData.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieMapData.val]);
       }
     });
   },
