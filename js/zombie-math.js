@@ -21,9 +21,9 @@ function calcApocalypse(cb) {
 
   }).then(function(stateNeighbors) {
     for(var i = 0; i < zombieMapData.maxIterations; i++) {
-      zombieMapData.data.states[i + 1] = {};
-      for(var state in zombieMapData.data.states[i]) {
-        var zombiePop = zombieMapData.data.states[i][state];
+      zombieMapData.data.percentage[i + 1] = {};
+      for(var state in zombieMapData.data.percentage[i]) {
+        var zombiePop = zombieMapData.data.percentage[i][state];
         var humanPop = 100 - zombiePop;
         var biteChance = zombieMapData.biteChance / 100;
         var growthRate = zombieMapData.growthRate / 100;
@@ -35,7 +35,7 @@ function calcApocalypse(cb) {
 
         for(var neighborIndex in stateNeighbors[state]) {
           var neighborCode = stateNeighbors[state][neighborIndex];
-          var neighborZombiePop = zombieMapData.data.states[i][neighborCode];
+          var neighborZombiePop = zombieMapData.data.percentage[i][neighborCode];
           var neighborHumanPop = 100 - neighborZombiePop;
           newZombiePop = neighborZombiePop * biteChance;
           newZombiePop = (newZombiePop > neighborHumanPop ? humanPop : newZombiePop);
@@ -49,7 +49,7 @@ function calcApocalypse(cb) {
         humanPop = (humanPop > 100 ? 100 : humanPop);
         totalZombiePop = 100 - humanPop;
 
-        zombieMapData.data.states[i + 1][state] = totalZombiePop;
+        zombieMapData.data.percentage[i + 1][state] = totalZombiePop;
       }
     }
 

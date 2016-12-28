@@ -88,7 +88,7 @@ var zombieControls = {
           zombieMapData.val = 0;
           document.getElementById('div-runtime').style.display = 'none'
           document.getElementById('curTimeValue').innerHTML = zombieMapData.val;
-          zombieMapData.mapObject.series.regions[0].setValues(zombieMapData.data.states[zombieMapData.val]);
+          zombieMapData.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieMapData.val]);
           setupControls()
         } else {
           console.log(err);

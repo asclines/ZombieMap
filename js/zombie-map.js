@@ -14,7 +14,7 @@ function setupMap() {
       regions: [{
         scale: ['#99ff99', '#990000'],
         attribute: 'fill',
-        values: zombieMapData.data.states[zombieMapData.val],
+        values: zombieMapData.data.percentage[zombieMapData.val],
         min: 0,
         max: 100,
         legend: {
@@ -26,13 +26,13 @@ function setupMap() {
     onRegionTipShow: function(event, label, code) {
       label.html(
         '<b>' + label.html() + '</b></br>' +
-        '<b>Zombie takeover: </b>' + zombieMapData.data.states[zombieMapData.val][code] + '%'
+        '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
       );
     },
     onRegionClick: function(event, code) {
       //Only increment if the "Set Map" tab is loaded
       if(document.getElementById('status-setmap').classList.contains("active")) {
-        zombieMapData.data.states["0"][code]++;
+        zombieMapData.data.percentage["0"][code]++;
       }
     }
   });

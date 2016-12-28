@@ -13,7 +13,7 @@ Handles loading all data from JSON files
 function getInitialData(cb) {
   $.getJSON('data/zombie-initial-states.json', function(emptyData) {
     data = {
-      "states": {
+      "percentage": {
         "0": emptyData
       }
     }
