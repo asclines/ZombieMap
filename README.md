@@ -1,4 +1,8 @@
 # ZombieMap
 Mapping Zombie Apocalypse!
 
-Note: Since this project is being solo-developed and there is no current release yet, I will be working directly out of master.
+**NOTE: This project is still in early stages of development. **
+
+To see this in action checkout [this page](http://www.alexanderclines.com/ZombieMap/)
+
+Documentation coming soon.
