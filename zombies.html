@@ -11,9 +11,8 @@
     <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 
     <!-- SEMANTIC -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(components/form.min.css+components/input.min.css+components/tab.min.css+components/segment.min.css+components/menu.min.css)">    <script src="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(semantic.min.js+components/form.min.js+components/tab.min.js)"></script>
-
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(components/form.min.css+components/input.min.css+components/tab.min.css+components/segment.min.css+components/menu.min.css+components/label.min.css+components/popup.min.css+components/button.min.css)">
+    <script src="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(semantic.min.js+components/form.min.js+components/tab.min.js+components/popup.min.js)"></script>
 
 
     <!--  ZOMBIES-->
@@ -43,13 +42,17 @@
     </div>
     <div id="status-setparams" class="ui bottom attached active tab segment" data-tab="params">
         <div id="form-params" class="ui form">
-            <div class="fields">
+            <div class="inline fields">
                 <div class="field">
-                    <label>Bite Chance (Percent %)</label>
+                    <div class="ui basic label" data-tooltip="Percentage of humans that become zombies each time." data-position="top left">
+                        Bite Spread
+                    </div>
                     <input type="number" id="biteChance" name="biteChance" min="1" max="100" value="25">
                 </div>
                 <div class="field">
-                    <label>Population Growth Rate (Percent %)</label>
+                    <div class="ui basic label" data-tooltip="How many humans are born each time in percentage to current population." data-position="top left">
+                        Population Growth
+                    </div>
                     <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
                 </div>
             </div>
@@ -63,7 +66,9 @@
         <div id="form-map" class="ui form">
             <div class="fields">
                 <div id="field-max-time" class="field">
-                    <label>Max Time (0 < t < 100)</label>
+                    <div class="ui basic label" data-tooltip="How many iterations you want. (0 < t < 100)" data-position="top left">
+                        Max Time
+                    </div>
                     <input type="number" id="timeMax" name="timeMax" min="1" max="100" value="4">
                 </div>
 
@@ -84,7 +89,10 @@
             </div>
         </div>
     </div>
+    <!--  -->
 
+
+    <!--  -->
 
     <div class="ui piled segment ">
         <h4 class="ui header">Zombies!</h4>
