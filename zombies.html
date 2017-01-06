@@ -1,31 +1,42 @@
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
 
-<link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
-<link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
-<link rel="stylesheet" media="all" href="css/zombie.css" />
+<head>
+    <meta charset="UTF-8">
+    <title>Zombie Map</title>
 
-<script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
-<script src="js/assets/jquery-jvectormap-us-aea.js"></script>
+    <!--  JQUERY -->
+    <link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" type="text/css" href="semantic/out/semantic.min.css">
-<script src="semantic/out/semantic.min.js"></script>
+    <!-- SEMANTIC -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(components/form.min.css+components/input.min.css+components/tab.min.css+components/segment.min.css)">
+    <script src="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(semantic.min.js+components/form.min.js+components/tab.min.js)"></script>
 
-<script src="/js/zombie-map.js"></script>
-<script src="/js/zombie-controls.js"></script>
-<script src="/js/zombie-data.js"></script>
-<script src="/js/zombie-math.js"></script>
-<script src="/js/assets/big.js"></script>
 
-<template id="zombie-map" >
-  <div class="zombie"  >
+
+
+    <!--  ZOMBIES-->
+    <link rel="stylesheet" media="all" href="css/zombie.css" />
+    <script src="/js/zombie-map.js"></script>
+    <script src="/js/zombie-controls.js"></script>
+    <script src="/js/zombie-data.js"></script>
+    <script src="/js/zombie-math.js"></script>
+
+    <!--  ASSETS-->
+    <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
+    <script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="js/assets/jquery-jvectormap-us-aea.js"></script>
+    <script src="/js/assets/big.js"></script>
+
+</head>
+
+<body>
+
     <h2 class="ui header">Zombie Map!</h2>
     <div id="map" class="zombiemap"></div>
-  </div>
-</template>
 
-<template id="zombie-controls">
-  <div class="zombie">
     <div id="tabs-main" class="ui top attached tabular menu ">
         <a class="active item" data-tab="params">Set Parameters</a>
         <a class="item" data-tab="map">Set Map</a>
@@ -64,7 +75,7 @@
         <div id="form-calc" class="ui form">
             <button id="calculateSubmit" class="ui button">Launch</button>
             <div id="div-runtime" style="margin: 10px; display: none">
-              <button id="calculateReset" class="ui button">Reset</button>
+                <button id="calculateReset" class="ui button">Reset</button>
                 <div class="ui label">
                     Current Time
                     <div class="detail"><span id="curTimeValue">0</span></div>
@@ -74,18 +85,15 @@
             </div>
         </div>
     </div>
-  </div>
-
-</template>
 
 
-<template id="zombie-info">
-  <div class="zombie">
     <div class="ui piled segment ">
-      <h4 class="ui header">Zombies!</h4>
-      <p>Ever wanted to know more about zombies?</p>
-       <p>Well let's pretend this text explains it!</p>
-       <p>Look! More info!</p>
+        <h4 class="ui header">Zombies!</h4>
+        <p>Ever wanted to know more about zombies?</p>
+        <p>Well let's pretend this text explains it!</p>
+        <p>Look! More info!</p>
     </div>
-  </div>
-</template>
+
+</body>
+
+</html>
