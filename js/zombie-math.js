@@ -60,7 +60,6 @@ function calcApocalypse(cb) {
 
 
 function calcNewZombiesInState(stateIndex, timeIndex, neighbors) {
-  console.log("calcNewZombiesInState");
   var zombiePop = new Big(zombieMapData.data.zombiepop[timeIndex][stateIndex]);
   var humanPop = new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]);
   var biteChance = zombieMapData.biteChance / 100;
@@ -88,13 +87,13 @@ function calcNewZombiesInState(stateIndex, timeIndex, neighbors) {
   var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
 
   //var zombieTakeoverPercentage = calcZombiePercentage(totalHumanPop, totalZombiePop);
-
-  if(stateIndex == "US-TX") {
-    console.log("State[" + stateIndex + "] at time[" + timeIndex + "] with" +
-      "\n newZombiePop = " + bigOut(newZombiePop) +
-      "\n newHumanPop = " + bigOut(newHumanPop) +
-      "\n zombieTakeoverPercentage = " + bigOut(zombieTakeoverPercentage));
-  }
+  // 
+  // if(stateIndex == "US-TX") {
+  //   console.log("State[" + stateIndex + "] at time[" + timeIndex + "] with" +
+  //     "\n newZombiePop = " + bigOut(newZombiePop) +
+  //     "\n newHumanPop = " + bigOut(newHumanPop) +
+  //     "\n zombieTakeoverPercentage = " + bigOut(zombieTakeoverPercentage));
+  // }
 
 
 

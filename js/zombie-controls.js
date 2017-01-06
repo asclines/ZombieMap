@@ -45,7 +45,7 @@ var zombieControls = {
         zombieMapData.biteChance = document.getElementById('biteChance').value;
         zombieMapData.growthRate = document.getElementById('growthRate').value;
         calcApocalypse(function(results) {
-          console.log(results);
+          // console.log(results);
           $("#form-params").removeClass('loading')
           $("#form-map").removeClass('loading')
           $("#form-calc").removeClass('loading')
