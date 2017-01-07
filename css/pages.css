@@ -1,3 +1,5 @@
+.object-fit_contain { object-fit: contain }
+
 .hidden.menu {
     display: none;
 }

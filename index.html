@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Zombie Map Project</title>
+    <title>Zombie Apocalypse</title>
 
 
     <link rel="stylesheet" type="text/css" href="semantic/dist/components/reset.css">
@@ -30,12 +30,9 @@
 
     <style>
         #zombieframe {
-            display: block;
-            position: fixed;
-            width: 100%;
-            height: 100%;
+            height: calc(100vh - 20px);
+            width: calc(100vw - 40px);
         }
-
     </style>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -64,20 +61,20 @@
 
             });
 
-            $(function() {
-              $('a[href*="#"]:not([href="#"])').click(function() {
-                if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                  var target = $(this.hash);
-                  target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                  if (target.length) {
-                    $('html, body').animate({
-                      scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                  }
+        $(function() {
+            $('a[href*="#"]:not([href="#"])').click(function() {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000);
+                        return false;
+                    }
                 }
-              });
             });
+        });
     </script>
 </head>
 
@@ -113,6 +110,8 @@
 
 
     <!-- Page Contents -->
+
+
     <div class="pusher">
         <div class="ui inverted vertical masthead center aligned segment">
 
@@ -124,7 +123,7 @@
                     <a href="#top-anchor" class="active item">Home</a>
                     <a href="#map-anchor" class="item">Map</a>
                     <a href="#motivation-anchor" class="item">Motivation</a>
-                    <a href="#acknowledge-anchor"class="item">Acknowledgements</a>
+                    <a href="#acknowledge-anchor" class="item">Acknowledgements</a>
                     <div class="right item">
                         <a href="https://github.com/asclines/ZombieMap" class="ui inverted button">GitHub</a>
                     </div>
@@ -133,7 +132,7 @@
 
             <div id="top-anchor" class="ui text container">
                 <h1 class="ui inverted header">
-                  Zombie Map Project
+                  Zombie Apocalypse Map
                 </h1>
                 <h2>a LAZARUS project</h2>
             </div>
@@ -142,6 +141,25 @@
 
         <div id="map-anchor" class="ui vertical stripe segment">
             <h1 class="ui header">Zombie Map</h1>
+            <div id="appointy">
+
+                <iframe src="zombies.html" id="zombieframe" scrolling="no" frameborder="0" allowtransparency="true" style="text-align: center; -webkit-overflow-scrolling: touch; overflow: auto;"></iframe>
+
+            </div>
+            <!-- <iframe src="zombies.html" frameborder="0" height="100%" width="100%" id="zombieframe"></iframe> -->
+            <!--  onload="autoResize(this)" -->
+
+            <!-- <object class="object-fit_contain" data="zombies.html"></object> -->
+
+            <div class="ui piled segment ">
+                <h4 class="ui header">Zombies!</h4>
+                <p>Ever wanted to know more about zombies?</p>
+                <p>Well let's pretend this text explains it!</p>
+                <p>Look! More info!</p>
+            </div>
+
+
+
         </div>
         <div id="motivation-anchor" class="ui vertical stripe segment">
             <h1 class="ui header">Motivation</h1>
@@ -158,9 +176,5 @@
     </div>
 
 </body>
-<!-- <body>
-    <iframe src="zombies.html" frameborder="0" id="zombieframe"></iframe>
-
-</body> -->
 
 </html>
