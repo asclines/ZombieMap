@@ -83,16 +83,14 @@
     <!-- Following Menu -->
     <div class="ui large top fixed hidden menu">
         <div class="ui container">
-            <a class="active item">Home</a>
-            <a class="item">Work</a>
-            <a class="item">Company</a>
-            <a class="item">Careers</a>
+            <a href="#top-anchor" class="active item">Home</a>
+            <a href="#about-anchor" class="item">About</a>
+            <a href="#map-anchor" class="item">Map</a>
+            <a href="#motivation-anchor" class="item">Motivation</a>
+            <a href="#acknowledge-anchor" class="item">Acknowledgements</a>
             <div class="right menu">
                 <div class="item">
-                    <a class="ui button">Log in</a>
-                </div>
-                <div class="item">
-                    <a class="ui primary button">Sign Up</a>
+                    <a href="https://github.com/asclines/ZombieMap" class="ui button">GitHub</a>
                 </div>
             </div>
         </div>
@@ -100,12 +98,12 @@
 
     <!-- Sidebar Menu -->
     <div class="ui vertical inverted sidebar menu">
-        <a class="active item">Home</a>
-        <a class="item">Work</a>
-        <a class="item">Company</a>
-        <a class="item">Careers</a>
-        <a class="item">Login</a>
-        <a class="item">Signup</a>
+        <a href="#top-anchor" class="active item">Home</a>
+        <a href="#about-anchor" class="item">About</a>
+        <a href="#map-anchor" class="item">Map</a>
+        <a href="#motivation-anchor" class="item">Motivation</a>
+        <a href="#acknowledge-anchor" class="item">Acknowledgements</a>
+        <a href="https://github.com/asclines/ZombieMap" class="ui inverted button">GitHub</a>
     </div>
 
 
@@ -121,6 +119,7 @@
                         <i class="sidebar icon"></i>
                     </a>
                     <a href="#top-anchor" class="active item">Home</a>
+                    <a href="#about-anchor" class="item">About</a>
                     <a href="#map-anchor" class="item">Map</a>
                     <a href="#motivation-anchor" class="item">Motivation</a>
                     <a href="#acknowledge-anchor" class="item">Acknowledgements</a>
@@ -139,42 +138,51 @@
 
         </div>
 
-        <div id="map-anchor" class="ui vertical stripe segment">
+        <div id="about-anchor" class="ui piled segment ">
+            <h1 class="ui header">Zombies!</h1>
+            <p>Ever wanted to know more about zombies?</p>
+            <p>Well let's pretend this text explains it!</p>
+            <p>Look! More info!</p>
+        </div>
+
+
+
+        <div id="map-anchor" class="ui stripe segment">
             <h1 class="ui header">Zombie Map</h1>
             <div id="appointy">
 
                 <iframe src="zombies.html" id="zombieframe" scrolling="no" frameborder="0" allowtransparency="true" style="text-align: center; -webkit-overflow-scrolling: touch; overflow: auto;"></iframe>
 
             </div>
-            <!-- <iframe src="zombies.html" frameborder="0" height="100%" width="100%" id="zombieframe"></iframe> -->
-            <!--  onload="autoResize(this)" -->
-
-            <!-- <object class="object-fit_contain" data="zombies.html"></object> -->
-
-            <div class="ui piled segment ">
-                <h4 class="ui header">Zombies!</h4>
-                <p>Ever wanted to know more about zombies?</p>
-                <p>Well let's pretend this text explains it!</p>
-                <p>Look! More info!</p>
-            </div>
-
 
 
         </div>
-        <div id="motivation-anchor" class="ui vertical stripe segment">
+
+
+
+        <div id="motivation-anchor" class="ui piled segment ">
             <h1 class="ui header">Motivation</h1>
+            <p> Funzies. </p>
         </div>
-        <div id="acknowledge-anchor" class="ui vertical stripe segment">
+
+
+        <div id="acknowledge-anchor" class="ui piled segment ">
             <h1 class="ui header">Acknowledgements</h1>
+            <p>
+                In order of appearance:
+                <ol class="ui list">
+                    <li>Me</li>
+                    <li>Myself</li>
+                    <li>I</li>
+                </ol>
+            </p>
         </div>
 
 
 
         <div class="ui inverted vertical footer segment">
-
         </div>
     </div>
-
 </body>
 
 </html>
