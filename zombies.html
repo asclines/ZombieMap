@@ -11,9 +11,32 @@
     <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
 
     <!-- SEMANTIC -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(components/form.min.css+components/input.min.css+components/tab.min.css+components/segment.min.css+components/menu.min.css+components/label.min.css+components/popup.min.css+components/button.min.css)">
-    <script src="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(semantic.min.js+components/form.min.js+components/tab.min.js+components/popup.min.js)"></script>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(
+components/form.min.css+
+components/input.min.css+
+components/tab.min.css+
+components/segment.min.css+
+components/menu.min.css+
+components/label.min.css+
+components/popup.min.css+
+components/button.min.css+
+components/modal.min.css+
+components/dimmer.min.css+
+components/transition.min.css+
+components/list.min.css
+)">
 
+    <script src="https://cdn.jsdelivr.net/g/semantic-ui@2.2.4(
+semantic.min.js+
+components/form.min.js+
+components/tab.min.js+
+components/popup.min.js+
+components/modal.min.js+
+components/dimmer.min.js+
+components/visibility.min.js+
+components/transition.min.js
+)"></script>
 
     <!--  ZOMBIES-->
     <link rel="stylesheet" media="all" href="css/zombie.css" />
@@ -31,9 +54,43 @@
 </head>
 
 <body>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#showInstructions').click(function() {
+                console.log("Instructions!");
+                $('#instructionsModal').modal('show');
+            });
+        });
+    </script>
+    <div class="ui small modal" id="instructionsModal">
+        <div class="header" style="width:auto">Instructions</div>
+        <div class="content" style="width:auto">
+            <ol class="ui list">
+                <li>Set the initial parameters you would like</li>
+                <li>Set map
+                    <ol>
+                        <li>Click on the states to increase number of initial zombies</li>
+                        <li>Set time parameter</li>
+                    </ol>
+                </li>
+                <li>Calculate
+                    <ol>
+                        <li>Click on the launch button to run calculations.</li>
+                        <li>Use the slider to go backwards and fowards in time to see how your initial parameters played out.</li>
+                        <li>Hit the reset button if you would like to change anything.</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
 
     <h2 class="ui header">Zombie Map!</h2>
     <div class="zombie">
+
+        <button id="showInstructions" class="mini ui basic button">
+          Instructions
+        </button>
+
         <div id="map" class="zombiemap"></div>
         <div id="tabs-main" class="ui top attached tabular menu ">
             <a class="active item" data-tab="params">Set Parameters</a>
