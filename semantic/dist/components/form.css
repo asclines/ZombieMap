@@ -1076,7 +1076,7 @@
 }
 .ui.form .selection.dropdown > .menu {
   border-top-width: 1px !important;
-  border-radius: 0.28571429rem !important;
+  border-radius: 4px !important;
 }
 .ui.form .ui.icon.input > .icon {
   width: 1em;
