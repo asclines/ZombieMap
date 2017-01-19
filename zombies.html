@@ -9,7 +9,7 @@
     <link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <!-- SEMANTIC -->
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <script src="semantic/dist/semantic.min.js"></script>
@@ -40,8 +40,16 @@
             $('#showInstructions').click(function() {
                 $('#instructionsModal').modal('show');
             });
+            $('.cookie.nag')
+                .nag('show');
         });
     </script>
+    <div class="ui inline cookie nag">
+        <span class="title">
+    First time here? Read the instructions first!
+  </span>
+        <i class="close icon"></i>
+    </div>
     <div class="ui small modal" id="instructionsModal">
         <div class="header" style="width:auto">Instructions</div>
         <div class="content" style="width:auto">
