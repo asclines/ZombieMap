@@ -18,14 +18,15 @@ function getInitialData(cb) {
     var newPercentage = JSON.parse(JSON.stringify(initPercentage));
     var newZombiePop = JSON.parse(JSON.stringify(initPercentage));
 
+
     data = {
       "percentage": {
         "0": newPercentage["0"]
       },
-      "humanpop":{
+      "humanpop": {
         "0": initPop["0"]
       },
-      "zombiepop":{
+      "zombiepop": {
         "0": newZombiePop["0"]
       }
     }
