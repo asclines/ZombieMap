@@ -1,126 +1,141 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Zombie Map</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>Zombie Map</title>
 
-    <!--  JQUERY -->
-    <link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <!-- SEMANTIC -->
-    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-    <script src="semantic/dist/semantic.min.js"></script>
+        <!--  JQUERY -->
+        <link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <!-- SEMANTIC -->
+        <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+        <script src="semantic/dist/semantic.min.js"></script>
 
-    <!-- JS Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.min.js"></script>
+        <!-- JS Libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.min.js"></script>
 
 
 
-    <!--  ZOMBIES-->
-    <link rel="stylesheet" media="all" href="css/zombie.css" />
-    <script src="js/zombie-map.js"></script>
-    <script src="js/zombie-controls.js"></script>
-    <script src="js/zombie-data.js"></script>
-    <script src="js/zombie-math.js"></script>
+        <!--  ZOMBIES-->
+        <link rel="stylesheet" media="all" href="css/zombie.css" />
+        <script src="js/zombie-map.js"></script>
+        <script src="js/zombie-controls.js"></script>
+        <script src="js/zombie-data.js"></script>
+        <script src="js/zombie-math.js"></script>
 
-    <!--  ASSETS-->
-    <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
-    <script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
-    <script src="js/assets/jquery-jvectormap-us-aea.js"></script>
-    <script src="js/assets/big.js"></script>
+        <!--  ASSETS-->
+        <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
+        <script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
+        <script src="js/assets/jquery-jvectormap-us-aea.js"></script>
+        <script src="js/assets/big.js"></script>
 
-</head>
+    </head>
 
-<body>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#zombie-instructions").load("html/zombies-instructions.html")
-            $('#showInstructions').click(function() {
-                $('#instructionsModal').modal('show');
+    <body>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#zombie-instructions").load("html/zombies-instructions.html")
+                $('#showInstructions').click(function() {
+                    $('#instructionsModal').modal('show');
+                });
+                $("#showSettings").click(function(){
+                  $('.ui.sidebar')
+                      .sidebar('toggle');
+                });
+                $('.cookie.nag')
+                    .nag('show');
             });
-            $('.cookie.nag')
-                .nag('show');
-        });
-    </script>
-    <div class="ui inline cookie nag">
-        <span class="title">
-    First time here? Read the instructions first!
-  </span>
-        <i class="close icon"></i>
-    </div>
-    <div id="zombie-instructions"></div>
-
-    <div class="zombie">
-        <button id="showInstructions" class="mini ui basic button">
+        </script>
+        <div class="ui inline cookie nag">
+            <span class="title">
+         First time here? Read the instructions first!
+        </span>
+            <i class="close icon"></i>
+        </div>
+        <div id="zombie-instructions"></div>
+        <div class="ui sidebar inverted vertical menu">
+            <a class="item">
+           1
+          </a>
+            <a class="item">
+            2
+          </a>
+            <a class="item">
+            3
+          </a>
+        </div>
+        <div class="zombie">
+            <button id="showSettings" class="mini ui basic button">
+        Settings
+        </button>
+            <button id="showInstructions" class="mini ui basic button">
           Instructions
         </button>
 
-        <div class="ui visible sidebar inverted vertical">
-        </div>
-        <div class="pusher">
 
 
             <div id="map" class="zombiemap"></div>
-        </div>
-        <div id="tabs-main" class="ui top attached tabular menu ">
-            <a class="active item" data-tab="params">Set Parameters</a>
-            <a class="item" data-tab="map">Set Map</a>
-            <a class="item" data-tab="calc">Calculate</a>
-        </div>
-        <div id="status-setparams" class="ui bottom attached active tab segment" data-tab="params" style="width:auto">
-            <div id="form-params" class="ui form">
-                <div class="inline fields">
-                    <div class="field">
-                        <div class="ui basic label" data-tooltip="Percentage of humans that become zombies each time." data-position="top left">
-                            Bite Spread
+
+
+            <div id="tabs-main" class="ui top attached tabular menu ">
+                <a class="active item" data-tab="params">Set Parameters</a>
+                <a class="item" data-tab="map">Set Map</a>
+                <a class="item" data-tab="calc">Calculate</a>
+            </div>
+            <div id="status-setparams" class="ui bottom attached active tab segment" data-tab="params" style="width:auto">
+                <div id="form-params" class="ui form">
+                    <div class="inline fields">
+                        <div class="field">
+                            <div class="ui basic label" data-tooltip="Percentage of humans that become zombies each time." data-position="top left">
+                                Bite Spread
+                            </div>
+                            <input type="number" id="biteChance" name="biteChance" min="1" max="100" value="25">
                         </div>
-                        <input type="number" id="biteChance" name="biteChance" min="1" max="100" value="25">
+                        <div class="field">
+                            <div class="ui basic label" data-tooltip="How many humans are born each time in percentage to current population." data-position="top left">
+                                Population Growth
+                            </div>
+                            <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
+                        </div>
                     </div>
-                    <div class="field">
-                        <div class="ui basic label" data-tooltip="How many humans are born each time in percentage to current population." data-position="top left">
-                            Population Growth
+                </div>
+
+            </div>
+            <div id="status-setmap" class="ui bottom attached tab segment" data-tab="map" style="width:auto">
+                <p>
+                    Click on the states above to increase the initial zombie population.
+                </p>
+                <div id="form-map" class="ui form">
+                    <div class="fields">
+                        <div id="field-max-time" class="field">
+                            <div class="ui basic label" data-tooltip="How many iterations you want. (0 < t < 100)" data-position="top left">
+                                Max Time
+                            </div>
+                            <input type="number" id="timeMax" name="timeMax" min="1" max="100" value="4">
                         </div>
-                        <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
+
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div id="status-setmap" class="ui bottom attached tab segment" data-tab="map" style="width:auto">
-            <p>
-                Click on the states above to increase the initial zombie population.
-            </p>
-            <div id="form-map" class="ui form">
-                <div class="fields">
-                    <div id="field-max-time" class="field">
-                        <div class="ui basic label" data-tooltip="How many iterations you want. (0 < t < 100)" data-position="top left">
-                            Max Time
+            <div id="status-calc" class="ui bottom attached tab segment" data-tab="calc" style="width:auto">
+                <div id="form-calc" class="ui form">
+                    <button id="calculateSubmit" class="ui button">Launch</button>
+                    <div id="div-runtime" style="margin: 10px; display: none">
+                        <button id="calculateReset" class="ui button">Reset</button>
+                        <div class="ui label">
+                            Current Time
+                            <div class="detail"><span id="curTimeValue">0</span></div>
                         </div>
-                        <input type="number" id="timeMax" name="timeMax" min="1" max="100" value="4">
-                    </div>
+                        <div id="slider" style="width: 280px; margin: 10px"></div>
 
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="status-calc" class="ui bottom attached tab segment" data-tab="calc" style="width:auto">
-            <div id="form-calc" class="ui form">
-                <button id="calculateSubmit" class="ui button">Launch</button>
-                <div id="div-runtime" style="margin: 10px; display: none">
-                    <button id="calculateReset" class="ui button">Reset</button>
-                    <div class="ui label">
-                        Current Time
-                        <div class="detail"><span id="curTimeValue">0</span></div>
-                    </div>
-                    <div id="slider" style="width: 280px; margin: 10px"></div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-</body>
+    </body>
 
 </html>
