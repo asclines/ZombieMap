@@ -1,0 +1,41 @@
+<p data-tooltip="Just like that!">
+  Confused?
+  <br />
+  Hover over text for more info.
+</p>
+<h1 class="ui header" data-tooltip="Set your parameters.">Step 1</h1>
+
+<div id="form-params" class="ui form">
+    <div class="inline field">
+        <div class="ui basic label" data-tooltip="Percentage of humans that become zombies each time." data-position="top left">
+            Bite Spread
+        </div>
+        <input type="number" id="biteChance" name="biteChance" min="1" max="100" value="25">
+    </div>
+    <div class="inline field">
+        <div class="ui basic label" data-tooltip="How many humans are born each time in percentage to current population." data-position="top left">
+            Population Growth
+        </div>
+        <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
+    </div>
+</div>
+<h2>Step 2</h2>
+<p>
+    Set your time.
+</p>
+
+<div id="field-max-time" class="inline field">
+    <div class="ui basic label" data-tooltip="How many iterations you want. (0 < t < 100)" data-position="top left">
+        Max Time
+    </div>
+    <input type="number" id="timeMax" name="timeMax" min="1" max="100" value="4">
+</div>
+
+<h2>Step 3</h2>
+<p>
+    Select states for initial zombies
+</p>
+
+<button id="calculateSubmit" class="ui button">Launch</button>
+
+</div>
