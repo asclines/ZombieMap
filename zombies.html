@@ -37,6 +37,7 @@
 <body>
     <script type="text/javascript">
         $(document).ready(function() {
+          $("#zombie-instructions").load("html/zombies-instructions.html")
             $('#showInstructions').click(function() {
                 $('#instructionsModal').modal('show');
             });
@@ -50,34 +51,20 @@
   </span>
         <i class="close icon"></i>
     </div>
-    <div class="ui small modal" id="instructionsModal">
-        <div class="header" style="width:auto">Instructions</div>
-        <div class="content" style="width:auto">
-            <ol class="ui list">
-                <li>Set the initial parameters you would like</li>
-                <li>Set map
-                    <ol>
-                        <li>Click on the states to increase number of initial zombies</li>
-                        <li>Set time parameter</li>
-                    </ol>
-                </li>
-                <li>Calculate
-                    <ol>
-                        <li>Click on the launch button to run calculations.</li>
-                        <li>Use the slider to go backwards and fowards in time to see how your initial parameters played out.</li>
-                        <li>Hit the reset button if you would like to change anything.</li>
-                    </ol>
-                </li>
-            </ol>
-        </div>
-    </div>
+    <div id="zombie-instructions"></div>
 
     <div class="zombie">
         <button id="showInstructions" class="mini ui basic button">
           Instructions
         </button>
 
-        <div id="map" class="zombiemap"></div>
+        <div class="ui visible sidebar inverted vertical">
+        </div>
+        <div class="pusher">
+
+
+            <div id="map" class="zombiemap"></div>
+        </div>
         <div id="tabs-main" class="ui top attached tabular menu ">
             <a class="active item" data-tab="params">Set Parameters</a>
             <a class="item" data-tab="map">Set Map</a>
