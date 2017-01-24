@@ -1,3 +1,6 @@
+function getZombieMathModelHtml(){
+  return "html/mathmodels/zombie-model-sample.html";
+}
 function zombieMathModel(params, population, neighbors) {
   var newZombiePop = new Big(0);
   if(population.humans.gt(0)){
