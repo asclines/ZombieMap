@@ -27,10 +27,9 @@ zombieSim.math = {
         var totalPop = humanPop.plus(zombiePop);
         var realPercentage = zombiePop.div(totalPop);
 
-        //var realPercentage = calcZombiePercentage(humanPop, zombiePop);
-        zombieMapData.data.percentage["0"][state] = bigOut(realPercentage.times(100));
-        zombieMapData.data.zombiepop["0"][state] = bigOut(zombiePop);
-        zombieMapData.data.humanpop["0"][state] = bigOut(humanPop);
+        zombieMapData.data.percentage["0"][state] = zombieSim.utils.bigOut(realPercentage.times(100));
+        zombieMapData.data.zombiepop["0"][state] = zombieSim.utils.bigOut(zombiePop);
+        zombieMapData.data.humanpop["0"][state] = zombieSim.utils.bigOut(humanPop);
       }
 
       //Then do the rest
@@ -73,18 +72,14 @@ zombieSim.math = {
   }
 }
 
+
+zombieSim.utils = zombieSim.utils || {};
+
 //Helper method to get the output from Big number consistent
-function bigOut(number) {
+zombieSim.utils.bigOut = function(number){
   if(number.lt(0)){
     number = number.times(0)
   }
   var result = number.toFixed(3);
   return result;
-}
-
-function calcZombiePercentage(humanPop, zombiePop) {
-  if(zombiePop == 0) return 0;
-  else if(humanPop == 0) return 100;
-  else return(zombiePop) / (humanPop + zombiePop) * 100;
-
 }

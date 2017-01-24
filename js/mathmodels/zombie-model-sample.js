@@ -31,9 +31,9 @@ zombieSim.model = {
     var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
 
     return {
-      zombies: bigOut(totalZombiePop),
-      humans: bigOut(totalHumanPop),
-      percentage: bigOut(zombieTakeoverPercentage.times(100))
+      zombies: zombieSim.utils.bigOut(totalZombiePop),
+      humans: zombieSim.utils.bigOut(totalHumanPop),
+      percentage: zombieSim.utils.bigOut(zombieTakeoverPercentage.times(100))
     };
   }
 };
