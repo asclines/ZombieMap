@@ -1,11 +1,14 @@
-/**
-File: zombie-map.js
+//This belongs in every file that adds to zombieSim namespace to prevent
+//overwrting.
+var zombieSim = zombieSim || {};
 
-Manages the map object.
-**/
+zombieSim.inProgress = false; //Various parts of the elements in this site depend on this fact.
+
+zombieSim.map = {
+
+}
 
 var zombieMapData = {};
-var zombieSimInProgress = false; //Various parts of the elements in this site dsepending on this fact.
 
 
 function setupMap() {
@@ -28,7 +31,7 @@ function setupMap() {
     },
     onRegionTipShow: function(event, label, code) {
 
-      if(zombieSimInProgress) {
+      if(zombieSim.inProgress) {
         label.html(
           '<b>' + label.html() + '</b></br>' +
           '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '% </b></br>' +
@@ -46,7 +49,7 @@ function setupMap() {
     },
     onRegionClick: function(event, code) {
       //Only increment if the "Set Map" tab is loaded
-      if(!zombieSimInProgress){
+      if(!zombieSim.inProgress){
         zombieMapData.data.percentage["0"][code]++;
       }
     }

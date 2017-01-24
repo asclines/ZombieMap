@@ -34,7 +34,7 @@ zombieSim.controls = {
 var zombieControls = {
   submit: function() {
     $('#calculateSubmit').click(function() {
-      zombieSimInProgress = true;
+      zombieSim.inProgress = true;
       document.getElementById('calculateSubmit').style.display = 'none'
 
       $("#map").addClass('loading')
@@ -83,7 +83,7 @@ var zombieControls = {
 
   reset: function() {
     $('#calculateReset').click(function() {
-      zombieSimInProgress = false;
+      zombieSim.inProgress = false;
       zombieSim.controls.initData(function(err) {
         document.getElementById('calculateSubmit').style.display = 'block'
 
