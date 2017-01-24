@@ -1,17 +1,19 @@
 body {
-    background-color: #505050;
+  height: auto;
+
 }
 
 .zombie {
-    margin: 10px;
+    padding: 10px;
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
+    background-color: #505050;
 }
 
 .zombiemap {
     overflow: hidden;
-    max-width: 1000px;
+    width: 70vw;
     height: 70vh;
     flex-grow: 1;
 }
