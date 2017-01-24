@@ -15,7 +15,6 @@ zombieSim.data = {
       var newPercentage = JSON.parse(JSON.stringify(initPercentage));
       var newZombiePop = JSON.parse(JSON.stringify(initPercentage));
 
-
       data = {
         "percentage": {
           "0": newPercentage["0"]
@@ -28,17 +27,17 @@ zombieSim.data = {
         }
       }
       cb(data);
-
     });
-  }
-}
+  },
 
-/**
- Callback returns an object where the key is the ISO code of a state and the
- value is a list of ISO codes of the neighboring states.
-**/
-function getStateNeighbors(cb) {
-  $.getJSON('data/states-neighbors.json', function(data) {
-    cb(data);
-  })
+  /**
+   Callback returns an object where the key is the ISO code of a state and the
+   value is a list of ISO codes of the neighboring states.
+  **/
+  getStateNeighbors: function(cb){
+    $.getJSON('data/states-neighbors.json', function(data) {
+      cb(data);
+    })
+  }
+
 }

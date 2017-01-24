@@ -9,7 +9,7 @@ zombieSim.math = {
   **/
   calcApocalypse: function(cb){
     new Promise(function(resolve, reject) {
-      getStateNeighbors(function(stateNeighbors) {
+      zombieSim.data.getStateNeighbors(function(stateNeighbors) {
         var stateNeighbors = stateNeighbors;
         if(stateNeighbors != null) {
           resolve(stateNeighbors);
