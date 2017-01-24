@@ -33,7 +33,7 @@ zombieSim.math = {
       }
 
       //Then do the rest
-      for(var i = 0; i < zombieMapData.maxIterations; i++) {
+      for(var i = 0; i < zombieSim.maxTime; i++) {
         zombieSim.map.data.percentage[i + 1] = {};
         zombieSim.map.data.zombiepop[i + 1] = {};
         zombieSim.map.data.humanpop[i + 1] = {};

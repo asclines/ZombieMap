@@ -53,5 +53,3 @@ zombieSim.map = {
   }
 
 }
-
-var zombieMapData = {};
