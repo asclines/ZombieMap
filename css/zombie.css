@@ -4,7 +4,7 @@ body {
 }
 
 .zombie {
-    margin: 10px;
+    padding: 10px;
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
