@@ -4,7 +4,7 @@ $(document).ready(function() {
     initData(function(err) {
       if(err == null) {
         setupMap();
-        setupControls();
+        zombieSim.controls.setup();
       } else {
         console.log(err);
       }

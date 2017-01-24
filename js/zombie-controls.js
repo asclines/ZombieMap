@@ -1,12 +1,12 @@
-/**
-File: zombie-controls.js
+//This belongs in every file that adds to zombieSim namespace to prevent
+//overwrting.
+var zombieSim = zombieSim || {};
 
-Manages all the controls and user input for the apocalypse.
-**/
-
-function setupControls() {
-  zombieControls.submit();
-  zombieControls.reset();
+zombieSim.controls = {
+  setup: function(){
+    zombieControls.submit();
+    zombieControls.reset();
+  }
 }
 
 function initData(cb) {
