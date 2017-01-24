@@ -14,7 +14,7 @@ zombieSim.map = {
         regions: [{
           scale: ['#99ff99', '#990000'],
           attribute: 'fill',
-          values: zombieSim.map.data.percentage[zombieSim.currentTime],
+          values: this.data.percentage[zombieSim.currentTime],
           min: 0,
           max: 100,
           legend: {
