@@ -3,6 +3,7 @@
 var zombieSim = zombieSim || {};
 
 zombieSim.inProgress = false; //Various parts of the elements in this site depend on this fact.
+
 zombieSim.map = {
   setup: function(){
     zombieMapData.val = 0;
@@ -54,8 +55,3 @@ zombieSim.map = {
 }
 
 var zombieMapData = {};
-
-
-$(function() {
-  $('.menu .item').tab();
-});
