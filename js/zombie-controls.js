@@ -100,7 +100,7 @@ var zombieControls = {
       }
     });
 
-    document.getElementById('growthRate').innerHTML = zombieControlsData.biteSpread;
+    document.getElementById('growthRate').innerHTML = zombieControlsData.growthRate;
     $("#slider-growth").slider({
       value: zombieControlsData.growthRate,
       min: 0,
