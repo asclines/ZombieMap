@@ -12,6 +12,7 @@ function setupMap() {
   zombieMapData.val = 0;
   $('#map').vectorMap({
     map: 'us_aea',
+    backgroundColor: "transparent",
     series: {
       regions: [{
         scale: ['#99ff99', '#990000'],
@@ -57,14 +58,4 @@ function setupMap() {
 
 $(function() {
   $('.menu .item').tab();
-  initData(function(err) {
-    if(err == null) {
-      setupMap();
-      setupControls();
-    } else {
-      console.log(err);
-    }
-
-  });
-
 });

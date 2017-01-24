@@ -9,33 +9,51 @@
 
 <div class="ui inverted form">
     <div class="inline field">
-        <label data-tooltip="Percentage of humans that become zombies each time." data-position="top left">
+      <div class="ui black label"
+        data-tooltip="Percentage of humans that become zombies each time."
+        data-position="top left">
           Bite Spread
-        </label>
-        <input type="number" id="biteChance" name="biteChance" min="1" max="100" value="25">
+          <div class="inverted detail">
+            <span id="biteChance">0</span>
+          </div>
+      </div>
+        <div id="slider-spread" class="zombiesettingsslider"></div>
     </div>
 
     <div class="inline field">
-        <label data-tooltip="How many humans are born each time in percentage to current population." data-position="top left">
-            Growth
-        </label>
-        <input type="number" id="growthRate" name="growthRate" min="0" max="100" value="1">
+      <div class="ui black label "
+        data-tooltip="How many humans are born each time in percentage to current population."
+        data-position="top left">
+          Growth
+          <div class="inverted detail">
+            <span id="growthRate">0</span>
+          </div>
+      </div>
+        <div id="slider-growth" class="zombiesettingsslider"></div>
     </div>
+
 </div>
 
 
-<h2 class="ui inverted header" data-tooltip="How long should the simulation go?" data-position="top left">
-  Step 2
+<h2 class="ui inverted header"
+  data-tooltip="How long should the simulation go? Note: The higher this number is, the longer it takes to calculate."
+  data-position="top left">
+    Step 2
 </h2>
 
 <div class="ui inverted form">
-
-    <div class="inline field">
-        <label data-tooltip="How many iterations you want. (0 < t < 100)" data-position="top left">
-        Max Time
-    </label>
-        <input type="number" id="timeMax" name="timeMax" min="1" max="100" value="4">
+  <div class="inline field">
+    <div class="ui black label "
+      data-tooltip="How many iterations you want. Note: The higher this number is, the longer it takes to calculate."
+      data-position="top left">
+          Max Time
     </div>
+          <input type="number" id="timeMax" name="timeMax" min="1" max="1000" value="4">
+      </div>
+  </div>
+
+
+
 </div>
 
 <h2 class="ui inverted header" data-tooltip="Click on the states to increase the initial zombie population." data-position="top left">
