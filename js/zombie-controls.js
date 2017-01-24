@@ -10,7 +10,7 @@ zombieSim.controls = {
 
   initData: function(cb){
     new Promise(function(resolve, reject) {
-      getInitialData(function(data) {
+      zombieSim.data.getInitialData(function(data) {
         if(data != null) {
           resolve(data)
         } else {
