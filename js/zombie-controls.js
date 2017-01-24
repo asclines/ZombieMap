@@ -18,7 +18,7 @@ zombieSim.controls = {
         }
       })
     }).then(function(data) {
-      zombieMapData.data = data;
+      zombieSim.map.data = data;
       zombieControls.settings();
       cb(null);
     }).catch(function(err) {
@@ -52,7 +52,7 @@ var zombieControls = {
           }
         })
       }).then(function(results) {
-        zombieMapData.data = results;
+        zombieSim.map.data = results;
         document.getElementById('div-runtime').style.display = 'block'
         zombieControls.simulatiorSlider();
 
@@ -71,7 +71,7 @@ var zombieControls = {
       slide: function(event, ui) {
         zombieSim.currentTime = ui.value;
         document.getElementById('curTimeValue').innerHTML = zombieSim.currentTime;
-        zombieSim.map.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieSim.currentTime]);
+        zombieSim.map.mapObject.series.regions[0].setValues(zombieSim.map.data.percentage[zombieSim.currentTime]);
       }
     });
   },
@@ -91,7 +91,7 @@ var zombieControls = {
           zombieSim.currentTime = 0;
           document.getElementById('div-runtime').style.display = 'none'
           document.getElementById('curTimeValue').innerHTML = zombieSim.currentTime;
-          zombieSim.map.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieSim.currentTime]);
+          zombieSim.map.mapObject.series.regions[0].setValues(zombieSim.map.data.percentage[zombieSim.currentTime]);
           setupControls()
         } else {
           console.log(err);

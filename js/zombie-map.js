@@ -14,7 +14,7 @@ zombieSim.map = {
         regions: [{
           scale: ['#99ff99', '#990000'],
           attribute: 'fill',
-          values: zombieMapData.data.percentage[zombieSim.currentTime],
+          values: zombieSim.map.data.percentage[zombieSim.currentTime],
           min: 0,
           max: 100,
           legend: {
@@ -28,23 +28,23 @@ zombieSim.map = {
         if(zombieSim.inProgress) {
           label.html(
             '<b>' + label.html() + '</b></br>' +
-            '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieSim.currentTime][code] + '% </b></br>' +
-            '<b>Human Population: </b>' + Number(zombieMapData.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
-            '<b>Zombie Population: </b>' + Number(zombieMapData.data.zombiepop[zombieSim.currentTime][code]).toLocaleString()
+            '<b>Zombie takeover: </b>' + zombieSim.map.data.percentage[zombieSim.currentTime][code] + '% </b></br>' +
+            '<b>Human Population: </b>' + Number(zombieSim.map.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
+            '<b>Zombie Population: </b>' + Number(zombieSim.map.data.zombiepop[zombieSim.currentTime][code]).toLocaleString()
 
           );
         } else {
           label.html(
             '<b>' + label.html() + '</b></br>' +
-            '<b>Population: </b>' + Number(zombieMapData.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
-            '<b>Initial Zombies </b>' + zombieMapData.data.percentage[zombieSim.currentTime][code] + '%'
+            '<b>Population: </b>' + Number(zombieSim.map.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
+            '<b>Initial Zombies </b>' + zombieSim.map.data.percentage[zombieSim.currentTime][code] + '%'
           );
         }
       },
       onRegionClick: function(event, code) {
         //Only increment if the "Set Map" tab is loaded
         if(!zombieSim.inProgress){
-          zombieMapData.data.percentage["0"][code]++;
+          zombieSim.map.data.percentage["0"][code]++;
         }
       }
     });
