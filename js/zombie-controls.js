@@ -64,14 +64,14 @@ var zombieControls = {
 
   simulatiorSlider: function(){
     $("#slider-simulator").slider({
-      value: zombieMapData.val,
+      value: zombieSim.currentTime,
       min: 0,
       max: document.getElementById('timeMax').value,
       step: 1,
       slide: function(event, ui) {
-        zombieMapData.val = ui.value;
-        document.getElementById('curTimeValue').innerHTML = zombieMapData.val;
-        zombieSim.map.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieMapData.val]);
+        zombieSim.currentTime = ui.value;
+        document.getElementById('curTimeValue').innerHTML = zombieSim.currentTime;
+        zombieSim.map.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieSim.currentTime]);
       }
     });
   },
@@ -88,10 +88,10 @@ var zombieControls = {
         document.getElementById('calculateSubmit').style.display = 'block'
 
         if(err == null) {
-          zombieMapData.val = 0;
+          zombieSim.currentTime = 0;
           document.getElementById('div-runtime').style.display = 'none'
-          document.getElementById('curTimeValue').innerHTML = zombieMapData.val;
-          zombieSim.map.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieMapData.val]);
+          document.getElementById('curTimeValue').innerHTML = zombieSim.currentTime;
+          zombieSim.map.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieSim.currentTime]);
           setupControls()
         } else {
           console.log(err);

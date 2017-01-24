@@ -6,7 +6,7 @@ zombieSim.inProgress = false; //Various parts of the elements in this site depen
 
 zombieSim.map = {
   setup: function(){
-    zombieMapData.val = 0;
+    zombieSim.currentTime = 0;
     $('#map').vectorMap({
       map: 'us_aea',
       backgroundColor: "transparent",
@@ -14,7 +14,7 @@ zombieSim.map = {
         regions: [{
           scale: ['#99ff99', '#990000'],
           attribute: 'fill',
-          values: zombieMapData.data.percentage[zombieMapData.val],
+          values: zombieMapData.data.percentage[zombieSim.currentTime],
           min: 0,
           max: 100,
           legend: {
@@ -28,16 +28,16 @@ zombieSim.map = {
         if(zombieSim.inProgress) {
           label.html(
             '<b>' + label.html() + '</b></br>' +
-            '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '% </b></br>' +
-            '<b>Human Population: </b>' + Number(zombieMapData.data.humanpop[zombieMapData.val][code]).toLocaleString() + '</b></br>' +
-            '<b>Zombie Population: </b>' + Number(zombieMapData.data.zombiepop[zombieMapData.val][code]).toLocaleString()
+            '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieSim.currentTime][code] + '% </b></br>' +
+            '<b>Human Population: </b>' + Number(zombieMapData.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
+            '<b>Zombie Population: </b>' + Number(zombieMapData.data.zombiepop[zombieSim.currentTime][code]).toLocaleString()
 
           );
         } else {
           label.html(
             '<b>' + label.html() + '</b></br>' +
-            '<b>Population: </b>' + Number(zombieMapData.data.humanpop[zombieMapData.val][code]).toLocaleString() + '</b></br>' +
-            '<b>Initial Zombies </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '%'
+            '<b>Population: </b>' + Number(zombieMapData.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
+            '<b>Initial Zombies </b>' + zombieMapData.data.percentage[zombieSim.currentTime][code] + '%'
           );
         }
       },
