@@ -57,7 +57,7 @@ var zombieControls = {
       }).then(function(results) {
         zombieMapData.data = results;
         document.getElementById('div-runtime').style.display = 'block'
-        zombieControls.slider();
+        zombieControls.simulatiorSlider();
 
       }, function(err) {
         console.log(err);
@@ -65,7 +65,7 @@ var zombieControls = {
     });
   },
 
-  slider: function() {
+  simulatiorSlider: function() {
     $("#slider").slider({
       value: zombieMapData.val,
       min: 0,
