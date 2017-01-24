@@ -3,6 +3,7 @@
 var zombieSim = zombieSim || {};
 
 zombieSim.controls = {
+
   setup: function(){
     zombieControls.submit();
     zombieControls.reset();
@@ -41,7 +42,7 @@ var zombieControls = {
 
 
       new Promise(function(resolve, reject) {
-        zombieSim.maxTime = zombieSim.model.params.maxTime;
+        zombieSim.maxTime = document.getElementById('timeMax').value;
         zombieSim.math.calcApocalypse(function(results) {
           // console.log(results);
           $("#map").removeClass('loading')
@@ -77,7 +78,7 @@ var zombieControls = {
   },
 
   settings: function() {
-    document.getElementById('timeMax').value = zombieSim.model.params.maxTime;
+    document.getElementById('timeMax').value = 42; //Default setting
     zombieSim.model.setup();
   },
 

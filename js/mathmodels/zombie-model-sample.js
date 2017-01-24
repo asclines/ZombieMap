@@ -5,8 +5,7 @@ var zombieSim = zombieSim || {};
 zombieSim.model = {
   params: {
     biteChance: .20,
-    growthRate: .05,
-    maxTime: 42
+    growthRate: .05
   },
 
   paramSettingsHtmlFile: "html/mathmodels/zombie-model-sample.html",
