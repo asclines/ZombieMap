@@ -42,7 +42,7 @@ var zombieControls = {
 
 
       new Promise(function(resolve, reject) {
-        zombieMapData.maxIterations = zombieMathModelParams.maxTime;
+        zombieMapData.maxIterations = zombieSim.model.params.maxTime;
         calcApocalypse(function(results) {
           // console.log(results);
           $("#map").removeClass('loading')
@@ -78,30 +78,30 @@ var zombieControls = {
   },
 
   settings: function() {
-    document.getElementById('timeMax').value = zombieMathModelParams.maxTime;
+    document.getElementById('timeMax').value = zombieSim.model.params.maxTime;
 
 
-    document.getElementById('biteChance').innerHTML = zombieMathModelParams.biteChance;
+    document.getElementById('biteChance').innerHTML = zombieSim.model.params.biteChance;
     $("#slider-spread").slider({
-      value: zombieMathModelParams.biteChance,
+      value: zombieSim.model.params.biteChance,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieMathModelParams.biteChance = ui.value;
-        document.getElementById('biteChance').innerHTML = zombieMathModelParams.biteChance;
+        zombieSim.model.params.biteChance = ui.value;
+        document.getElementById('biteChance').innerHTML = zombieSim.model.params.biteChance;
       }
     });
 
-    document.getElementById('growthRate').innerHTML = zombieMathModelParams.growthRate;
+    document.getElementById('growthRate').innerHTML = zombieSim.model.params.growthRate;
     $("#slider-growth").slider({
-      value: zombieMathModelParams.growthRate,
+      value: zombieSim.model.params.growthRate,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieMathModelParams.growthRate = ui.value;
-        document.getElementById('growthRate').innerHTML = zombieMathModelParams.growthRate;
+        zombieSim.model.params.growthRate = ui.value;
+        document.getElementById('growthRate').innerHTML = zombieSim.model.params.growthRate;
       }
     });
 

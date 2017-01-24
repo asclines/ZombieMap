@@ -72,7 +72,7 @@ function calcNewZombiesInState(stateIndex, timeIndex, neighbors){
     neighborPops.push(neighbor);
   }
 
-  var results = zombieMathModel(population, neighborPops);
+  var results = zombieSim.model.nextIteration(population, neighborPops);
   zombieMapData.data.zombiepop[timeIndex + 1][stateIndex] = results.zombies;
   zombieMapData.data.humanpop[timeIndex + 1][stateIndex] = results.humans;
   zombieMapData.data.percentage[timeIndex + 1][stateIndex] = results.percentage;
