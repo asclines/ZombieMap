@@ -49,7 +49,7 @@ zombieSim.map = {
       }
     });
 
-    zombieMapData.mapObject = $('#map').vectorMap('get', 'mapObject');
+    this.mapObject = $('#map').vectorMap('get', 'mapObject');
   }
 
 }
