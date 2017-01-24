@@ -1,62 +1,59 @@
-/**
-File: zombie-math.js
+//This belongs in every file that adds to zombieSim namespace to prevent
+//overwrting.
+var zombieSim = zombieSim || {};
 
-Handles calculating the actual apocalypse
-**/
+zombieSim.math = {
+  /**
+    Callback returns an object of time intervals and the status of each state
+    at each time interval.
+  **/
+  calcApocalypse: function(cb){
+    new Promise(function(resolve, reject) {
+      getStateNeighbors(function(stateNeighbors) {
+        var stateNeighbors = stateNeighbors;
+        if(stateNeighbors != null) {
+          resolve(stateNeighbors);
+        } else {
+          reject(Error("Could not load state neighbors data."));
+        }
+      })
+    }).then(function(stateNeighbors) {
+      //First setup initial zombiepop using user inputted percentages
+      for(var state in zombieMapData.data.percentage["0"]) {
+        var humanPop = new Big(zombieMapData.data.humanpop["0"][state]);
+        var zombiePop = new Big(zombieMapData.data.percentage["0"][state]).div(100).times(humanPop); // / 100) * humanPop;
+        humanPop = humanPop.minus(zombiePop);
+        //humanPop -= zombiePop;
+        var totalPop = humanPop.plus(zombiePop);
+        var realPercentage = zombiePop.div(totalPop);
 
-/**
-  Callback returns an object of time intervals and the status of each state
-  at each time interval.
-**/
-function calcApocalypse(cb) {
-  new Promise(function(resolve, reject) {
-    getStateNeighbors(function(stateNeighbors) {
-      var stateNeighbors = stateNeighbors;
-      if(stateNeighbors != null) {
-        resolve(stateNeighbors);
-      } else {
-        reject(Error("Could not load state neighbors data."));
+        //var realPercentage = calcZombiePercentage(humanPop, zombiePop);
+        zombieMapData.data.percentage["0"][state] = bigOut(realPercentage.times(100));
+        zombieMapData.data.zombiepop["0"][state] = bigOut(zombiePop);
+        zombieMapData.data.humanpop["0"][state] = bigOut(humanPop);
       }
+
+      //Then do the rest
+      for(var i = 0; i < zombieMapData.maxIterations; i++) {
+        zombieMapData.data.percentage[i + 1] = {};
+        zombieMapData.data.zombiepop[i + 1] = {};
+        zombieMapData.data.humanpop[i + 1] = {};
+
+        for(var state in zombieMapData.data.percentage[i]) {
+          calcNewZombiesInState(state, i, stateNeighbors[state]);
+        }
+      }
+
+      cb(zombieMapData.data);
+
+    }, function(err) {
+      console.log(err);
     })
-
-  }).then(function(stateNeighbors) {
-    //First setup initial zombiepop using user inputted percentages
-    for(var state in zombieMapData.data.percentage["0"]) {
-      var humanPop = new Big(zombieMapData.data.humanpop["0"][state]);
-      var zombiePop = new Big(zombieMapData.data.percentage["0"][state]).div(100).times(humanPop); // / 100) * humanPop;
-      humanPop = humanPop.minus(zombiePop);
-      //humanPop -= zombiePop;
-      var totalPop = humanPop.plus(zombiePop);
-      var realPercentage = zombiePop.div(totalPop);
-
-
-      //var realPercentage = calcZombiePercentage(humanPop, zombiePop);
-      zombieMapData.data.percentage["0"][state] = bigOut(realPercentage.times(100));
-      zombieMapData.data.zombiepop["0"][state] = bigOut(zombiePop);
-      zombieMapData.data.humanpop["0"][state] = bigOut(humanPop);
-
-    }
-
-
-
-
-    //Then do the rest
-    for(var i = 0; i < zombieMapData.maxIterations; i++) {
-      zombieMapData.data.percentage[i + 1] = {};
-      zombieMapData.data.zombiepop[i + 1] = {};
-      zombieMapData.data.humanpop[i + 1] = {};
-
-      for(var state in zombieMapData.data.percentage[i]) {
-        calcNewZombiesInState(state, i, stateNeighbors[state]);
-      }
-    }
-
-    cb(zombieMapData.data);
-
-  }, function(err) {
-    console.log(err);
-  })
+  }
 }
+
+
+
 function calcNewZombiesInState(stateIndex, timeIndex, neighbors){
   var population = {
     humans: new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]),

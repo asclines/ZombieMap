@@ -43,7 +43,7 @@ var zombieControls = {
 
       new Promise(function(resolve, reject) {
         zombieMapData.maxIterations = zombieSim.model.params.maxTime;
-        calcApocalypse(function(results) {
+        zombieSim.math.calcApocalypse(function(results) {
           // console.log(results);
           $("#map").removeClass('loading')
           if(results == null) {
