@@ -57,50 +57,31 @@ function calcApocalypse(cb) {
     console.log(err);
   })
 }
-
-
-function calcNewZombiesInState(stateIndex, timeIndex, neighbors) {
-  var zombiePop = new Big(zombieMapData.data.zombiepop[timeIndex][stateIndex]);
-  var humanPop = new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]);
-  var biteChance = zombieMapData.biteChance / 100;
-  var growthRate = zombieMapData.growthRate / 100;
-
-  var newZombiePop = new Big(0);
-  if(humanPop.gt(0)){
-    newZombiePop = zombiePop.times(biteChance);
-  }
-
-  for(var neighborIndex in neighbors) {
+function calcNewZombiesInState(stateIndex, timeIndex, neighbors){
+  var params = {
+    biteChance: (zombieMapData.biteChance / 100),
+    growthRate: (zombieMapData.growthRate / 100)
+  };
+  var population = {
+    humans: new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]),
+    zombies: new Big(zombieMapData.data.zombiepop[timeIndex][stateIndex])
+  };
+  var neighborPops = [];
+  for (var neighborIndex in neighbors){
     var neighborCode = neighbors[neighborIndex];
-    var neighborZombiePop = new Big(zombieMapData.data.zombiepop[timeIndex][neighborCode]);
-    var borderChance = Math.random(); //Chance disease crosses border.
-    if(humanPop.gt(0)){
-      var newestZobmies = neighborZombiePop.times(biteChance);
-      newZombiePop = newZombiePop.plus(newestZobmies);
+    var neighbor = {
+      humans: new Big(zombieMapData.data.humanpop[timeIndex][neighborCode]),
+      zombies: new Big(zombieMapData.data.zombiepop[timeIndex][neighborCode])
     }
+    neighborPops.push(neighbor);
   }
 
-  var newHumanPop = new Big(humanPop).times(growthRate);
-  var totalHumanPop = new Big(humanPop).minus(newZombiePop).plus(newHumanPop);
-  var totalZombiePop = new Big(zombiePop).plus(newZombiePop);
-  var sumPop = new Big(totalHumanPop).plus(totalZombiePop);
-  var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
-
-  //var zombieTakeoverPercentage = calcZombiePercentage(totalHumanPop, totalZombiePop);
-  // 
-  // if(stateIndex == "US-TX") {
-  //   console.log("State[" + stateIndex + "] at time[" + timeIndex + "] with" +
-  //     "\n newZombiePop = " + bigOut(newZombiePop) +
-  //     "\n newHumanPop = " + bigOut(newHumanPop) +
-  //     "\n zombieTakeoverPercentage = " + bigOut(zombieTakeoverPercentage));
-  // }
-
-
-
-  zombieMapData.data.zombiepop[timeIndex + 1][stateIndex] = bigOut(totalZombiePop);
-  zombieMapData.data.humanpop[timeIndex + 1][stateIndex] = bigOut(totalHumanPop);
-  zombieMapData.data.percentage[timeIndex + 1][stateIndex] = bigOut(zombieTakeoverPercentage.times(100));
+  var results = zombieMathModel(params, population, neighborPops);
+  zombieMapData.data.zombiepop[timeIndex + 1][stateIndex] = results.zombies;
+  zombieMapData.data.humanpop[timeIndex + 1][stateIndex] = results.humans;
+  zombieMapData.data.percentage[timeIndex + 1][stateIndex] = results.percentage;
 }
+
 
 //Helper method to get the output from Big number consistent
 function bigOut(number) {
