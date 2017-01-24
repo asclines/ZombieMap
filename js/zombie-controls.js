@@ -4,6 +4,7 @@ File: zombie-controls.js
 Manages all the controls and user input for the apocalypse.
 **/
 
+
 function setupControls() {
   zombieControls.submit();
   zombieControls.reset();
@@ -34,11 +35,11 @@ function initData(cb) {
 var zombieControls = {
   submit: function() {
     $('#calculateSubmit').click(function() {
+      zombieSimInProgress = true;
       document.getElementById('calculateSubmit').style.display = 'none'
 
-      $("#form-params").addClass('loading')
-      $("#form-map").addClass('loading')
-      $("#form-calc").addClass('loading')
+      $("#map").addClass('loading')
+
 
       new Promise(function(resolve, reject) {
         zombieMapData.maxIterations = document.getElementById('timeMax').value;
@@ -46,9 +47,7 @@ var zombieControls = {
         zombieMapData.growthRate = document.getElementById('growthRate').value;
         calcApocalypse(function(results) {
           // console.log(results);
-          $("#form-params").removeClass('loading')
-          $("#form-map").removeClass('loading')
-          $("#form-calc").removeClass('loading')
+          $("#map").removeClass('loading')
           if(results == null) {
             reject(Error("Did not receive results."));
           } else {
@@ -82,6 +81,7 @@ var zombieControls = {
 
   reset: function() {
     $('#calculateReset').click(function() {
+      zombieSimInProgress = false;
       initData(function(err) {
         document.getElementById('calculateSubmit').style.display = 'block'
 
