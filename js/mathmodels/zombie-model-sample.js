@@ -12,27 +12,27 @@ zombieSim.model = {
   paramSettingsHtmlFile: "html/mathmodels/zombie-model-sample.html",
 
   setup: function(){
-    document.getElementById('biteChance').innerHTML = zombieSim.model.params.biteChance;
+    document.getElementById('biteChance').innerHTML = this.params.biteChance;
     $("#slider-spread").slider({
-      value: zombieSim.model.params.biteChance,
+      value: this.params.biteChance,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieSim.model.params.biteChance = ui.value;
-        document.getElementById('biteChance').innerHTML = zombieSim.model.params.biteChance;
+        this.params.biteChance = ui.value;
+        document.getElementById('biteChance').innerHTML = this.params.biteChance;
       }
     });
 
-    document.getElementById('growthRate').innerHTML = zombieSim.model.params.growthRate;
+    document.getElementById('growthRate').innerHTML = this.params.growthRate;
     $("#slider-growth").slider({
-      value: zombieSim.model.params.growthRate,
+      value: this.params.growthRate,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieSim.model.params.growthRate = ui.value;
-        document.getElementById('growthRate').innerHTML = zombieSim.model.params.growthRate;
+        this.params.growthRate = ui.value;
+        document.getElementById('growthRate').innerHTML = this.params.growthRate;
       }
     });
   },
