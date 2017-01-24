@@ -4,7 +4,11 @@ File: zombie-controls.js
 Manages all the controls and user input for the apocalypse.
 **/
 
-
+var zombieControlsData = {
+  biteSpread: 20,
+  growthRate: 5,
+  maxTime: 42
+}
 function setupControls() {
   zombieControls.submit();
   zombieControls.reset();
@@ -21,6 +25,7 @@ function initData(cb) {
     })
   }).then(function(data) {
     zombieMapData.data = data;
+    zombieControls.sliders();
     cb(null);
   }).catch(function(err) {
     console.log(err);
@@ -43,8 +48,8 @@ var zombieControls = {
 
       new Promise(function(resolve, reject) {
         zombieMapData.maxIterations = document.getElementById('timeMax').value;
-        zombieMapData.biteChance = document.getElementById('biteChance').value;
-        zombieMapData.growthRate = document.getElementById('growthRate').value;
+        zombieMapData.biteChance = zombieControlsData.biteSpread;
+        zombieMapData.growthRate = zombieControlsData.growthRate;
         calcApocalypse(function(results) {
           // console.log(results);
           $("#map").removeClass('loading')
@@ -65,8 +70,8 @@ var zombieControls = {
     });
   },
 
-  simulatiorSlider: function() {
-    $("#slider").slider({
+  simulatiorSlider: function(){
+    $("#slider-simulator").slider({
       value: zombieMapData.val,
       min: 0,
       max: document.getElementById('timeMax').value,
@@ -77,6 +82,34 @@ var zombieControls = {
         zombieMapData.mapObject.series.regions[0].setValues(zombieMapData.data.percentage[zombieMapData.val]);
       }
     });
+  },
+
+  sliders: function() {
+    document.getElementById('biteChance').innerHTML = zombieControlsData.biteSpread;
+    $("#slider-spread").slider({
+      value: zombieControlsData.biteSpread,
+      min: 0,
+      max: 100,
+      step: 1,
+      slide: function(event, ui){
+        zombieControlsData.biteSpread = ui.value;
+        document.getElementById('biteChance').innerHTML = zombieControlsData.biteSpread;
+      }
+    });
+
+    document.getElementById('growthRate').innerHTML = zombieControlsData.biteSpread;
+    $("#slider-growth").slider({
+      value: zombieControlsData.growthRate,
+      min: 0,
+      max: 100,
+      step: 1,
+      slide: function(event, ui){
+        zombieControlsData.growthRate = ui.value;
+        document.getElementById('growthRate').innerHTML = zombieControlsData.growthRate;
+      }
+    });
+
+
   },
 
   reset: function() {
@@ -96,5 +129,6 @@ var zombieControls = {
         }
       })
     });
-  }
+  },
+
 }

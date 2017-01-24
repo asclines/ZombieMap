@@ -4,7 +4,7 @@ body {
 }
 
 [data-tooltip] {
-  z-index: 10;
+  z-index: 10 !important;
 }
 
 .zombie {
@@ -40,6 +40,6 @@ body {
 
 .zombiesettingsslider {
   background: white;
-  width: 100px;
+  width: 150;
   margin: 10px;
 }

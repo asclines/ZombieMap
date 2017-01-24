@@ -58,14 +58,4 @@ function setupMap() {
 
 $(function() {
   $('.menu .item').tab();
-  initData(function(err) {
-    if(err == null) {
-      setupMap();
-      setupControls();
-    } else {
-      console.log(err);
-    }
-
-  });
-
 });
