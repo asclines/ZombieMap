@@ -40,41 +40,38 @@ zombieSim.math = {
         zombieMapData.data.humanpop[i + 1] = {};
 
         for(var state in zombieMapData.data.percentage[i]) {
-          calcNewZombiesInState(state, i, stateNeighbors[state]);
+          this.calcNewZombiesInState(state, i, stateNeighbors[state]);
         }
       }
 
       cb(zombieMapData.data);
 
-    }, function(err) {
+    }.bind(this), function(err) {
       console.log(err);
     })
-  }
-}
+  },
 
-
-
-function calcNewZombiesInState(stateIndex, timeIndex, neighbors){
-  var population = {
-    humans: new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]),
-    zombies: new Big(zombieMapData.data.zombiepop[timeIndex][stateIndex])
-  };
-  var neighborPops = [];
-  for (var neighborIndex in neighbors){
-    var neighborCode = neighbors[neighborIndex];
-    var neighbor = {
-      humans: new Big(zombieMapData.data.humanpop[timeIndex][neighborCode]),
-      zombies: new Big(zombieMapData.data.zombiepop[timeIndex][neighborCode])
+  calcNewZombiesInState: function(stateIndex, timeIndex, neighbors){
+    var population = {
+      humans: new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]),
+      zombies: new Big(zombieMapData.data.zombiepop[timeIndex][stateIndex])
+    };
+    var neighborPops = [];
+    for (var neighborIndex in neighbors){
+      var neighborCode = neighbors[neighborIndex];
+      var neighbor = {
+        humans: new Big(zombieMapData.data.humanpop[timeIndex][neighborCode]),
+        zombies: new Big(zombieMapData.data.zombiepop[timeIndex][neighborCode])
+      }
+      neighborPops.push(neighbor);
     }
-    neighborPops.push(neighbor);
+
+    var results = zombieSim.model.nextIteration(population, neighborPops);
+    zombieMapData.data.zombiepop[timeIndex + 1][stateIndex] = results.zombies;
+    zombieMapData.data.humanpop[timeIndex + 1][stateIndex] = results.humans;
+    zombieMapData.data.percentage[timeIndex + 1][stateIndex] = results.percentage;
   }
-
-  var results = zombieSim.model.nextIteration(population, neighborPops);
-  zombieMapData.data.zombiepop[timeIndex + 1][stateIndex] = results.zombies;
-  zombieMapData.data.humanpop[timeIndex + 1][stateIndex] = results.humans;
-  zombieMapData.data.percentage[timeIndex + 1][stateIndex] = results.percentage;
 }
-
 
 //Helper method to get the output from Big number consistent
 function bigOut(number) {
