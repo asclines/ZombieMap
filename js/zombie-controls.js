@@ -25,7 +25,7 @@ function initData(cb) {
     })
   }).then(function(data) {
     zombieMapData.data = data;
-    zombieControls.sliders();
+    zombieControls.settings();
     cb(null);
   }).catch(function(err) {
     console.log(err);
@@ -47,7 +47,7 @@ var zombieControls = {
 
 
       new Promise(function(resolve, reject) {
-        zombieMapData.maxIterations = document.getElementById('timeMax').value;
+        zombieMapData.maxIterations = zombieControlsData.maxTime;
         zombieMapData.biteChance = zombieControlsData.biteSpread;
         zombieMapData.growthRate = zombieControlsData.growthRate;
         calcApocalypse(function(results) {
@@ -84,7 +84,10 @@ var zombieControls = {
     });
   },
 
-  sliders: function() {
+  settings: function() {
+    document.getElementById('timeMax').value = zombieControlsData.maxTime;
+
+
     document.getElementById('biteChance').innerHTML = zombieControlsData.biteSpread;
     $("#slider-spread").slider({
       value: zombieControlsData.biteSpread,
