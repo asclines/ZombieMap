@@ -1,10 +1,10 @@
 <script>
 $(document).ready(function() {
-  $("#zombie-settings-params").load(getZombieMathModelHtml(), function(){
-    initData(function(err) {
+  $("#zombie-settings-params").load(zombieSim.model.paramSettingsHtmlFile, function(){
+    zombieSim.controls.initData(function(err) {
       if(err == null) {
-        setupMap();
-        setupControls();
+        zombieSim.map.setup();
+        zombieSim.controls.setup();
       } else {
         console.log(err);
       }
