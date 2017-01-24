@@ -6,28 +6,27 @@ zombieSim.controls = {
   setup: function(){
     zombieControls.submit();
     zombieControls.reset();
+  },
+
+  initData: function(cb){
+    new Promise(function(resolve, reject) {
+      getInitialData(function(data) {
+        if(data != null) {
+          resolve(data)
+        } else {
+          reject(Error("Could not load initial data."))
+        }
+      })
+    }).then(function(data) {
+      zombieMapData.data = data;
+      zombieControls.settings();
+      cb(null);
+    }).catch(function(err) {
+      console.log(err);
+      cb(err);
+    });
   }
 }
-
-function initData(cb) {
-  new Promise(function(resolve, reject) {
-    getInitialData(function(data) {
-      if(data != null) {
-        resolve(data)
-      } else {
-        reject(Error("Could not load initial data."))
-      }
-    })
-  }).then(function(data) {
-    zombieMapData.data = data;
-    zombieControls.settings();
-    cb(null);
-  }).catch(function(err) {
-    console.log(err);
-    cb(err);
-  });
-}
-
 
 /**
   Holds all internal methods for setting up controls.
@@ -111,7 +110,7 @@ var zombieControls = {
   reset: function() {
     $('#calculateReset').click(function() {
       zombieSimInProgress = false;
-      initData(function(err) {
+      zombieSim.controls.initData(function(err) {
         document.getElementById('calculateSubmit').style.display = 'block'
 
         if(err == null) {

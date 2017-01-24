@@ -1,7 +1,7 @@
 <script>
 $(document).ready(function() {
   $("#zombie-settings-params").load(zombieSim.model.paramSettingsHtmlFile, function(){
-    initData(function(err) {
+    zombieSim.controls.initData(function(err) {
       if(err == null) {
         setupMap();
         zombieSim.controls.setup();
