@@ -51,23 +51,25 @@
         </script>
 
         <div id="zombie-instructions"></div>
-            <div class="zombie">
-              <div id="zombie-settings" class="zombiesettings"></div>
+        <div class="zombie">
+            <div id="zombie-settings" class="zombiesettings"></div>
 
-              <div id="map" class="zombiemap"></div>
+            <div id="map" class="zombiemap"></div>
+            <div class="zombelinebreak"></div>
+            <button id="calculateSubmit" class="ui inverted massive button">Launch</button>
+        </div>
+
+
+
+        <div id="div-runtime" style="margin: 10px; display: none">
+            <button id="calculateReset" class="ui inverted medium button">Reset</button>
+            <div class="ui black label">
+                Current Time
+                <div class="inverted detail"><span id="curTimeValue">0</span></div>
             </div>
+            <div id="slider" class="zombieslider"></div>
 
-            <button id="calculateSubmit" class="ui button">Launch</button>
-
-            <div id="div-runtime" style="margin: 10px; display: none">
-                <button id="calculateReset" class="ui button">Reset</button>
-                <div class="ui label">
-                    Current Time
-                    <div class="detail"><span id="curTimeValue">0</span></div>
-                </div>
-                <div id="slider" style="width: 280px; margin: 10px"></div>
-
-            </div>
+        </div>
 
     </body>
 

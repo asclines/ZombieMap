@@ -1,15 +1,33 @@
+body {
+    background-color: #505050;
+}
 
 .zombie {
-  margin: 10px;
-  display: flex;
+    margin: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: space-between;
 }
+
 .zombiemap {
     overflow: hidden;
     max-width: 1000px;
     height: 70vh;
     flex-grow: 1;
 }
-.zombiesettings{
-  padding: 4px;
-  width: auto;
+
+.zombiesettings {
+    padding: 4px;
+    width: auto;
+    color: white;
+}
+
+.zombelinebreak {
+    width: 100%;
+}
+
+.zombieslider {
+    background: white;
+    width: 280px;
+    margin: 10px;
 }
