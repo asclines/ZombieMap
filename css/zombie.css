@@ -1,16 +1,15 @@
 
 .zombie {
   margin: 10px;
-  background-color: white;
   display: flex;
 }
 .zombiemap {
     overflow: hidden;
-    max-width: 800px;
-    height: 80vh;
-    width: auto;
+    max-width: 1000px;
+    height: 70vh;
     flex-grow: 1;
 }
 .zombiesettings{
-  padding: 2px;
+  padding: 4px;
+  width: auto;
 }

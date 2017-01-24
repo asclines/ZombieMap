@@ -5,6 +5,8 @@ Manages the map object.
 **/
 
 var zombieMapData = {};
+var zombieSimInProgress = false; //Various parts of the elements in this site dsepending on this fact.
+
 
 function setupMap() {
   zombieMapData.val = 0;
@@ -25,7 +27,7 @@ function setupMap() {
     },
     onRegionTipShow: function(event, label, code) {
 
-      if(document.getElementById('div-runtime').classList.contains("active")) {
+      if(zombieSimInProgress) {
         label.html(
           '<b>' + label.html() + '</b></br>' +
           '<b>Zombie takeover: </b>' + zombieMapData.data.percentage[zombieMapData.val][code] + '% </b></br>' +
@@ -43,7 +45,7 @@ function setupMap() {
     },
     onRegionClick: function(event, code) {
       //Only increment if the "Set Map" tab is loaded
-      if(document.getElementById('status-setmap').classList.contains("active")) {
+      if(!zombieSimInProgress){
         zombieMapData.data.percentage["0"][code]++;
       }
     }
