@@ -4,11 +4,6 @@ File: zombie-controls.js
 Manages all the controls and user input for the apocalypse.
 **/
 
-var zombieControlsData = {
-  biteSpread: 20,
-  growthRate: 5,
-  maxTime: 42
-}
 function setupControls() {
   zombieControls.submit();
   zombieControls.reset();
@@ -47,9 +42,7 @@ var zombieControls = {
 
 
       new Promise(function(resolve, reject) {
-        zombieMapData.maxIterations = zombieControlsData.maxTime;
-        zombieMapData.biteChance = zombieControlsData.biteSpread;
-        zombieMapData.growthRate = zombieControlsData.growthRate;
+        zombieMapData.maxIterations = zombieMathModelParams.maxTime;
         calcApocalypse(function(results) {
           // console.log(results);
           $("#map").removeClass('loading')
@@ -85,30 +78,30 @@ var zombieControls = {
   },
 
   settings: function() {
-    document.getElementById('timeMax').value = zombieControlsData.maxTime;
+    document.getElementById('timeMax').value = zombieMathModelParams.maxTime;
 
 
-    document.getElementById('biteChance').innerHTML = zombieControlsData.biteSpread;
+    document.getElementById('biteChance').innerHTML = zombieMathModelParams.biteChance;
     $("#slider-spread").slider({
-      value: zombieControlsData.biteSpread,
+      value: zombieMathModelParams.biteChance,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieControlsData.biteSpread = ui.value;
-        document.getElementById('biteChance').innerHTML = zombieControlsData.biteSpread;
+        zombieMathModelParams.biteChance = ui.value;
+        document.getElementById('biteChance').innerHTML = zombieMathModelParams.biteChance;
       }
     });
 
-    document.getElementById('growthRate').innerHTML = zombieControlsData.growthRate;
+    document.getElementById('growthRate').innerHTML = zombieMathModelParams.growthRate;
     $("#slider-growth").slider({
-      value: zombieControlsData.growthRate,
+      value: zombieMathModelParams.growthRate,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieControlsData.growthRate = ui.value;
-        document.getElementById('growthRate').innerHTML = zombieControlsData.growthRate;
+        zombieMathModelParams.growthRate = ui.value;
+        document.getElementById('growthRate').innerHTML = zombieMathModelParams.growthRate;
       }
     });
 

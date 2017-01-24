@@ -58,10 +58,6 @@ function calcApocalypse(cb) {
   })
 }
 function calcNewZombiesInState(stateIndex, timeIndex, neighbors){
-  var params = {
-    biteChance: (zombieMapData.biteChance / 100),
-    growthRate: (zombieMapData.growthRate / 100)
-  };
   var population = {
     humans: new Big(zombieMapData.data.humanpop[timeIndex][stateIndex]),
     zombies: new Big(zombieMapData.data.zombiepop[timeIndex][stateIndex])
@@ -76,7 +72,7 @@ function calcNewZombiesInState(stateIndex, timeIndex, neighbors){
     neighborPops.push(neighbor);
   }
 
-  var results = zombieMathModel(params, population, neighborPops);
+  var results = zombieMathModel(population, neighborPops);
   zombieMapData.data.zombiepop[timeIndex + 1][stateIndex] = results.zombies;
   zombieMapData.data.humanpop[timeIndex + 1][stateIndex] = results.humans;
   zombieMapData.data.percentage[timeIndex + 1][stateIndex] = results.percentage;
