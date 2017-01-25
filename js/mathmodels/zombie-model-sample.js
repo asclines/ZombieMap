@@ -3,9 +3,9 @@
 var zombieSim = zombieSim || {};
 
 zombieSim.model = {
-  params: {
-    biteChance: .20,
-    growthRate: .05
+  params: { //With default values
+    biteChance: 20,
+    growthRate: 5
   },
 
   paramSettingsHtmlFile: "html/mathmodels/zombie-model-sample.html",
@@ -37,19 +37,21 @@ zombieSim.model = {
   },
 
   nextIteration: function(population, neighbors) {
+    var trueBiteChance = this.params.biteChance / 100;
+    var trueGrowthRate = this.params.growthRate / 100;
 
     var newZombiePop = new Big(0);
     if(population.humans.gt(0)){
-      newZombiePop = population.zombies.times(this.params.biteChance);
+      newZombiePop = population.zombies.times(trueBiteChance);
     }
 
     for(var neighborIndex in neighbors) {
       if(population.humans.gt(0)){
-        var newestZombies = neighbors[neighborIndex].humans.times(this.params.biteChance);
+        var newestZombies = neighbors[neighborIndex].humans.times(trueBiteChance);
         newZombiePop = newZombiePop.plus(newestZombies);
       }
     }
-    var newHumanPop = new Big(population.humans).times(this.params.growthRate);
+    var newHumanPop = new Big(population.humans).times(trueGrowthRate);
     var totalHumanPop = new Big(population.humans).minus(newZombiePop).plus(newHumanPop);
     var totalZombiePop = new Big(population.zombies).plus(newZombiePop);
     var sumPop = new Big(totalHumanPop).plus(totalZombiePop);
