@@ -1,4 +1,7 @@
 node_modules/
 semantic/out/
 scratch/
-.package-switch.cson # For atom package handling
+
+# Ignore hidden files
+.*
+!/.gitignore
