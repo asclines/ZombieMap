@@ -7,7 +7,7 @@ zombieSim.inProgress = false; //Various parts of the elements in this site depen
 zombieSim.map = {
   setup: function() {
     zombieSim.currentTime = 0;
-    //
+    console.log(this.data.percentage[zombieSim.currentTime]);
     this.mapObject = new jvm.MultiMap({
       container: $('#map'),
       maxLevel: 1,
@@ -15,10 +15,6 @@ zombieSim.map = {
         map: 'us_lcc_en',
         backgroundColor: "transparent",
         onRegionTipShow: function(event, label, code) {
-          //TODO
-        },
-        onRegionTipShow: function(event, label, code) {
-
           if(zombieSim.inProgress) {
             label.html(
               '<b>' + label.html() + '</b></br>' +
@@ -32,6 +28,7 @@ zombieSim.map = {
               '<b>' + label.html() + '</b></br>' +
               '<b>Population: </b>' + Number(zombieSim.map.data.humanpop[zombieSim.currentTime][code]).toLocaleString() + '</b></br>' +
               '<b>Initial Zombies </b>' + zombieSim.map.data.percentage[zombieSim.currentTime][code] + '%'
+              + '</b></br> Code:' + code
             );
           }
         },
