@@ -11,15 +11,14 @@ zombieSim.controls = {
 
   initData: function(cb){
     new Promise(function(resolve, reject) {
-      zombieSim.data.getInitialData(function(data) {
-        if(data != null) {
-          resolve(data)
+      zombieSim.data.getInitialData(function() {
+        if(zombieSim.map.data != null) {
+          resolve()
         } else {
           reject(Error("Could not load initial data."))
         }
       })
-    }).then(function(data) {
-      zombieSim.map.data = data;
+    }).then(function() {
       zombieControls.settings();
       cb(null);
     }).catch(function(err) {

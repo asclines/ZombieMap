@@ -26,7 +26,7 @@ zombieSim.data = {
       var initialStatePercentage = JSON.parse(JSON.stringify(statesInitial));
       var initialStatesZombiePopulation = JSON.parse(JSON.stringify(statesInitial));
       var initialCountiesPercentage = JSON.parse(JSON.stringify(countiesInitial));
-      var initialCOuntriesZombiePopulation = JSON.parse(JSON.stringify(countiesInitial));
+      var initialCountriesZombiePopulation = JSON.parse(JSON.stringify(countiesInitial));
 
       var stateData = {
         "percentage": {
@@ -46,25 +46,40 @@ zombieSim.data = {
           "0": initialCountiesPercentage["0"]
         },
         "humanpop": {
-          "0": countiesPopulations["-"]
+          "0": countiesPopulations["0"]
         },
         "zombiepop": {
-          "0": initialCOuntriesZombiePopulation["0"]
+          "0": initialCountriesZombiePopulation["0"]
         }
       }
       this.countyData = countyData;
 
-      this.data = stateData;
-      //
-      // var data = {};
-      // for (var attrname in countyData) data[attrname] = countyData[attrname];
-      // for (var attrname in stateData) data[attrname] = stateData[attrname];
-      //
-      //
 
 
+      var data = {
+        "percentage": {
+          "0": zombieSim.utils.mergeObjects(
+            initialStatePercentage["0"],
+            initialCountiesPercentage["0"]
+          )
+        },
+        "humanpop": {
+          "0": zombieSim.utils.mergeObjects(
+            statesPopulation["0"],
+            countiesPopulations["0"]
+          )
+        },
+        "zombiepop": {
+          "0": zombieSim.utils.mergeObjects(
+            initialStatesZombiePopulation["0"],
+            initialCountriesZombiePopulation["0"]
+          )
+        }
+      };
 
-      cb(data);
+      zombieSim.map.data = data;
+
+      cb();
     });
   },
 
@@ -78,4 +93,13 @@ zombieSim.data = {
     })
   }
 
+}
+
+
+zombieSim.utils = zombieSim.utils || {};
+zombieSim.utils.mergeObjects = function(obj1, obj2){
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
 }
