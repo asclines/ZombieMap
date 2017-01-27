@@ -17,6 +17,23 @@ zombies = {
       container: $('#map'),
       map: 'us_aea',
       backgroundColor: "transparent",
+      onRegionTipShow: function(event, label, code) {
+        if(this.inProgress) {
+          label.html(
+            '<b>' + label.html() + '</b></br>' +
+            '<b>Zombie takeover: </b>' + zombies.stateData.percentage[zombies.currentTime][code] + '% </b></br>' +
+            '<b>Human Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+            '<b>Zombie Population: </b>' + Number(zombies.stateData.zombiePop[zombies.currentTime][code]).toLocaleString()
+
+          );
+        } else {
+          label.html(
+            '<b>' + label.html() + '</b></br>' +
+            '<b>Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+            '<b>Initial Zombies: </b>' + zombies.stateData.zombiePop[zombies.currentTime][code]
+          );
+        }
+      },
       series: {
         regions: [{
           scale: ['#99ff99', '#990000'],
@@ -57,19 +74,19 @@ zombies = {
         "percentage": {
           "0": initialStatePercentage["0"]
         },
-        "humanpop": {
+        "humanPop": {
           "0": statesPopulation["0"]
         },
-        "zombiepop": {
+        "zombiePop": {
           "0": initialStatesZombiePopulation["0"]
         }
       }
-      zombies.stateData = stateData;
+      this.stateData = stateData;
 
 
       log.debug("Done preparing data")
       done();
-    });
+    }.bind(this));
 
   }
 
