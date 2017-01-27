@@ -5,11 +5,12 @@ zombies = {
   currentTime: 0,
   init: function() {
     log.debug("Initializing zombies")
-    this.getInitialData(function() {
+    new Promise(zombies.getInitialData).then(function(){
+      log.debug("Done getting initial data")
       zombies.setupMap(function() {
         zombieModel.setup();
       })
-    });
+    })
 
     $('#calculateSubmit').click(this.onLaunchClick);
     $('#calculateReset').click(this.onResetClick);
@@ -153,42 +154,46 @@ zombies = {
   /*
   DATA HANDLING
   */
-  getInitialData: function(done) {
+  getInitialData: function(resolve, reject) {
     log.debug("Loading data files")
     $.when(
-      $.getJSON('data/states-initial.json'),
-      $.getJSON('data/states-pops.json'),
+      $.getJSON('data/percentages.json'),
+      $.getJSON('data/populations.json'),
+      $.getJSON('data/states-counties.json'),
       $.getJSON('data/county-adjacent.json')
     ).done(function(
-      statesInitial,
-      statesPopulation,
+      percentages,
+      populations,
+      statesCounties,
       countyNeighbors
     ) {
       log.debug("Preparing data");
+      //console.log(countyNeighbors);
+
+      if (percentages["1"] != "success") reject("Could not load data/percentages.json");
+      if (populations["1"] != "success") reject("Could not load data/populations.json");
+      if (statesCounties["1"] != "success") reject("Could not load data/states-counties.json");
+      if (countyNeighbors["1"] != "success") reject("Could not load data/county-adjacent.json");
 
 
-      var initialStatePercentage = JSON.parse(JSON.stringify(statesInitial));
-      var initialStatesZombiePopulation = JSON.parse(JSON.stringify(statesInitial));
 
-      this.countyNeighbors = countyNeighbors;
-
-      this.percentages = {
-        "0": initialStatePercentage["0"]
+      zombies.percentages = {
+        "0": percentages["0"]
+      }
+      zombies.populations = {
+          "human": {
+            "0": populations["0"]["human"]
+          },
+          "zombie": {
+            "0": populations["0"]["zombie"]
+          }
       }
 
-      this.populations = {
-        "human": {
-          "0": statesPopulation["0"]
-        },
-        "zombie": {
-          "0": initialStatesZombiePopulation["0"]
-        }
-      }
+      zombies.statesCounties = statesCounties["0"];
+      zombies.countyNeighbors = countyNeighbors["0"];
 
-
-      log.debug("Done preparing data")
-      done();
-    }.bind(this));
+      resolve();
+    });
 
   },
 
