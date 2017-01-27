@@ -28,6 +28,8 @@ zombieSim.data = {
       var initialCountiesPercentage = JSON.parse(JSON.stringify(countiesInitial));
       var initialCountriesZombiePopulation = JSON.parse(JSON.stringify(countiesInitial));
 
+      this.countyNeighbors = countiesAdjacents;
+
       var stateData = {
         "percentage": {
           "0": initialStatePercentage["0"]
@@ -91,6 +93,12 @@ zombieSim.data = {
     $.getJSON('data/states-neighbors.json', function(data) {
       cb(data);
     })
+  },
+
+  getCountyNeighbors: function(cb){
+    $.getJSON('data/counties-adjacents.json', function(data) {
+      cb(data);
+    });
   }
 
 }

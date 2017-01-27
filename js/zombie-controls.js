@@ -42,6 +42,7 @@ var zombieControls = {
 
       new Promise(function(resolve, reject) {
         zombieSim.maxTime = document.getElementById('timeMax').value;
+        zombieSim.math.launch();
         zombieSim.math.calcApocalypse(function(results) {
           // console.log(results);
           $("#map").removeClass('loading')

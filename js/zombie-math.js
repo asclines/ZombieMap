@@ -3,6 +3,7 @@
 var zombieSim = zombieSim || {};
 
 zombieSim.math = {
+
   /**
     Callback returns an object of time intervals and the status of each state
     at each time interval.
@@ -69,6 +70,25 @@ zombieSim.math = {
     zombieSim.map.data.zombiepop[timeIndex + 1][stateIndex] = results.zombies;
     zombieSim.map.data.humanpop[timeIndex + 1][stateIndex] = results.humans;
     zombieSim.map.data.percentage[timeIndex + 1][stateIndex] = results.percentage;
+  },
+
+  /**
+    Callback returns an object of time intervals and the status of each state/county
+    at each time interval.
+  **/
+  launch: function(cb){
+  //First setup initial zombiepop using user inputted percentages
+  for (var countyCode in zombieSim.map.data.percentage["0"]) {
+    if(zombieSim.utils.isState(countyCode)) continue;
+
+    // var humanPop = new Big(zombieSim.map.data.humapop["0"][countyCode]);
+    // var zombiePop = new Big(zombieSim.map.data.zombiepop["0"][countyCode]);
+    //
+
+  }
+
+
+
   }
 }
 
@@ -82,4 +102,9 @@ zombieSim.utils.bigOut = function(number){
   }
   var result = number.toFixed(3);
   return result;
+}
+
+//Takes in a code and returns if code is a state or not
+zombieSim.utils.isState = function(code){
+  return(code.substring(0,2) == "US")
 }
