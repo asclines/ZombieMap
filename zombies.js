@@ -18,11 +18,12 @@ zombies = {
       map: 'us_aea',
       backgroundColor: "transparent",
       onRegionTipShow: zombies.onRegionTipShow,
+      onRegionClick: zombies.onRegionClick,
       series: {
         regions: [{
           scale: ['#99ff99', '#990000'],
           attribute: 'fill',
-          values: zombies.stateData.percentage[zombies.currentTime],
+          values: zombies.data.percentage[zombies.currentTime],
           min: 0,
           max: 100,
           legend: {
@@ -35,20 +36,49 @@ zombies = {
   }, //End - setupMap
 
   onRegionTipShow: function(event, label, code) {
-    if(this.inProgress) {
+    zombies.currentLabel = label;
+    zombies.currentHoverState = label.html();
+    if(zombies.inProgress) {
       label.html(
         '<b>' + label.html() + '</b></br>' +
-        '<b>Zombie takeover: </b>' + zombies.stateData.percentage[zombies.currentTime][code] + '% </b></br>' +
-        '<b>Human Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-        '<b>Zombie Population: </b>' + Number(zombies.stateData.zombiePop[zombies.currentTime][code]).toLocaleString()
+        '<b>Zombie takeover: </b>' + zombies.data.percentage[zombies.currentTime][code] + '% </b></br>' +
+        '<b>Human Population: </b>' + Number(zombies.data.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+        '<b>Zombie Population: </b>' + Number(zombies.data.zombiePop[zombies.currentTime][code]).toLocaleString()
       );
     } else {
       label.html(
         '<b>' + label.html() + '</b></br>' +
-        '<b>Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-        '<b>Initial Zombies: </b>' + zombies.stateData.zombiePop[zombies.currentTime][code]
+        '<b>Population: </b>' + Number(zombies.data.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+        '<b>Initial Zombies: </b>' + zombies.data.zombiePop[zombies.currentTime][code]
       );
     }
+  },
+
+  onRegionClick: function(event, code) {
+    if(zombies.inProgress) return;
+
+    var humanPop = zombies.data.humanPop["0"][code];
+    var zombiePop = zombies.data.zombiePop["0"][code];
+
+    if(humanPop > 100) {
+      humanPop = humanPop - 100;
+      zombiePop = zombiePop + 100;
+      zombies.data.percentage["0"][code] = (zombiePop / humanPop) * 100;
+    } else {
+      zombiePop = zombiePop + humanPop;
+      humanPop = 0;
+      zombies.data.percentage["0"][code] = 0;
+    }
+
+    zombies.data.humanPop["0"][code] = humanPop;
+    zombies.data.zombiePop["0"][code] = zombiePop;
+
+    zombies.currentLabel.html(
+      '<b>' + zombies.currentHoverState + '</b></br>' +
+      '<b>Population: </b>' + Number(zombies.data.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+      '<b>Initial Zombies: </b>' + zombies.data.zombiePop[zombies.currentTime][code]
+    );
+
   },
 
 
@@ -82,7 +112,7 @@ zombies = {
           "0": initialStatesZombiePopulation["0"]
         }
       }
-      this.stateData = stateData;
+      this.data = stateData;
 
 
       log.debug("Done preparing data")
