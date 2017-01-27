@@ -17,23 +17,7 @@ zombies = {
       container: $('#map'),
       map: 'us_aea',
       backgroundColor: "transparent",
-      onRegionTipShow: function(event, label, code) {
-        if(this.inProgress) {
-          label.html(
-            '<b>' + label.html() + '</b></br>' +
-            '<b>Zombie takeover: </b>' + zombies.stateData.percentage[zombies.currentTime][code] + '% </b></br>' +
-            '<b>Human Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-            '<b>Zombie Population: </b>' + Number(zombies.stateData.zombiePop[zombies.currentTime][code]).toLocaleString()
-
-          );
-        } else {
-          label.html(
-            '<b>' + label.html() + '</b></br>' +
-            '<b>Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-            '<b>Initial Zombies: </b>' + zombies.stateData.zombiePop[zombies.currentTime][code]
-          );
-        }
-      },
+      onRegionTipShow: zombies.onRegionTipShow,
       series: {
         regions: [{
           scale: ['#99ff99', '#990000'],
@@ -49,6 +33,23 @@ zombies = {
       }
     });
   }, //End - setupMap
+
+  onRegionTipShow: function(event, label, code) {
+    if(this.inProgress) {
+      label.html(
+        '<b>' + label.html() + '</b></br>' +
+        '<b>Zombie takeover: </b>' + zombies.stateData.percentage[zombies.currentTime][code] + '% </b></br>' +
+        '<b>Human Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+        '<b>Zombie Population: </b>' + Number(zombies.stateData.zombiePop[zombies.currentTime][code]).toLocaleString()
+      );
+    } else {
+      label.html(
+        '<b>' + label.html() + '</b></br>' +
+        '<b>Population: </b>' + Number(zombies.stateData.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+        '<b>Initial Zombies: </b>' + zombies.stateData.zombiePop[zombies.currentTime][code]
+      );
+    }
+  },
 
 
 
