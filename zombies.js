@@ -92,12 +92,16 @@ zombies = {
     log.debug("Loading data files")
     $.when(
       $.getJSON('data/states-initial.json'),
-      $.getJSON('data/states-pops.json')
+      $.getJSON('data/states-pops.json'),
+      $.getJSON('data/states-neighbors.json')
     ).done(function(
       statesInitial,
-      statesPopulation
+      statesPopulation,
+      statesNeighbors
     ) {
       log.debug("Preparing data")
+      this.statesNeighbors = statesNeighbors;
+
       var initialStatePercentage = JSON.parse(JSON.stringify(statesInitial));
       var initialStatesZombiePopulation = JSON.parse(JSON.stringify(statesInitial));
 
@@ -119,9 +123,21 @@ zombies = {
       done();
     }.bind(this));
 
-  }
+  },
 
 
+
+
+
+/*
+UTIL METHODS
+*/
+mergeObjects: function(obj1, obj2){
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
+}
 
 
 
