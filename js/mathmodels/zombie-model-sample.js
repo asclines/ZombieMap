@@ -13,25 +13,25 @@ zombieSim.model = {
   setup: function(){
     document.getElementById('biteChance').innerHTML = this.params.biteChance;
     $("#slider-spread").slider({
-      value: this.params.biteChance,
+      value: zombieSim.model.params.biteChance,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        this.params.biteChance = ui.value;
-        document.getElementById('biteChance').innerHTML = this.params.biteChance;
+        zombieSim.model.params.biteChance = ui.value;
+        document.getElementById('biteChance').innerHTML = zombieSim.model.params.biteChance;
       }
     });
 
     document.getElementById('growthRate').innerHTML = this.params.growthRate;
     $("#slider-growth").slider({
-      value: this.params.growthRate,
+      value: zombieSim.model.params.growthRate,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        this.params.growthRate = ui.value;
-        document.getElementById('growthRate').innerHTML = this.params.growthRate;
+        zombieSim.model.params.growthRate = ui.value;
+        document.getElementById('growthRate').innerHTML = zombieSim.model.params.growthRate;
       }
     });
   },
