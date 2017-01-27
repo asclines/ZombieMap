@@ -77,19 +77,32 @@ zombieSim.math = {
     at each time interval.
   **/
   launch: function(cb){
-  //First setup initial zombiepop using user inputted percentages
+  //First setup initial zombiepop
   for (var countyCode in zombieSim.map.data.percentage["0"]) {
     if(zombieSim.utils.isState(countyCode)) continue;
 
-    // var humanPop = new Big(zombieSim.map.data.humapop["0"][countyCode]);
-    // var zombiePop = new Big(zombieSim.map.data.zombiepop["0"][countyCode]);
-    //
-
+    zombieSim.map.data.percentage["0"][state] = new Big(zombieSim.map.data.percentage["0"][state]);
+    zombieSim.map.data.zombiepop["0"][state] = new Big(zombieSim.map.data.zombiepop["0"][state]);
+    zombieSim.map.data.humanpop["0"][state] = new Big(zombieSim.map.data.humanpop["0"][state]);
   }
 
+  //Then do the rest
+  for(var i = 0; i < zombieSim.maxTime; i++) {
+    zombieSim.map.data.percentage[i + 1] = {};
+    zombieSim.map.data.zombiepop[i + 1] = {};
+    zombieSim.map.data.humanpop[i + 1] = {};
 
-
+    for(var county in zombieSim.map.data.percentage[i]) {
+      this.calcNewZombiesInCountry(county, i, zombieSim.data.countyNeighbors[county]);
+    }
   }
+
+  cb(zombieSim.map.data);
+},
+
+calcNewZombiesInCountry: function(countyIndex, timeIndex, neighbors) {
+
+}
 }
 
 
