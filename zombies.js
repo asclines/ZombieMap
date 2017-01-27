@@ -137,6 +137,16 @@ mergeObjects: function(obj1, obj2){
   for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
   for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
   return obj3;
+},
+
+
+bigOut: function(number){
+  if(number.lt(0)){
+    number = number.times(0)
+  }
+
+  var result = number.toFixed(3);
+  return result;
 }
 
 
