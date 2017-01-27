@@ -81,9 +81,9 @@ zombieSim.math = {
   for (var countyCode in zombieSim.map.data.percentage["0"]) {
     if(zombieSim.utils.isState(countyCode)) continue;
 
-    zombieSim.map.data.percentage["0"][state] = new Big(zombieSim.map.data.percentage["0"][state]);
-    zombieSim.map.data.zombiepop["0"][state] = new Big(zombieSim.map.data.zombiepop["0"][state]);
-    zombieSim.map.data.humanpop["0"][state] = new Big(zombieSim.map.data.humanpop["0"][state]);
+    zombieSim.map.data.percentage["0"][countyCode] = new Big(zombieSim.map.data.percentage["0"][countyCode]);
+    zombieSim.map.data.zombiepop["0"][countyCode] = new Big(zombieSim.map.data.zombiepop["0"][countyCode]);
+    zombieSim.map.data.humanpop["0"][countyCode] = new Big(zombieSim.map.data.humanpop["0"][countyCode]);
   }
 
   //Then do the rest
@@ -93,7 +93,13 @@ zombieSim.math = {
     zombieSim.map.data.humanpop[i + 1] = {};
 
     for(var county in zombieSim.map.data.percentage[i]) {
-      this.calcNewZombiesInCountry(county, i, zombieSim.data.countyNeighbors[county]);
+      try {
+        this.calcNewZombiesInCountry(county, i, zombieSim.data.countyNeighbors[county]);
+
+      } catch(err) {
+      //  console.log(err);
+      //  console.log(zombieSim.data.countyNeighbors[county]);
+      }
     }
   }
 
@@ -101,7 +107,48 @@ zombieSim.math = {
 },
 
 calcNewZombiesInCountry: function(countyIndex, timeIndex, neighbors) {
+  var population = {
+    humans: new Big(zombieSim.map.data.humanpop[timeIndex][countyIndex]),
+    zombies: new Big(zombieSim.map.data.zombiepop[timeIndex][countyIndex])
+  };
 
+  var neighborPops = [];
+  for (var neighborIndex in neighbors){
+    var neighborCode = neighbors[neighborIndex];
+    try{
+      var neighbor = {
+        humans: new Big(zombieSim.map.data.humanpop[timeIndex][neighborCode]),
+        zombies: new Big(zombieSim.map.data.zombiepop[timeIndex][neighborCode])
+      }
+    } catch(err){
+      console.log(err);
+      console.log(neighborCode);
+      console.log(zombieSim.map.data.humanpop[timeIndex][neighborCode]);
+    }
+
+    neighborPops.push(neighbor);
+  }
+  var results = zombieSim.model.nextIteration(population, neighborPops);
+  zombieSim.map.data.zombiepop[timeIndex + 1][countyIndex] = results.zombies;
+  zombieSim.map.data.humanpop[timeIndex + 1][countyIndex] = results.humans;
+  zombieSim.map.data.percentage[timeIndex + 1][countyIndex] = results.percentage;
+
+  //Now, update the state
+  var zombieDelta = results.zombies - population.zombies;
+  var humanDelta = results.humans - population.humans;
+  var stateIndex = zombieSim.data.countyState[countyIndex];
+
+  var newStateZombiePop = new Big(zombieDelta).plus(zombieSim.map.data.zombiepop[timeIndex +1][stateIndex]);
+  zombieSim.map.data.zombiepop[timeIndex +1][stateIndex] = zombieSim.utils.bigOut(ewStateZombiePop);
+
+  var newStateHumanPop = new Big(humanDelta).plus(zombieSim.map.data.humanpop[timeIndex+1][stateIndex]);
+  zombieSim.map.data.humanpop[timeIndex+1][stateIndex] = zombieSim.utils.bigOut(newStateHumanPop);
+
+  zombieSim.map.data.percentage[timeIndex+1][stateIndex] = zombieSim.utils.bigOut(newStateZombiePop.div(newStateHumanPop));
+
+
+
+//TODO update the state!
 }
 }
 
@@ -112,6 +159,9 @@ zombieSim.utils = zombieSim.utils || {};
 zombieSim.utils.bigOut = function(number){
   if(number.lt(0)){
     number = number.times(0)
+  }
+  if (number.gt(00)){
+    number = number.times(0).plus(100);
   }
   var result = number.toFixed(3);
   return result;
