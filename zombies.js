@@ -5,12 +5,20 @@ zombies = {
   currentTime: 0,
   init: function() {
     log.debug("Initializing zombies")
-    this.getInitialData(this.setupMap);
+    this.getInitialData(function() {
+      zombies.setupMap(function() {
+        zombieModel.setup();
+      })
+    });
+
+    $('#calculateSubmit').click(this.onLaunchClick);
+    $('#calculateReset').click(this.onResetClick);
+
   },
   /*
   MAP HANDLING
   */
-  setupMap: function() {
+  setupMap: function(done) {
     log.debug("Setting up map")
     this.currentTime = 0;
     this.mapObject = new jvm.Map({
@@ -23,7 +31,7 @@ zombies = {
         regions: [{
           scale: ['#99ff99', '#990000'],
           attribute: 'fill',
-          values: zombies.data.percentage[zombies.currentTime],
+          values: zombies.percentages[zombies.currentTime],
           min: 0,
           max: 100,
           legend: {
@@ -33,6 +41,8 @@ zombies = {
           }]
       }
     });
+
+    done();
   }, //End - setupMap
 
   onRegionTipShow: function(event, label, code) {
@@ -41,15 +51,15 @@ zombies = {
     if(zombies.inProgress) {
       label.html(
         '<b>' + label.html() + '</b></br>' +
-        '<b>Zombie takeover: </b>' + zombies.data.percentage[zombies.currentTime][code] + '% </b></br>' +
-        '<b>Human Population: </b>' + Number(zombies.data.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-        '<b>Zombie Population: </b>' + Number(zombies.data.zombiePop[zombies.currentTime][code]).toLocaleString()
+        '<b>Zombie takeover: </b>' + zombies.percentages[zombies.currentTime][code] + '% </b></br>' +
+        '<b>Human Population: </b>' + Number(zombies.populations.human[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+        '<b>Zombie Population: </b>' + Number(zombies.populations.zombie[zombies.currentTime][code]).toLocaleString()
       );
     } else {
       label.html(
         '<b>' + label.html() + '</b></br>' +
-        '<b>Population: </b>' + Number(zombies.data.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-        '<b>Initial Zombies: </b>' + zombies.data.zombiePop[zombies.currentTime][code]
+        '<b>Population: </b>' + Number(zombies.populations.human[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+        '<b>Initial Zombies: </b>' + zombies.populations.zombie[zombies.currentTime][code]
       );
     }
   },
@@ -57,27 +67,72 @@ zombies = {
   onRegionClick: function(event, code) {
     if(zombies.inProgress) return;
 
-    var humanPop = zombies.data.humanPop["0"][code];
-    var zombiePop = zombies.data.zombiePop["0"][code];
+    var humanPop = zombies.populations.human["0"][code];
+    var zombiePop = zombies.populations.zombie["0"][code];
 
     if(humanPop > 100) {
       humanPop = humanPop - 100;
       zombiePop = zombiePop + 100;
-      zombies.data.percentage["0"][code] = (zombiePop / humanPop) * 100;
+      zombies.percentages["0"][code] = (zombiePop / humanPop) * 100;
     } else {
       zombiePop = zombiePop + humanPop;
       humanPop = 0;
-      zombies.data.percentage["0"][code] = 0;
+      zombies.percentages["0"][code] = 0;
     }
 
-    zombies.data.humanPop["0"][code] = humanPop;
-    zombies.data.zombiePop["0"][code] = zombiePop;
+    zombies.populations.human["0"][code] = humanPop;
+    zombies.populations.zombie["0"][code] = zombiePop;
 
     zombies.currentLabel.html(
       '<b>' + zombies.currentHoverState + '</b></br>' +
-      '<b>Population: </b>' + Number(zombies.data.humanPop[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-      '<b>Initial Zombies: </b>' + zombies.data.zombiePop[zombies.currentTime][code]
+      '<b>Population: </b>' + Number(zombies.populations.human[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
+      '<b>Initial Zombies: </b>' + zombies.populations.zombie[zombies.currentTime][code]
     );
+
+  },
+
+  /*
+  CONTROLS HANDLING
+  */
+  onLaunchClick: function() {
+    log.debug("Launching");
+    zombies.inProgress = true;
+    document.getElementById('calculateSubmit').style.display = 'none';
+    $("#map").addClass('loading');
+
+    zombies.maxTime = document.getElementById('timeMax').value;
+    new Promise(zombies.calculateSimulation).then(zombies.showSimulation);
+
+  },
+
+  onResetClick: function() {
+    log.debug("Resetting");
+    zombies.inProgress = false;
+    zombies.currentTime = 0;
+    document.getElementById('calculateSubmit').style.display = 'block'
+    document.getElementById('div-runtime').style.display = 'none'
+    document.getElementById('curTimeValue').innerHTML = zombies.currentTime;
+    zombies.init();
+  },
+
+  showSimulation: function() {
+    log.debug("Start simulation")
+    $("#map").removeClass('loading')
+    document.getElementById('div-runtime').style.display = 'block';
+    $("#slider-simulator").slider({
+      value: zombies.currentTime,
+      min: 0,
+      max: document.getElementById('timeMax').value,
+      step: 1,
+      slide: zombies.onSimulatorSlider
+    });
+
+  },
+
+  onSimulatorSlider: function(event, ui) {
+    zombies.currentTime = ui.value;
+    document.getElementById('curTimeValue').innerHTML = zombies.currentTime;
+    zombies.mapObject.series.regions[0].setValues(zombies.percentages[zombies.currentTime])
 
   },
 
@@ -85,38 +140,50 @@ zombies = {
 
 
   /*
+  MATH HANDLING
+  */
+  calculateSimulation: function(resolve) {
+    log.debug("Calculating Simulation");
+    //TODO
+    resolve();
+  },
+
+
+
+  /*
   DATA HANDLING
   */
-
   getInitialData: function(done) {
     log.debug("Loading data files")
     $.when(
       $.getJSON('data/states-initial.json'),
       $.getJSON('data/states-pops.json'),
-      $.getJSON('data/states-neighbors.json')
+      $.getJSON('data/county-adjacent.json')
     ).done(function(
       statesInitial,
       statesPopulation,
-      statesNeighbors
+      countyNeighbors
     ) {
-      log.debug("Preparing data")
-      this.statesNeighbors = statesNeighbors;
+      log.debug("Preparing data");
+
 
       var initialStatePercentage = JSON.parse(JSON.stringify(statesInitial));
       var initialStatesZombiePopulation = JSON.parse(JSON.stringify(statesInitial));
 
-      var stateData = {
-        "percentage": {
-          "0": initialStatePercentage["0"]
-        },
-        "humanPop": {
+      this.countyNeighbors = countyNeighbors;
+
+      this.percentages = {
+        "0": initialStatePercentage["0"]
+      }
+
+      this.populations = {
+        "human": {
           "0": statesPopulation["0"]
         },
-        "zombiePop": {
+        "zombie": {
           "0": initialStatesZombiePopulation["0"]
         }
       }
-      this.data = stateData;
 
 
       log.debug("Done preparing data")
@@ -129,25 +196,29 @@ zombies = {
 
 
 
-/*
-UTIL METHODS
-*/
-mergeObjects: function(obj1, obj2){
-  var obj3 = {};
-  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-  return obj3;
-},
+  /*
+  UTIL METHODS
+  */
+  mergeObjects: function(obj1, obj2) {
+    var obj3 = {};
+    for(var attrname in obj1) {
+      obj3[attrname] = obj1[attrname];
+    }
+    for(var attrname in obj2) {
+      obj3[attrname] = obj2[attrname];
+    }
+    return obj3;
+  },
 
 
-bigOut: function(number){
-  if(number.lt(0)){
-    number = number.times(0)
+  bigOut: function(number) {
+    if(number.lt(0)) {
+      number = number.times(0)
+    }
+
+    var result = number.toFixed(3);
+    return result;
   }
-
-  var result = number.toFixed(3);
-  return result;
-}
 
 
 

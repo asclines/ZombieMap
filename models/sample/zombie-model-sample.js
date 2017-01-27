@@ -1,37 +1,35 @@
-//This belongs in every file that adds to zombieSim namespace to prevent
-//overwrting.
-var zombieSim = zombieSim || {};
 
-zombieSim.model = {
-  params: { //With default values
-    biteChance: 20,
-    growthRate: 5
-  },
 
-  paramSettingsHtmlFile: "html/mathmodels/zombie-model-sample.html",
+zombieModel = {
+
+  paramSettingsHtmlFile: "models/sample/zombie-model-sample.html",
 
   setup: function(){
+    zombieModel.params = {  //With default values
+      biteChance: 20,
+      growthRate: 5
+    };
     document.getElementById('biteChance').innerHTML = this.params.biteChance;
     $("#slider-spread").slider({
-      value: zombieSim.model.params.biteChance,
+      value: zombieModel.params.biteChance,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieSim.model.params.biteChance = ui.value;
-        document.getElementById('biteChance').innerHTML = zombieSim.model.params.biteChance;
+        zombieModel.params.biteChance = ui.value;
+        document.getElementById('biteChance').innerHTML = zombieModel.params.biteChance;
       }
     });
 
     document.getElementById('growthRate').innerHTML = this.params.growthRate;
     $("#slider-growth").slider({
-      value: zombieSim.model.params.growthRate,
+      value: zombieModel.params.growthRate,
       min: 0,
       max: 100,
       step: 1,
       slide: function(event, ui){
-        zombieSim.model.params.growthRate = ui.value;
-        document.getElementById('growthRate').innerHTML = zombieSim.model.params.growthRate;
+        zombieModel.params.growthRate = ui.value;
+        document.getElementById('growthRate').innerHTML = zombieModel.params.growthRate;
       }
     });
   },
