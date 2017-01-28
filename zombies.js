@@ -53,23 +53,24 @@ zombies = {
       label.html(
         '<b>' + label.html() + '</b></br>' +
         '<b>Zombie takeover: </b>' + zombies.percentages[zombies.currentTime][code] + '% </b></br>' +
-        '<b>Human Population: </b>' + Number(zombies.populations.human[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-        '<b>Zombie Population: </b>' + Number(zombies.populations.zombie[zombies.currentTime][code]).toLocaleString()
+        '<b>Human Population: </b>' + Number(zombies.populations[zombies.currentTime][code].humans).toLocaleString() + '</b></br>' +
+        '<b>Zombie Population: </b>' + Number(zombies.populations[zombies.currentTime][code].zombies).toLocaleString()
       );
     } else {
       label.html(
         '<b>' + label.html() + '</b></br>' +
-        '<b>Population: </b>' + Number(zombies.populations.human[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-        '<b>Initial Zombies: </b>' + zombies.populations.zombie[zombies.currentTime][code]
+        '<b>Population: </b>' + Number(zombies.populations[zombies.currentTime][code].humans).toLocaleString() + '</b></br>' +
+        '<b>Initial Zombies: </b>' + zombies.populations[zombies.currentTime][code].zombies
       );
     }
   },
 
   onRegionClick: function(event, code) {
     if(zombies.inProgress) return;
+    var pop = zombies.populations["0"][code];
+    var humanPop = pop.humans;
+    var zombiePop = pop.zombies;
 
-    var humanPop = zombies.populations.human["0"][code];
-    var zombiePop = zombies.populations.zombie["0"][code];
 
     if(humanPop > 100) {
       humanPop = humanPop - 100;
@@ -81,13 +82,13 @@ zombies = {
       zombies.percentages["0"][code] = 0;
     }
 
-    zombies.populations.human["0"][code] = humanPop;
-    zombies.populations.zombie["0"][code] = zombiePop;
+    zombies.populations["0"][code].humans = humanPop;
+    zombies.populations["0"][code].zombies = zombiePop;
 
     zombies.currentLabel.html(
       '<b>' + zombies.currentHoverState + '</b></br>' +
-      '<b>Population: </b>' + Number(zombies.populations.human[zombies.currentTime][code]).toLocaleString() + '</b></br>' +
-      '<b>Initial Zombies: </b>' + zombies.populations.zombie[zombies.currentTime][code]
+      '<b>Population: </b>' + Number(zombies.populations[zombies.currentTime][code].humans).toLocaleString() + '</b></br>' +
+      '<b>Initial Zombies: </b>' + zombies.populations[zombies.currentTime][code].zombies
     );
 
   },
@@ -149,6 +150,27 @@ zombies = {
     resolve();
   },
 
+  calculateStateNextIteration: function(stateCode, timeIndex, resolve){
+    log.debug("Calculating timeIndex ", timeIndex, " for state ", stateCode);
+    var counties = zombies.statesCounties(stateCode);
+    var nextHumanPop = 0;
+    var nextZombiePop = 0;
+    //
+    // for (var countyCode in counties) {
+    //   var countyPop = {
+    //     "humans": zombies.populations[timeIndex]["human"],
+    //     "zombies": zombies.populations[timeIndex]["zombie"]
+    //   }
+    //   results = zombieModel.nextIteration(countyPop, zombies.countyNeighbors);
+    // }
+
+
+
+    //TODO
+  },
+
+
+
 
 
   /*
@@ -181,13 +203,9 @@ zombies = {
         "0": percentages["0"]
       }
       zombies.populations = {
-          "human": {
-            "0": populations["0"]["human"]
-          },
-          "zombie": {
-            "0": populations["0"]["zombie"]
-          }
+        "0": populations["0"]
       }
+
 
       zombies.statesCounties = statesCounties["0"];
       zombies.countyNeighbors = countyNeighbors["0"];
