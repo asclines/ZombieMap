@@ -1,0 +1,38 @@
+{
+    "US-CT": {
+        "humans": 4165020,
+        "zombies": 0
+    },
+    "09015": {
+        "humans": 134710,
+        "zombies": 0
+    },
+    "09011": {
+        "humans": 283120,
+        "zombies": 0
+    },
+    "09013": {
+        "humans": 193430,
+        "zombies": 0
+    },
+    "09007": {
+        "humans": 169310,
+        "zombies": 0
+    },
+    "09005": {
+        "humans": 174540,
+        "zombies": 0
+    },
+    "09003": {
+        "humans": 1103630,
+        "zombies": 0
+    },
+    "09001": {
+        "humans": 987720,
+        "zombies": 0
+    },
+    "09009": {
+        "humans": 1118560,
+        "zombies": 0
+    }
+}
