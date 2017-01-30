@@ -1,14 +1,7 @@
 <script>
 $(document).ready(function() {
-  $("#zombie-settings-params").load(zombieSim.model.paramSettingsHtmlFile, function(){
-    zombieSim.controls.initData(function(err) {
-      if(err == null) {
-        zombieSim.map.setup();
-        zombieSim.controls.setup();
-      } else {
-        console.log(err);
-      }
-    });
+  $("#zombie-settings-params").load(zombieModel.paramSettingsHtmlFile, function(){
+    zombies.init();
   })
 
 });
