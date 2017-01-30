@@ -61,22 +61,16 @@ zombieModel = {
     log.debug("newZombiePop =", newZombiePop);
 
     //Now thats see if any neighbors want to join.
-
-
-    // var currentHumanPop = population.humans;
-    // var currentZombiePop = population.zombies;
-
-
-    //var newZombiePop = ((currentHumanPop > 0) ? (currentZombiePop * trueBiteChance * currentHumanPop) : 0);
-    //currentHumanPop -= newZombiePop;
-
-    // for(var neighborIndex in neighbors){
-    //   if(currentHumanPop > 0){
-    //     var newestZombies = neighbors[neighborIndex].humans * trueBiteChance * currentHumanPop;
-    //     newZombiePop+= newestZombies;
-    //     currentHumanPop -= newestZombies;
-    //   }
-    // }
+    for(var neighborIndex in neighbors){
+      var neighborZombiePop = neighbors[neighborIndex].zombies;
+      if(nextHumanPop > 0 && neighborZombiePop > 0){
+        var neigbhorHumanPop = neighbors[neighborIndex].humans
+        var popNSum = nextHumanPop + neigbhorHumanPop + neighborZombiePop + nextHumanPop;
+        var newestZombies = Number(Math.floor((trueBiteChance * nextHumanPop * neighborZombiePop)/popNSum));
+        nextZombiePop += newestZombies;
+        nextHumanPop -= newestZombies;
+      }
+    }
 
     //How many humans were born this day?
     var newHumanPop = Math.floor(nextHumanPop * trueGrowthRate);

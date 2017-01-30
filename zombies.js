@@ -1,4 +1,4 @@
-log.setLevel('debug'); //See https://github.com/pimterry/loglevel for more
+log.setLevel('warn'); //See https://github.com/pimterry/loglevel for more
 
 zombies = {
   inProgress: false, //Various parts of the elements in this site depend on this fact.
@@ -318,8 +318,8 @@ zombies = {
     log.info("Loading data files")
     $.when(
       $.getJSON('data/percentages.json'),
-      $.getJSON('data/populations.test.json'),
-      $.getJSON('data/states-counties.test.json'),
+      $.getJSON('data/populations.json'),
+      $.getJSON('data/states-counties.json'),
       $.getJSON('data/county-adjacent.json')
     ).done(function(
       percentages,
@@ -373,10 +373,10 @@ zombies = {
   },
 
 
-  //Rounds number to a fixed number of 4 decimal places.
+  //Rounds number to a fixed number of 2 decimal places.
   roundNumber: function(num) {
     log.debug("Rounding",num)
-    return Number(num).toFixed(4);
+    return Number(num).toFixed(2);
   },
 
   //Determines perctange and rounds it.
