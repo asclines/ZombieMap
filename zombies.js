@@ -291,6 +291,7 @@ zombies = {
   /*
   UTIL METHODS
   */
+  //Returns a object containing all attributes in passed in objects.
   mergeObjects: function(obj1, obj2) {
     var obj3 = {};
     for(var attrname in obj1) {
@@ -302,6 +303,8 @@ zombies = {
     return obj3;
   },
 
+
+  //Rounds number to a fixed number of 4 decimal places.
   roundNumber: function(num) {
     return Number(num).toFixed(4);
   }
