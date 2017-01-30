@@ -79,7 +79,7 @@ zombies = {
   //NOTE: Assumes code is a state code for now.
   onRegionClick: function(event, code) {
     if(zombies.inProgress) return;
-    var deltaValue = 10; //Number of zombies to add to each county.
+    var deltaValue = 100; //Number of zombies to add to each county.
 
     //Iterate through each county add deltaValue zombies to each county
     var counties = zombies.statesCounties[code];
@@ -110,6 +110,7 @@ zombies = {
     zombies.populations["0"][code].humans = stateHumanPop;
     zombies.populations["0"][code].zombies = stateZombiePop;
     zombies.percentages["0"][code] = zombies.roundNumber((stateZombiePop / (stateHumanPop + stateZombiePop) * 100));
+    zombies.mapObject.series.regions[0].setValues(zombies.percentages[0])
 
 
 
