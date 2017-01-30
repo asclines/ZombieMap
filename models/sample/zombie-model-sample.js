@@ -1,5 +1,4 @@
 
-
 zombieModel = {
 
   paramSettingsHtmlFile: "models/sample/zombie-model-sample.html",
@@ -35,8 +34,6 @@ zombieModel = {
   },
 
   nextIteration: function(population, neighbors) {
-    log.debug("nextIteration: ", population, neighbors)
-
     var trueBiteChance = this.params.biteChance / 100;
     var trueGrowthRate = this.params.growthRate / 100;
 
@@ -58,8 +55,6 @@ zombieModel = {
     //And add newest zombies;
     nextZombiePop += newZombiePop;
 
-    log.debug("newZombiePop =", newZombiePop);
-
     //Now thats see if any neighbors want to join.
     for(var neighborIndex in neighbors){
       var neighborZombiePop = neighbors[neighborIndex].zombies;
@@ -77,24 +72,6 @@ zombieModel = {
     nextHumanPop += newHumanPop;
 
     var zombieTakeoverPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
-
-
-    // var newZombiePop = 0 new Big(0);
-    // if(population.humans.gt(0)){
-    //   newZombiePop = population.zombies.times(trueBiteChance);
-    // }
-
-    // for(var neighborIndex in neighbors) {
-    //   if(population.humans.gt(0)){
-    //     var newestZombies = neighbors[neighborIndex].humans.times(trueBiteChance);
-    //     newZombiePop = newZombiePop.plus(newestZombies);
-    //   }
-    // }
-    // var newHumanPop = new Big(population.humans).times(trueGrowthRate);
-    // var totalHumanPop = new Big(population.humans).minus(newZombiePop).plus(newHumanPop);
-    // var totalZombiePop = new Big(population.zombies).plus(newZombiePop);
-    // var sumPop = new Big(totalHumanPop).plus(totalZombiePop);
-    // var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
 
     return {
       zombies: nextZombiePop,

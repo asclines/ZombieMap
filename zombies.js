@@ -159,13 +159,10 @@ zombies = {
 
   onSimulatorSlider: function(event, ui) {
     log.debug("Sliding simulator:", ui)
-    log.debug(zombies.mapObject)
     zombies.currentTime = ui.value;
     document.getElementById('curTimeValue').innerHTML = ui.value;
-    log.debug(zombies.mapObject.series.regions)
     zombies.mapObject.series.regions[0].setValues(zombies.percentages[ui.value])
-    log.debug(zombies.percentages[ui.value])
-    log.debug(zombies.mapObject.series.regions)
+
 
   },
 
@@ -178,17 +175,16 @@ zombies = {
   calculateSimulation: function(resolve) {
     zombies.methodEntry();
     log.info("Calculating Simulation");
+
     //First: Create all the space needed.
     for(var i = 0; i < zombies.maxTime; i++) {
       zombies.percentages[i + 1] = {};
       zombies.populations[i + 1] = {};
       for(var stateCode in zombies.statesCounties) {
-        // log.debug("For time", i, "allocating space for state code", stateCode);
         zombies.populations[i + 1][stateCode] = {}
         zombies.populations[i + 1][stateCode] = {}
         var counties = zombies.statesCounties[stateCode];
         counties.forEach(function(countyCode) {
-          // log.debug("For time", i, "allocating space for county code", countyCode);
           zombies.populations[i + 1][countyCode] = {};
         })
       }
@@ -204,7 +200,6 @@ zombies = {
 
   calcAllStatesNextIteration: function(timeIndex, done) {
     zombies.methodEntry();
-    log.debug("Calculating all states for time: ", timeIndex);
     if(timeIndex >= zombies.maxTime) {
       log.debug("Reached maxtime: ", zombies.maxTime)
       done();
@@ -232,7 +227,6 @@ zombies = {
       statesPromises.push(deferred.promise);
     }
     Q.all(statesPromises).then(function(prevTime) {
-      //log.debug("Iteration ", timeIndex, " done")
       timeIndex++;
       zombies.calcAllStatesNextIteration(timeIndex, done);
     })
@@ -241,7 +235,6 @@ zombies = {
 
   calculateStateNextIteration: function(stateCode, timeIndex, resolve) {
     zombies.methodEntry();
-    log.debug("Calculating timeIndex", timeIndex, "for state", stateCode);
 
 
     var counties = zombies.statesCounties[stateCode];
@@ -256,27 +249,21 @@ zombies = {
 
       try {
         zombies.countyNeighbors[countyCode].forEach(function(neighborCode) {
-          log.debug("For countyCode", countyCode, "adding neighborCode", neighborCode)
           countyNeighborPops.push(zombies.populations[timeIndex][neighborCode])
         })
       } catch(e) {
         log.warn("calculateStateNextIteration", e, " countyCode: ", countyCode)
       } finally {
         results = zombieModel.nextIteration(countyPop, countyNeighborPops);
-        log.debug("Results for countyCode", countyCode, "at time", timeIndex, ":", results)
         zombies.populations[timeIndex + 1][countyCode].humans = results.humans;
         zombies.populations[timeIndex + 1][countyCode].zombies = results.zombies;
 
-        if(results.humans > 0 && timeIndex >= 1) {
-          log.debug("greaterReults", results)
-        }
         nextHumanPop += results.humans;
         nextZombiePop += results.zombies;
       }
 
     })
     var nextPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
-    log.debug("nextPercentage", nextPercentage)
 
 
     nextHumanPop = zombies.roundNumber(nextHumanPop);
@@ -284,17 +271,6 @@ zombies = {
 
     zombies.populations[timeIndex + 1][stateCode].humans = ((nextHumanPop < 0) ? 0 : nextHumanPop);
     zombies.populations[timeIndex + 1][stateCode].zombies = ((nextZombiePop < 0) ? 0 : nextZombiePop);
-
-
-    // var nextPercentage = 0;
-    // if(nextZombiePop > 0) {
-    //   nextPercentage = (nextZombiePop / (nextHumanPop + nextZombiePop)) * 100
-    //   nextPercentage = zombies.roundNumber(nextPercentage)
-    //   nextPercentage = ((nextPercentage > 100) ? 100 : nextPercentage)
-    // }
-
-
-
 
     zombies.percentages[timeIndex + 1][stateCode] = nextPercentage
     log.debug("Percentage at stateCode", stateCode, "at time", timeIndex + 1, "is", nextPercentage)
@@ -328,14 +304,11 @@ zombies = {
       countyNeighbors
     ) {
       log.info("Preparing data");
-      //console.log(countyNeighbors);
 
       if(percentages["1"] != "success") reject("Could not load data/percentages.json");
       if(populations["1"] != "success") reject("Could not load data/populations.json");
       if(statesCounties["1"] != "success") reject("Could not load data/states-counties.json");
       if(countyNeighbors["1"] != "success") reject("Could not load data/county-adjacent.json");
-
-
 
       zombies.percentages = {
         "0": percentages["0"]
@@ -343,7 +316,6 @@ zombies = {
       zombies.populations = {
         "0": populations["0"]
       }
-
 
       zombies.statesCounties = statesCounties["0"];
       zombies.countyNeighbors = countyNeighbors["0"];
@@ -375,14 +347,12 @@ zombies = {
 
   //Rounds number to a fixed number of 2 decimal places.
   roundNumber: function(num) {
-    log.debug("Rounding",num)
     return Number(num).toFixed(2);
   },
 
   //Determines perctange and rounds it.
   zombiePercentage: function(zombiePop, humanPop){
     zombies.methodEntry();
-    log.debug(zombiePop, humanPop)
     if(zombiePop <= 0) return 0;
     if(humanPop <= 0) return 100;
 
