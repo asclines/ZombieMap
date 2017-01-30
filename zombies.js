@@ -79,7 +79,7 @@ zombies = {
   //NOTE: Assumes code is a state code for now.
   onRegionClick: function(event, code) {
     if(zombies.inProgress) return;
-    //Iterate through each county add 10 zombies to each county
+    //Iterate through each county add 100 zombies to each county
     var counties = zombies.statesCounties[code];
     var stateHumanPop = 0;
     var stateZombiePop = 0;
@@ -163,6 +163,7 @@ zombies = {
     zombies.currentTime = ui.value;
     document.getElementById('curTimeValue').innerHTML = ui.value;
     zombies.mapObject.series.regions[0].setValues(zombies.percentages[ui.value])
+    log.debug(zombies.percentages[ui.value])
 
   },
 
@@ -272,21 +273,25 @@ zombies = {
       }
 
     })
+    var nextPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
+    log.debug("nextPercentage", nextPercentage)
+
 
     nextHumanPop = zombies.roundNumber(nextHumanPop);
     nextZombiePop = zombies.roundNumber(nextZombiePop);
 
     zombies.populations[timeIndex + 1][stateCode].humans = ((nextHumanPop < 0) ? 0 : nextHumanPop);
     zombies.populations[timeIndex + 1][stateCode].zombies = ((nextZombiePop < 0) ? 0 : nextZombiePop);
-    var nextPercentage = 0;
-    if(nextZombiePop > 0) {
-      nextPercentage = (nextZombiePop / (nextHumanPop + nextZombiePop)) * 100
-      nextPercentage = zombies.roundNumber(nextPercentage)
-      nextPercentage = ((nextPercentage > 100) ? 100 : nextPercentage)
-    }
 
 
-    log.debug("nextPercentage", nextPercentage)
+    // var nextPercentage = 0;
+    // if(nextZombiePop > 0) {
+    //   nextPercentage = (nextZombiePop / (nextHumanPop + nextZombiePop)) * 100
+    //   nextPercentage = zombies.roundNumber(nextPercentage)
+    //   nextPercentage = ((nextPercentage > 100) ? 100 : nextPercentage)
+    // }
+
+
 
 
     zombies.percentages[timeIndex + 1][stateCode] = nextPercentage
@@ -368,7 +373,21 @@ zombies = {
 
   //Rounds number to a fixed number of 4 decimal places.
   roundNumber: function(num) {
+    log.debug("Rounding",num)
     return Number(num).toFixed(4);
+  },
+
+  //Determines perctange and rounds it.
+  zombiePercentage: function(zombiePop, humanPop){
+    zombies.methodEntry();
+    log.debug(zombiePop, humanPop)
+    if(zombiePop <= 0) return 0;
+    if(humanPop <= 0) return 100;
+
+    var result = zombiePop / (humanPop + zombiePop);
+    result = result * 100;
+    zombies.methodExit();
+    return zombies.roundNumber(result);
   },
 
 

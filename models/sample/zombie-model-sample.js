@@ -35,29 +35,54 @@ zombieModel = {
   },
 
   nextIteration: function(population, neighbors) {
-    // log.debug("nextIteration: ", population, neighbors)
+    log.debug("nextIteration: ", population, neighbors)
+
     var trueBiteChance = this.params.biteChance / 100;
     var trueGrowthRate = this.params.growthRate / 100;
-    var currentHumanPop = population.humans;
-    var currentZombiePop = population.zombies;
 
+    //Initialize next populations with current populations
+    var nextHumanPop = population.humans;
+    var nextZombiePop = population.zombies;
 
-    var newZombiePop = ((currentHumanPop > 0) ? (currentZombiePop * trueBiteChance * currentHumanPop) : 0);
-    currentHumanPop -= newZombiePop;
+    var totalPopulation = nextHumanPop + nextZombiePop;
 
-    for(var neighborIndex in neighbors){
-      if(currentHumanPop > 0){
-        var newestZombies = neighbors[neighborIndex].humans * trueBiteChance * currentHumanPop;
-        newZombiePop+= newestZombies;
-        currentHumanPop -= newestZombies;
-      }
+    // Find the deltas, aka, how many zombies will be added and how many humans will die
+    var newZombiePop = 0;
+    if(nextHumanPop > 0) { //If there are humans to convert.
+      newZombiePop = Math.floor((nextZombiePop * nextHumanPop * trueBiteChance)/totalPopulation);
     }
 
-    var newHumanPop = currentHumanPop * trueGrowthRate;
-    currentHumanPop += newHumanPop;
+    //Now subtract the newest zombies from the human population.
+    nextHumanPop -= newZombiePop;
 
-    var sumPop = currentHumanPop + currentZombiePop;
-    var zombieTakeoverPercentage = currentZombiePop / sumPop;
+    //And add newest zombies;
+    nextZombiePop += newZombiePop;
+
+    log.debug("newZombiePop =", newZombiePop);
+
+    //Now thats see if any neighbors want to join.
+
+
+    // var currentHumanPop = population.humans;
+    // var currentZombiePop = population.zombies;
+
+
+    //var newZombiePop = ((currentHumanPop > 0) ? (currentZombiePop * trueBiteChance * currentHumanPop) : 0);
+    //currentHumanPop -= newZombiePop;
+
+    // for(var neighborIndex in neighbors){
+    //   if(currentHumanPop > 0){
+    //     var newestZombies = neighbors[neighborIndex].humans * trueBiteChance * currentHumanPop;
+    //     newZombiePop+= newestZombies;
+    //     currentHumanPop -= newestZombies;
+    //   }
+    // }
+
+    //How many humans were born this day?
+    var newHumanPop = Math.floor(nextHumanPop * trueGrowthRate);
+    nextHumanPop += newHumanPop;
+
+    var zombieTakeoverPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
 
 
     // var newZombiePop = 0 new Big(0);
@@ -78,9 +103,9 @@ zombieModel = {
     // var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
 
     return {
-      zombies: ((currentZombiePop < 0) ? 0 : currentZombiePop),
-      humans: ((currentHumanPop < 0 ) ? 0 : currentHumanPop),
-      percentage: (zombieTakeoverPercentage * 100)
+      zombies: nextZombiePop,
+      humans: nextHumanPop,
+      percentage: zombieTakeoverPercentage
     };
   }
 };
