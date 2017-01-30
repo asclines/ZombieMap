@@ -35,30 +35,52 @@ zombieModel = {
   },
 
   nextIteration: function(population, neighbors) {
+    // log.debug("nextIteration: ", population, neighbors)
     var trueBiteChance = this.params.biteChance / 100;
     var trueGrowthRate = this.params.growthRate / 100;
+    var currentHumanPop = population.humans;
+    var currentZombiePop = population.zombies;
 
-    var newZombiePop = new Big(0);
-    if(population.humans.gt(0)){
-      newZombiePop = population.zombies.times(trueBiteChance);
-    }
 
-    for(var neighborIndex in neighbors) {
-      if(population.humans.gt(0)){
-        var newestZombies = neighbors[neighborIndex].humans.times(trueBiteChance);
-        newZombiePop = newZombiePop.plus(newestZombies);
+    var newZombiePop = ((currentHumanPop > 0) ? (currentZombiePop * trueBiteChance * currentHumanPop) : 0);
+    currentHumanPop -= newZombiePop;
+
+    for(var neighborIndex in neighbors){
+      if(currentHumanPop > 0){
+        var newestZombies = neighbors[neighborIndex].humans * trueBiteChance * currentHumanPop;
+        newZombiePop+= newestZombies;
+        currentHumanPop -= newestZombies;
       }
     }
-    var newHumanPop = new Big(population.humans).times(trueGrowthRate);
-    var totalHumanPop = new Big(population.humans).minus(newZombiePop).plus(newHumanPop);
-    var totalZombiePop = new Big(population.zombies).plus(newZombiePop);
-    var sumPop = new Big(totalHumanPop).plus(totalZombiePop);
-    var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
+
+    var newHumanPop = currentHumanPop * trueGrowthRate;
+    currentHumanPop += newHumanPop;
+
+    var sumPop = currentHumanPop + currentZombiePop;
+    var zombieTakeoverPercentage = currentZombiePop / sumPop;
+
+
+    // var newZombiePop = 0 new Big(0);
+    // if(population.humans.gt(0)){
+    //   newZombiePop = population.zombies.times(trueBiteChance);
+    // }
+
+    // for(var neighborIndex in neighbors) {
+    //   if(population.humans.gt(0)){
+    //     var newestZombies = neighbors[neighborIndex].humans.times(trueBiteChance);
+    //     newZombiePop = newZombiePop.plus(newestZombies);
+    //   }
+    // }
+    // var newHumanPop = new Big(population.humans).times(trueGrowthRate);
+    // var totalHumanPop = new Big(population.humans).minus(newZombiePop).plus(newHumanPop);
+    // var totalZombiePop = new Big(population.zombies).plus(newZombiePop);
+    // var sumPop = new Big(totalHumanPop).plus(totalZombiePop);
+    // var zombieTakeoverPercentage = new Big(totalZombiePop).div(sumPop);
 
     return {
-      zombies: zombieSim.utils.bigOut(totalZombiePop),
-      humans: zombieSim.utils.bigOut(totalHumanPop),
-      percentage: zombieSim.utils.bigOut(zombieTakeoverPercentage.times(100))
+      zombies: ((currentZombiePop < 0) ? 0 : currentZombiePop),
+      humans: ((currentHumanPop < 0 ) ? 0 : currentHumanPop),
+      percentage: (zombieTakeoverPercentage * 100)
     };
   }
 };
