@@ -162,8 +162,10 @@ zombies = {
     log.debug(zombies.mapObject)
     zombies.currentTime = ui.value;
     document.getElementById('curTimeValue').innerHTML = ui.value;
+    log.debug(zombies.mapObject.series.regions)
     zombies.mapObject.series.regions[0].setValues(zombies.percentages[ui.value])
     log.debug(zombies.percentages[ui.value])
+    log.debug(zombies.mapObject.series.regions)
 
   },
 
@@ -387,7 +389,7 @@ zombies = {
     var result = zombiePop / (humanPop + zombiePop);
     result = result * 100;
     zombies.methodExit();
-    return zombies.roundNumber(result);
+    return Number(zombies.roundNumber(result));
   },
 
 
