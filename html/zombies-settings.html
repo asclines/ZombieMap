@@ -1,3 +1,19 @@
+<script>
+$(document).ready(function() {
+  $("#zombie-settings-params").load(zombieSim.model.paramSettingsHtmlFile, function(){
+    zombieSim.controls.initData(function(err) {
+      if(err == null) {
+        zombieSim.map.setup();
+        zombieSim.controls.setup();
+      } else {
+        console.log(err);
+      }
+    });
+  })
+
+});
+
+</script>
 <p data-tooltip="Just like that!" data-position="bottom right">
     Confused?
     <br /> Hover over text for more info.
@@ -7,32 +23,7 @@
   Step 1
 </h2>
 
-<div class="ui inverted form">
-    <div class="inline field">
-      <div class="ui black label"
-        data-tooltip="Percentage of humans that become zombies each time."
-        data-position="top left">
-          Bite Spread
-          <div class="inverted detail">
-            <span id="biteChance">0</span>
-          </div>
-      </div>
-        <div id="slider-spread" class="zombiesettingsslider"></div>
-    </div>
-
-    <div class="inline field">
-      <div class="ui black label "
-        data-tooltip="How many humans are born each time in percentage to current population."
-        data-position="top left">
-          Growth
-          <div class="inverted detail">
-            <span id="growthRate">0</span>
-          </div>
-      </div>
-        <div id="slider-growth" class="zombiesettingsslider"></div>
-    </div>
-
-</div>
+<div id="zombie-settings-params"></div>
 
 
 <h2 class="ui inverted header"

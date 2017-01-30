@@ -26,6 +26,8 @@
         <script src="js/zombie-data.js"></script>
         <script src="js/zombie-math.js"></script>
 
+        <script src="js/mathmodels/zombie-model-sample.js"></script>
+
         <!--  ASSETS-->
         <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
         <script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
@@ -37,18 +39,9 @@
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-              var deferredPages = [];
                 $("#zombie-instructions").load("html/zombies-instructions.html")
-                $("#zombie-settings").load("html/zombies-settings.html", function(){
-                  initData(function(err) {
-                    if(err == null) {
-                      setupMap();
-                      setupControls();
-                    } else {
-                      console.log(err);
-                    }
-                  });
-                })
+                $("#zombie-settings").load("html/zombies-settings.html");
+
                 $('#showInstructions').click(function() {
                     $('#instructionsModal').modal('show');
                 });
