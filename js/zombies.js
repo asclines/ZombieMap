@@ -74,6 +74,7 @@ zombies = {
           code.toLowerCase() + '-' +
           multiMap.defaultProjection + '-en.js';
       }
+
     });
 
     $('#map').bind('regionClick.jvectormap', zombies.onRegionClick);
@@ -115,7 +116,7 @@ zombies = {
     if(zombies.inProgress) return;
     if(zombies.isCodeState(code)) return;
     //var deltaValue = 100; //Number of zombies to add to each with each click
-    var deltaValue =  Number(document.getElementById('deltaClick').value);
+    var deltaValue = Number(document.getElementById('deltaClick').value);
 
     var countyPop = zombies.populations["0"][code];
     var stateCode = zombies.countyState[code];
@@ -156,6 +157,9 @@ zombies = {
 
     zombies.maxTime = document.getElementById('timeMax').value;
     new Promise(zombies.calculateSimulation).then(zombies.showSimulation);
+    if(!zombies.spinner) zombies.spinner = new Spinner();
+    zombies.spinner.spin()
+    document.getElementById('zombie-settings-params').appendChild(zombies.spinner.el);
 
   },
 
@@ -178,6 +182,7 @@ zombies = {
   showSimulation: function() {
     log.debug("Start simulation")
     $("#map").removeClass('loading')
+    zombies.spinner.stop();
     document.getElementById('div-runtime').style.display = 'block';
     $("#slider-simulator").slider({
       value: zombies.currentTime,
