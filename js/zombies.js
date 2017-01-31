@@ -130,7 +130,6 @@ zombies = {
       statePop.zombies += countyPop.humans;
       countyPop.humans = 0;
     }
-
     zombies.populations["0"][code] = countyPop;
     zombies.populations["0"][stateCode] = statePop;
     zombies.percentages["0"][code] = zombies.zombiePercentage(countyPop.zombies, countyPop.humans);
