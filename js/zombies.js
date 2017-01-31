@@ -1,7 +1,8 @@
 log.setLevel('debug'); //See https://github.com/pimterry/loglevel for more
 
 zombies = {
-  inProgress: false, //Various parts of the elements in this site depend on this fact.
+  inProgress: false, //Various parts of the elements in this site depend
+                    //on this fact.
   currentTime: 0,
   init: function() {
     log.debug("Initializing zombies")
@@ -70,7 +71,9 @@ zombies = {
         updateMap = function() {
           setTimeout(function() {
             if(zombies.mapObject.maps[mapId])
-              zombies.mapObject.maps[mapId].series.regions[0].setValues(zombies.percentages[zombies.currentTime])
+              zombies.mapObject.maps[mapId]
+                .series.regions[0]
+                .setValues(zombies.percentages[zombies.currentTime])
             else updateMap();
           }, 100);
         };
@@ -100,16 +103,26 @@ zombies = {
     try {
       if(zombies.inProgress) {
         label.html(
-          '<b>' + label.html() + '</b></br>' +
-          '<b>Zombie takeover: </b>' + zombies.percentages[zombies.currentTime][code] + '% </b></br>' +
-          '<b>Human Population: </b>' + Number(zombies.populations[zombies.currentTime][code].humans).toLocaleString() + '</b></br>' +
-          '<b>Zombie Population: </b>' + Number(zombies.populations[zombies.currentTime][code].zombies).toLocaleString()
+          '<b>' + label.html() + '</b></br>'
+          + '<b>Zombie takeover: </b>'
+          + zombies.percentages[zombies.currentTime][code] + '% </b></br>'
+          + '<b>Human Population: </b>'
+          + Number(zombies.populations[zombies.currentTime][code].humans)
+            .toLocaleString()
+          + '</b></br>'
+          + '<b>Zombie Population: </b>'
+          + Number(zombies.populations[zombies.currentTime][code].zombies)
+            .toLocaleString()
         );
       } else {
         label.html(
-          '<b>' + label.html() + '</b></br>' +
-          '<b>Population: </b>' + Number(zombies.populations[zombies.currentTime][code].humans).toLocaleString() + '</b></br>' +
-          '<b>Initial Zombies: </b>' + zombies.populations[zombies.currentTime][code].zombies
+          '<b>' + label.html() + '</b></br>'
+          +'<b>Population: </b>'
+          + Number(zombies.populations[zombies.currentTime][code].humans)
+            .toLocaleString()
+          + '</b></br>'
+          + '<b>Initial Zombies: </b>'
+          + zombies.populations[zombies.currentTime][code].zombies
         );
       }
     } catch(err) {
@@ -143,13 +156,22 @@ zombies = {
     }
     zombies.populations["0"][code] = countyPop;
     zombies.populations["0"][stateCode] = statePop;
-    zombies.percentages["0"][code] = zombies.zombiePercentage(countyPop.zombies, countyPop.humans);
-    zombies.percentages["0"][stateCode] = zombies.zombiePercentage(statePop.zombies, statePop.humans);
+    zombies.percentages["0"][code] = zombies.zombiePercentage(
+      countyPop.zombies,
+      countyPop.humans
+    );
+    zombies.percentages["0"][stateCode] = zombies.zombiePercentage(
+      statePop.zombies,
+      statePop.humans
+    );
 
     zombies.currentLabel.html(
-      '<b>' + zombies.currentHoverState + '</b></br>' +
-      '<b>Population: </b>' + Number(zombies.populations[zombies.currentTime][code].humans).toLocaleString() + '</b></br>' +
-      '<b>Initial Zombies: </b>' + zombies.populations[zombies.currentTime][code].zombies
+      '<b>' + zombies.currentHoverState + '</b></br>'
+      + '<b>Population: </b>'
+      + Number(zombies.populations[zombies.currentTime][code].humans)
+        .toLocaleString() + '</b></br>'
+      + '<b>Initial Zombies: </b>'
+      + zombies.populations[zombies.currentTime][code].zombies
     );
 
   },
@@ -167,7 +189,8 @@ zombies = {
     new Promise(zombies.calculateSimulation).then(zombies.showSimulation);
     if(!zombies.spinner) zombies.spinner = new Spinner();
     zombies.spinner.spin()
-    document.getElementById('zombie-settings-params').appendChild(zombies.spinner.el);
+    document.getElementById('zombie-settings-params')
+      .appendChild(zombies.spinner.el);
 
   },
 
@@ -287,7 +310,10 @@ zombies = {
         results = zombieModel.nextIteration(countyPop, countyNeighborPops);
         zombies.populations[timeIndex + 1][countyCode].humans = results.humans;
         zombies.populations[timeIndex + 1][countyCode].zombies = results.zombies;
-        zombies.percentages[timeIndex + 1][countyCode] = zombies.zombiePercentage(results.zombies, results.humans);
+        zombies.percentages[timeIndex + 1][countyCode] = zombies.zombiePercentage(
+          results.zombies,
+          results.humans
+        );
         nextHumanPop += results.humans;
         nextZombiePop += results.zombies;
       }
