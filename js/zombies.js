@@ -46,16 +46,23 @@ zombies = {
         onRegionClick: zombies.onRegionClick,
         series: {
           regions: [{
-            scale: ['#99ff99', '#990000'],
-            attribute: 'fill',
-            values: zombies.percentages[zombies.currentTime],
-            min: 0,
-            max: 100,
-            legend: {
-              horizontal: true,
-              title: 'Percentage taken over by zombies'
-            }
-            }]
+              scale: ['#99ff99', '#990000'],
+              attribute: 'fill',
+              values: zombies.percentages[zombies.currentTime],
+              min: 0,
+              max: 100,
+              legend: {
+                horizontal: true,
+                title: 'Percentage taken over by zombies'
+              }
+          },
+            {
+              scale: ['#4682B4 ', '#990000'],
+              attribute: 'fill',
+              values: zombies.lakeCodes,
+              min: 0,
+              max: 100
+        }]
         }
       },
       mapUrlByCode: function(code, multiMap) {
@@ -317,13 +324,15 @@ zombies = {
       $.getJSON('data/populations.json'),
       $.getJSON('data/states-counties.json'),
       $.getJSON('data/county-adjacent.json'),
-      $.getJSON('data/county-state.json')
+      $.getJSON('data/county-state.json'),
+      $.getJSON('data/lake-codes.json')
     ).done(function(
       percentages,
       populations,
       statesCounties,
       countyNeighbors,
-      countyState
+      countyState,
+      lakeCodes
     ) {
       log.info("Preparing data");
 
@@ -332,6 +341,8 @@ zombies = {
       if(statesCounties["1"] != "success") reject("Could not load data/states-counties.json");
       if(countyNeighbors["1"] != "success") reject("Could not load data/county-adjacent.json");
       if(countyState["1"] != "success") reject("Could not load data/county-state.json")
+      if(lakeCodes["1"] != "success") reject("Could not load data/lake-codes.json")
+
 
       zombies.percentages = {
         "0": percentages["0"]
@@ -343,6 +354,7 @@ zombies = {
       zombies.statesCounties = statesCounties["0"];
       zombies.countyNeighbors = countyNeighbors["0"];
       zombies.countyState = countyState["0"];
+      zombies.lakeCodes = lakeCodes["0"]
       resolve();
     });
 
