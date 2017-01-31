@@ -94,6 +94,7 @@ zombies = {
 
   onRegionTipShow: function(event, label, code) {
     // log.debug("onRegionTipShow", label, code)
+    if(code in zombies.lakeCodes) return;
     zombies.currentLabel = label;
     zombies.currentHoverState = label.html();
     try {
@@ -120,7 +121,7 @@ zombies = {
 
 
   onRegionClick: function(event, code) {
-    if(zombies.inProgress) return;
+    if(zombies.inProgress || code in zombies.lakeCodes) return;
     if(zombies.isCodeState(code)) return;
     //var deltaValue = 100; //Number of zombies to add to each with each click
     var deltaValue = Number(document.getElementById('deltaClick').value);
