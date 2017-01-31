@@ -114,7 +114,9 @@ zombies = {
   onRegionClick: function(event, code) {
     if(zombies.inProgress) return;
     if(zombies.isCodeState(code)) return;
-    var deltaValue = 100; //Number of zombies to add to each with each click.
+    //var deltaValue = 100; //Number of zombies to add to each with each click
+    var deltaValue =  Number(document.getElementById('deltaClick').value);
+
     var countyPop = zombies.populations["0"][code];
     var stateCode = zombies.countyState[code];
     var statePop = zombies.populations["0"][stateCode];
