@@ -25,24 +25,34 @@ zombies = {
   setupMap: function(done) {
     log.debug("Setting up map")
     zombies.currentTime = 0;
-    zombies.mapObject = new jvm.Map({
+
+    zombies.mapObject = new jvm.MultiMap({
       container: $('#map'),
-      map: 'us_aea',
-      backgroundColor: "transparent",
-      onRegionTipShow: zombies.onRegionTipShow,
-      onRegionClick: zombies.onRegionClick,
-      series: {
-        regions: [{
-          scale: ['#99ff99', '#990000'],
-          attribute: 'fill',
-          values: zombies.percentages[zombies.currentTime],
-          min: 0,
-          max: 100,
-          legend: {
-            horizontal: true,
-            title: 'Percentage taken over by zombies'
-          }
-          }]
+      maxLevel: 1,
+
+      main: {
+        map: 'us_lcc_en',
+        backgroundColor: "transparent",
+        onRegionTipShow: zombies.onRegionTipShow,
+        onRegionClick: zombies.onRegionClick,
+        series: {
+          regions: [{
+            scale: ['#99ff99', '#990000'],
+            attribute: 'fill',
+            values: zombies.percentages[zombies.currentTime],
+            min: 0,
+            max: 100,
+            legend: {
+              horizontal: true,
+              title: 'Percentage taken over by zombies'
+            }
+            }]
+        }
+      },
+      mapUrlByCode: function(code, multiMap) {
+        return 'data/counties/jquery-jvectormap-data-' +
+          code.toLowerCase() + '-' +
+          multiMap.defaultProjection + '-en.js';
       }
     });
 
@@ -50,7 +60,7 @@ zombies = {
   }, //End - setupMap
 
   onRegionTipShow: function(event, label, code) {
-    //log.debug("onRegionTipShow", label, code)
+    // log.debug("onRegionTipShow", label, code)
     zombies.currentLabel = label;
     zombies.currentHoverState = label.html();
     try {
@@ -102,8 +112,8 @@ zombies = {
 
       zombies.populations["0"][countyCode].humans = humanPop;
       zombies.populations["0"][countyCode].zombies = zombiePop;
-      stateHumanPop+=humanPop;
-      stateZombiePop+=zombiePop;
+      stateHumanPop += humanPop;
+      stateZombiePop += zombiePop;
 
     });
 
@@ -336,7 +346,7 @@ zombies = {
   },
 
   //Determines perctange and rounds it.
-  zombiePercentage: function(zombiePop, humanPop){
+  zombiePercentage: function(zombiePop, humanPop) {
     if(zombiePop <= 0) return 0;
     if(humanPop <= 0) return 100;
 
