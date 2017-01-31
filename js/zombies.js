@@ -9,6 +9,15 @@ zombies = {
       log.debug("Done getting initial data")
       zombies.setupMap(function() {
         zombieModel.setup();
+
+        // var obj = zombies.mapObject.maps.us_lcc_en;
+        // for(var name in obj) {
+        //   if(obj.hasOwnProperty(name)) {
+        //     log.debug("Property:",name)
+        //   }
+        // }
+
+
       })
     }, function(reason) {
       log.error(reason)
@@ -25,32 +34,58 @@ zombies = {
   setupMap: function(done) {
     log.debug("Setting up map")
     zombies.currentTime = 0;
-    zombies.mapObject = new jvm.Map({
+
+    zombies.mapObject = new jvm.MultiMap({
       container: $('#map'),
-      map: 'us_aea',
-      backgroundColor: "transparent",
-      onRegionTipShow: zombies.onRegionTipShow,
-      onRegionClick: zombies.onRegionClick,
-      series: {
-        regions: [{
-          scale: ['#99ff99', '#990000'],
-          attribute: 'fill',
-          values: zombies.percentages[zombies.currentTime],
-          min: 0,
-          max: 100,
-          legend: {
-            horizontal: true,
-            title: 'Percentage taken over by zombies'
-          }
-          }]
+      maxLevel: 1,
+
+      main: {
+        map: 'us_lcc_en',
+        backgroundColor: "transparent",
+        onRegionTipShow: zombies.onRegionTipShow,
+        onRegionClick: zombies.onRegionClick,
+        series: {
+          regions: [{
+            scale: ['#99ff99', '#990000'],
+            attribute: 'fill',
+            values: zombies.percentages[zombies.currentTime],
+            min: 0,
+            max: 100,
+            legend: {
+              horizontal: true,
+              title: 'Percentage taken over by zombies'
+            }
+            }]
+        }
+      },
+      mapUrlByCode: function(code, multiMap) {
+        var mapId = code.toLowerCase() + "_lcc_en";
+        updateMap = function() {
+          setTimeout(function() {
+            if(zombies.mapObject.maps[mapId])
+              zombies.mapObject.maps[mapId].series.regions[0].setValues(zombies.percentages[zombies.currentTime])
+            else updateMap();
+          }, 100);
+        };
+
+        updateMap();
+
+        return 'data/counties/jquery-jvectormap-data-' +
+          code.toLowerCase() + '-' +
+          multiMap.defaultProjection + '-en.js';
       }
     });
+
+    $('#map').bind('regionClick.jvectormap', zombies.onRegionClick);
+
+
+
 
     done();
   }, //End - setupMap
 
   onRegionTipShow: function(event, label, code) {
-    //log.debug("onRegionTipShow", label, code)
+    // log.debug("onRegionTipShow", label, code)
     zombies.currentLabel = label;
     zombies.currentHoverState = label.html();
     try {
@@ -76,43 +111,29 @@ zombies = {
   },
 
 
-  //NOTE: Assumes code is a state code for now.
   onRegionClick: function(event, code) {
     if(zombies.inProgress) return;
-    var deltaValue = 100; //Number of zombies to add to each county.
+    if(zombies.isCodeState(code)) return;
+    var deltaValue = 100; //Number of zombies to add to each with each click.
+    var countyPop = zombies.populations["0"][code];
+    var stateCode = zombies.countyState[code];
+    var statePop = zombies.populations["0"][stateCode];
 
-    //Iterate through each county add deltaValue zombies to each county
-    var counties = zombies.statesCounties[code];
-    var stateHumanPop = 0;
-    var stateZombiePop = 0;
-    counties.forEach(function(countyCode) {
-      var pop = zombies.populations["0"][countyCode];
-      var humanPop = pop.humans;
-      var zombiePop = pop.zombies;
-
-      if(humanPop > deltaValue) {
-        humanPop = humanPop - deltaValue;
-        zombiePop = zombiePop + deltaValue;
-        zombies.percentages["0"][countyCode] = zombies.roundNumber((zombiePop / (humanPop + zombiePop) * 100));
-      } else {
-        zombiePop = zombiePop + humanPop;
-        humanPop = 0;
-        zombies.percentages["0"][countyCode] = 0;
-      }
-
-      zombies.populations["0"][countyCode].humans = humanPop;
-      zombies.populations["0"][countyCode].zombies = zombiePop;
-      stateHumanPop+=humanPop;
-      stateZombiePop+=zombiePop;
-
-    });
-
-    zombies.populations["0"][code].humans = stateHumanPop;
-    zombies.populations["0"][code].zombies = stateZombiePop;
-    zombies.percentages["0"][code] = zombies.roundNumber((stateZombiePop / (stateHumanPop + stateZombiePop) * 100));
-    zombies.mapObject.series.regions[0].setValues(zombies.percentages[0])
-
-
+    if(countyPop.humans > deltaValue) {
+      countyPop.humans -= deltaValue;
+      countyPop.zombies += deltaValue;
+      statePop.humans -= deltaValue;
+      statePop.zombies += deltaValue;
+    } else {
+      countyPop.zombies += countyPop.humans;
+      statePop.humans -= countyPop.humans;
+      statePop.zombies += countyPop.humans;
+      countyPop.humans = 0;
+    }
+    zombies.populations["0"][code] = countyPop;
+    zombies.populations["0"][stateCode] = statePop;
+    zombies.percentages["0"][code] = zombies.zombiePercentage(countyPop.zombies, countyPop.humans);
+    zombies.percentages["0"][stateCode] = zombies.zombiePercentage(statePop.zombies, statePop.humans);
 
     zombies.currentLabel.html(
       '<b>' + zombies.currentHoverState + '</b></br>' +
@@ -143,8 +164,13 @@ zombies = {
     document.getElementById('calculateSubmit').style.display = 'block'
     document.getElementById('div-runtime').style.display = 'none'
     document.getElementById('curTimeValue').innerHTML = zombies.currentTime;
-    zombies.mapObject.remove();
-    zombies.init();
+
+    new Promise(zombies.getInitialData).then(function() {
+      zombies.forEachMap(function(map) {
+        map.series.regions[0].setValues(zombies.percentages["0"])
+      });
+    })
+
   },
 
   showSimulation: function() {
@@ -164,9 +190,9 @@ zombies = {
   onSimulatorSlider: function(event, ui) {
     zombies.currentTime = ui.value;
     document.getElementById('curTimeValue').innerHTML = ui.value;
-    zombies.mapObject.series.regions[0].setValues(zombies.percentages[ui.value])
-
-
+    zombies.forEachMap(function(map) {
+      map.series.regions[0].setValues(zombies.percentages[ui.value]);
+    })
   },
 
 
@@ -246,7 +272,7 @@ zombies = {
         results = zombieModel.nextIteration(countyPop, countyNeighborPops);
         zombies.populations[timeIndex + 1][countyCode].humans = results.humans;
         zombies.populations[timeIndex + 1][countyCode].zombies = results.zombies;
-
+        zombies.percentages[timeIndex + 1][countyCode] = zombies.zombiePercentage(results.zombies, results.humans);
         nextHumanPop += results.humans;
         nextZombiePop += results.zombies;
       }
@@ -283,12 +309,14 @@ zombies = {
       $.getJSON('data/percentages.json'),
       $.getJSON('data/populations.json'),
       $.getJSON('data/states-counties.json'),
-      $.getJSON('data/county-adjacent.json')
+      $.getJSON('data/county-adjacent.json'),
+      $.getJSON('data/county-state.json')
     ).done(function(
       percentages,
       populations,
       statesCounties,
-      countyNeighbors
+      countyNeighbors,
+      countyState
     ) {
       log.info("Preparing data");
 
@@ -296,6 +324,7 @@ zombies = {
       if(populations["1"] != "success") reject("Could not load data/populations.json");
       if(statesCounties["1"] != "success") reject("Could not load data/states-counties.json");
       if(countyNeighbors["1"] != "success") reject("Could not load data/county-adjacent.json");
+      if(countyState["1"] != "success") reject("Could not load data/county-state.json")
 
       zombies.percentages = {
         "0": percentages["0"]
@@ -306,6 +335,7 @@ zombies = {
 
       zombies.statesCounties = statesCounties["0"];
       zombies.countyNeighbors = countyNeighbors["0"];
+      zombies.countyState = countyState["0"];
       resolve();
     });
 
@@ -337,7 +367,7 @@ zombies = {
   },
 
   //Determines perctange and rounds it.
-  zombiePercentage: function(zombiePop, humanPop){
+  zombiePercentage: function(zombiePop, humanPop) {
     if(zombiePop <= 0) return 0;
     if(humanPop <= 0) return 100;
 
@@ -346,6 +376,18 @@ zombies = {
     return Number(zombies.roundNumber(result));
   },
 
+
+  //Returns true if code is for a state instead of county
+  isCodeState: function(code) {
+    return code.substring(0, 2) == "US";
+  },
+
+  //Runs function fun on each map
+  forEachMap: function(fun) {
+    for(var mapId in zombies.mapObject.maps) {
+      fun(zombies.mapObject.maps[mapId]);
+    }
+  },
 
 
   /*
