@@ -4,12 +4,13 @@ zombieModel = {
   paramSettingsHtmlFile: "models/hzmodel1/zombie-model-hz1.html",
 
   setup: function(){
-    zombieModel.params = {  //With default values
-      biteRate: 10,
-      biteInfectsChance: 20,
+    zombieModel.params = {  //With default values, NOTE: Currently spread is not modifiable by user
+      biteRate: 80,
+      biteInfectsChance: 90,
       zombieDeathRate: 10,
-      encounterRate: 25,
-      birthRate: 5
+      encounterRate: 40,
+      birthRate: 5,
+      spread: 25
     };
 
     // Handling Bite Infection or Kill
@@ -84,6 +85,71 @@ zombieModel = {
   },
 
   nextIteration: function(population, neighbors) {
+    var biteRate = this.params.biteRate / 100;
+    var biteInfectsChance = this.params.biteInfectsChance / 100;
+    var zombieDeathRate = this.params.zombieDeathRate / 100;
+    var encounterRate = this.params.encounterRate / 100;
+    var birthRate = this.params.birthRate / 100;
+    var spread = this.params.spread;
 
+    //First get results from equations without spread
+    var calcResults = this.calc(population.humans, population.zombies, biteRate, biteInfectsChance, zombieDeathRate, encounterRate, birthRate);
+    var nextHumanPop = calcResults.newHumanPop;
+    var nextZombiePop = calcResults.newZombiePop;
+    var totalPopulation = nextHumanPop + nextZombiePop;
+
+    //Now determine results from spread
+    for(var neighborIndex in neighbors){
+      var neighborZombiePop = neighbors[neighborIndex].zombies;
+      if(neighborZombiePop == 0) continue;
+      if(neighborZombiePop > spread){
+        nextHumanPop -= spread;
+        nextZombiePop += spread;
+      } else {
+        nextHumanPop -= neighborZombiePop;
+        nextZombiePop += neighborZombiePop;
+      }
+    }
+
+    var zombieTakeoverPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
+    // log.debug("Results:", nextZombiePop, nextHumanPop, zombieTakeoverPercentage)
+    return {
+      zombies: Number(nextZombiePop),
+      humans: Number(nextHumanPop),
+      percentage: Number(zombieTakeoverPercentage)
+    };
+
+  },
+
+
+  //Handles everything from equations except spread
+  calc: function(curHumanPop, curZombiePop, biteRate, biteInfectsChance, zombieDeathRate, encounterRate, birthRate){
+    if(curHumanPop == 0) return {
+      newHumanPop:0,
+      newZombiePop: curZombiePop
+    }
+    var curPop = curHumanPop + curZombiePop;
+    var bornHumans = birthRate * curHumanPop;
+    if(curZombiePop == 0) return {
+      newHumanPop: Math.floor(bornHumans + curHumanPop),
+      newZombiePop: 0
+    }
+
+    var encounters = encounterRate * curHumanPop * curZombiePop / curPop;
+    var bittenHumans = biteRate * encounters;
+    var infectedHumans = biteInfectsChance * bittenHumans;
+    var killedZombies = zombieDeathRate * encounters;
+
+    var newHumanPop = curHumanPop + bornHumans - bittenHumans;
+    var newZombiePop = curZombiePop + infectedHumans - killedZombies;
+
+    var results = {
+      newHumanPop: Number(Math.floor(newHumanPop)),
+      newZombiePop: Number(Math.floor(newZombiePop))
+    }
+
+    return results;
   }
+
+
 };
