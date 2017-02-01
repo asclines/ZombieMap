@@ -8,6 +8,7 @@ zombieModel = {
       biteChance: 20,
       growthRate: 5
     };
+    
     document.getElementById('biteChance').innerHTML = this.params.biteChance;
     $("#slider-spread").slider({
       value: zombieModel.params.biteChance,
