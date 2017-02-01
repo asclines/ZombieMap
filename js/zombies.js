@@ -436,7 +436,7 @@ zombies = {
       sum+=val;
     })
     if (sum == 0) return 0;
-    else return sum / arr.length;
+    else return Number(zombies.roundNumber(sum / arr.length));
 
   },
 
