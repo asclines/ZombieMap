@@ -1,0 +1,52 @@
+<!--  JQUERY -->
+<link rel="stylesheet" media="all" href="css/jquery-ui-1.8.21.custom.css" />
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<!-- SEMANTIC -->
+<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+<script src="semantic/dist/semantic.min.js"></script>
+
+<!-- JS Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.min.js"></script>
+<script src="https:///cdnjs.cloudflare.com/ajax/libs/loglevel/1.4.0/loglevel.min.js"></script>
+
+
+<!--  ZOMBIES-->
+<link rel="stylesheet" media="all" href="css/zombie.css" />
+<script src="js/zombies.js"></script>
+
+<script src="models/sample/zombie-model-sample.min.js"></script>
+
+<!--  ASSETS-->
+<link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
+<script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
+<script src="js/assets/jquery-jvectormap-us-lcc-en.js"></script>
+<script src="js/assets/jquery-jvectormap-us-aea.js"></script>
+<script src="http://spin.js.org/spin.min.js"></script>
+
+<script src="js/assets/big.js"></script>
+
+
+<template id="t">
+  <div class="zombie">
+      <div id="zombie-settings" class="zombiesettings"></div>
+
+      <div id="map" class="zombiemap"></div>
+      <div class="zombelinebreak"></div>
+      <button id="calculateSubmit" class="ui inverted massive button">Launch</button>
+  </div>
+</template>
+
+
+
+<div id="div-runtime" style="margin: 10px; display: none">
+    <button id="calculateReset" class="ui inverted medium button">Reset</button>
+    <div class="ui black label">
+        Current Time
+        <div class="inverted detail"><span id="curTimeValue">0</span></div>
+    </div>
+    <div id="slider-simulator" class="zombiesimslider"></div>
+
+</div>

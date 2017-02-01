@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Zombie Map - Demo</title>
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+
+    </head>
+
+    <body>
+        <script>
+            function resizeIframe(obj) {
+              console.log("HELLO");
+                obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+            }
+        </script>
+            <iframe src="zombies.html"
+            id="zombieframe"
+            scrolling="no"
+            frameborder="0" allowtransparency="true" style="text-align: center; -webkit-overflow-scrolling: touch; overflow: auto;" onload="resizeIframe(this)">
+        </iframe>
+
+        <!-- <script type="text/javascript">
+          $(document).ready(function() {
+            console.log("Ready");
+            $("#zombieBody").load("/zombies.html", function(){
+              console.log("loaded!");
+            });
+          });
+      </script>
+
+        <div id=zombieBody>
+
+        </div> -->
+        <!-- <object data="../zombies.html" width="100vh" height="100vh">
+            <embed src="../zombies.html"  width="100vh" height="100vh"> </embed>
+            Error: Embedded data could not be displayed.
+        </object> -->
+    </body>
+
+</html>
