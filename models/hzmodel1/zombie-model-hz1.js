@@ -69,7 +69,7 @@ zombieModel = {
 
     // Handling Humans being borth
     document.getElementById('birthRate').innerHTML = this.params.birthRate;
-    $("#slider-encounter-rate").slider({
+    $("#slider-birth-rate").slider({
       value: zombieModel.params.birthRate,
       min: 0,
       max: 100,
