@@ -8,7 +8,8 @@ zombieModel = {
       biteRate: 10,
       biteInfectsChance: 20,
       zombieDeathRate: 10,
-      encounterRate: 25
+      encounterRate: 25,
+      birthRate: 5
     };
 
     // Handling Bite Infection or Kill
@@ -65,6 +66,20 @@ zombieModel = {
         document.getElementById('encounterRate').innerHTML = zombieModel.params.encounterRate;
       }
     });
+
+    // Handling Humans being borth
+    document.getElementById('birthRate').innerHTML = this.params.birthRate;
+    $("#slider-encounter-rate").slider({
+      value: zombieModel.params.birthRate,
+      min: 0,
+      max: 100,
+      step: 1,
+      slide: function(event, ui){
+        zombieModel.params.birthRate = ui.value;
+        document.getElementById('birthRate').innerHTML = zombieModel.params.birthRate;
+      }
+    });
+
 
   },
 
