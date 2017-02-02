@@ -292,6 +292,7 @@ zombies = {
 
 
     var counties = zombies.statesCounties[stateCode];
+    var nextCountyPercentages = [];
     var nextHumanPop = 0;
     var nextZombiePop = 0;
 
@@ -314,12 +315,19 @@ zombies = {
           results.zombies,
           results.humans
         );
+
+        nextCountyPercentages.push(zombies.percentages[timeIndex + 1][countyCode])
         nextHumanPop += results.humans;
         nextZombiePop += results.zombies;
       }
 
     })
-    var nextPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
+
+    //Find out average percentage of county to make state match
+
+
+    var nextPercentage = zombies.getArrayAverage(nextCountyPercentages)
+    //var nextPercentage = zombies.zombiePercentage(nextZombiePop, nextHumanPop);
 
 
     nextHumanPop = zombies.roundNumber(nextHumanPop);
@@ -420,6 +428,16 @@ zombies = {
     var result = zombiePop / (humanPop + zombiePop);
     result = result * 100;
     return Number(zombies.roundNumber(result));
+  },
+
+  getArrayAverage: function(arr){
+    var sum = 0;
+    arr.forEach(function(val){
+      sum+=val;
+    })
+    if (sum == 0) return 0;
+    else return Number(zombies.roundNumber(sum / arr.length));
+
   },
 
 
