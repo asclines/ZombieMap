@@ -25,6 +25,7 @@ body {
     padding: 4px;
     width: auto;
     color: white;
+    display: inline-block;
 }
 
 .zombelinebreak {
