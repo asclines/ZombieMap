@@ -102,12 +102,13 @@ zombieModel = {
     for(var neighborIndex in neighbors){
       var neighborZombiePop = neighbors[neighborIndex].zombies;
       if(neighborZombiePop == 0) continue;
-      if(neighborZombiePop > spread){
+      if(neighborZombiePop > spread && nextHumanPop > spread){
         nextHumanPop -= spread;
         nextZombiePop += spread;
       } else {
-        nextHumanPop -= neighborZombiePop;
-        nextZombiePop += neighborZombiePop;
+        var deltaSpread = ((neighborZombiePop < nextHumanPop) ? neighborZombiePop : nextHumanPop)
+        nextHumanPop -= deltaSpread;
+        nextZombiePop += deltaSpread;
       }
     }
 
