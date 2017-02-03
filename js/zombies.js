@@ -4,6 +4,7 @@ zombies = {
   inProgress: false, //Various parts of the elements in this site depend
                     //on this fact.
   currentTime: 0,
+  zombiesAdded: 0,
   init: function() {
     log.debug("Initializing zombies")
     new Promise(zombies.getInitialData).then(function() {
@@ -180,6 +181,11 @@ zombies = {
   CONTROLS HANDLING
   */
   onLaunchClick: function() {
+    if(zombies.zombiesAdded == 0){
+      window.alert("No zombies added!");
+      return;
+    }
+
     log.debug("Launching");
     zombies.inProgress = true;
     document.getElementById('calculateSubmit').style.display = 'none';
@@ -197,6 +203,7 @@ zombies = {
   onResetClick: function() {
     log.debug("Resetting");
     zombies.inProgress = false;
+    zombies.zombiesAdded = 0;
     zombies.currentTime = 0;
     document.getElementById('calculateSubmit').style.display = 'block'
     document.getElementById('div-runtime').style.display = 'none'
