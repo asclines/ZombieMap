@@ -24,7 +24,10 @@
         <link rel="stylesheet" media="all" href="css/zombie.css" />
         <script src="js/zombies.js"></script>
 
-        <script src="models/sample/zombie-model-sample.min.js"></script>
+        <!--  MODELS Note: Only 1 should be uncommented at at time -->
+        <!-- <script src="models/sample/zombie-model-sample.min.js"></script> -->
+        <script src="models/hzmodel1/zombie-model-hz1.js"></script>
+
 
         <!--  ASSETS-->
         <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
@@ -65,10 +68,9 @@
         </div>
 
 
-
         <div id="div-runtime" style="margin: 10px; display: none">
             <button id="calculateReset" class="ui inverted medium button">Reset</button>
-            <div class="ui black label">
+            <div class="ui mini black label">
                 Current Time
                 <div class="inverted detail"><span id="curTimeValue">0</span></div>
             </div>
