@@ -149,10 +149,12 @@ zombies = {
       countyPop.zombies += deltaValue;
       statePop.humans -= deltaValue;
       statePop.zombies += deltaValue;
+      zombies.zombiesAdded += deltaValue;
     } else {
       countyPop.zombies += countyPop.humans;
       statePop.humans -= countyPop.humans;
       statePop.zombies += countyPop.humans;
+      zombies.zombiesAdded += countyPop.humans
       countyPop.humans = 0;
     }
     zombies.populations["0"][code] = countyPop;
