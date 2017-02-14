@@ -3,10 +3,11 @@
         $("#zombie-settings-params").load(zombieModel.paramSettingsHtmlFile, function() {
             zombies.init();
         })
-        $('#showMath').click(function() {
-            $('#mathModal').modal('show');
-        });
-
+        $("#zombie-math-guide").load(zombieModel.mathGuideHtmlFile, function() {
+          $('#showMath').click(function() {
+              $('#mathModal').modal('show');
+          });
+        })
     });
 </script>
 <p data-tooltip="Just like that!" data-position="bottom right">
