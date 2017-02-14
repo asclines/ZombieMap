@@ -53,7 +53,15 @@
         </script>
 
         <script type="text/x-mathjax-config">
-            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+            MathJax.Hub.Config({
+              tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']]
+              },
+              "HTML-CSS": { scale: 120, linebreaks: { automatic: true } },
+              CommonHTML: { scale: 130, linebreaks: { automatic: true } },
+              SVG: { linebreaks: { automatic:true } },
+              displayAlign: "left"
+            });
         </script>
 
         <div class="ui large modal" id="mathModal">
