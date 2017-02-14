@@ -3,6 +3,8 @@ zombieModel = {
 
   paramSettingsHtmlFile: "models/hzmodel1/zombie-model-hz1.html",
 
+  mathGuideHtmlFile: "models/hzmodel1/mathguide.html",
+
   setup: function(){
     zombieModel.params = {  //With default values, NOTE: Currently spread is not modifiable by user
       biteRate: 80,
