@@ -3,6 +3,9 @@
         $("#zombie-settings-params").load(zombieModel.paramSettingsHtmlFile, function() {
             zombies.init();
         })
+        $('#showMath').click(function() {
+            $('#mathModal').modal('show');
+        });
 
     });
 </script>
@@ -10,6 +13,10 @@
     Confused?
     <br /> Hover over text for more info.
 </p>
+
+<button id="showMath" class="ui inverted button" data-tooltip="Show the math behind this simulation."  data-position="bottom left">
+  Math
+</button>
 
 <h3 class="ui inverted header" data-tooltip="Set your parameters." data-position="top left">
   Step 1
