@@ -26,8 +26,8 @@
         <script src="js/zombies.js"></script>
 
         <!--  MODELS Note: Only 1 should be uncommented at at time -->
-        <script src="models/sample/zombie-model-sample.min.js"></script>
-        <!-- <script src="models/hzmodel1/zombie-model-hz1.js"></script> -->
+        <!-- <script src="models/sample/zombie-model-sample.min.js"></script> -->
+        <script src="models/hzmodel1/zombie-model-hz1.js"></script>
 
 
         <!--  ASSETS-->
@@ -40,6 +40,7 @@
         <script src="js/assets/big.js"></script>
 
     </head>
+
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
@@ -51,11 +52,12 @@
             });
         </script>
 
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+
         <div class="ui small modal" id="mathModal">
-            <div class="header" style="width:auto">Math</div>
-            <div class="content" style="width:auto">
-              <div id="zombie-math-guide"></div>
-            </div>
+            <div id="zombie-math-guide"></div>
         </div>
 
         <div class="zombie">
