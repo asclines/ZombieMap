@@ -1,13 +1,15 @@
-
 zombieModel = {
 
   paramSettingsHtmlFile: "models/sample/zombie-model-sample.html",
+
+  mathGuideHtmlFile: "models/sample/mathguide.html",
 
   setup: function(){
     zombieModel.params = {  //With default values
       biteChance: 20,
       growthRate: 5
     };
+
     document.getElementById('biteChance').innerHTML = this.params.biteChance;
     $("#slider-spread").slider({
       value: zombieModel.params.biteChance,

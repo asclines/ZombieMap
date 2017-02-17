@@ -18,19 +18,24 @@
         <!-- JS Libraries -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.4.1/q.min.js"></script>
         <script src="https:///cdnjs.cloudflare.com/ajax/libs/loglevel/1.4.0/loglevel.min.js"></script>
-
+        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
 
         <!--  ZOMBIES-->
         <link rel="stylesheet" media="all" href="css/zombie.css" />
-        <script src="js/zombies.min.js"></script>
+        <script src="js/zombies.js"></script>
 
-        <script src="models/sample/zombie-model-sample.min.js"></script>
+        <!--  MODELS Note: Only 1 should be uncommented at at time -->
+        <!-- <script src="models/sample/zombie-model-sample.min.js"></script> -->
+        <script src="models/hzmodel1/zombie-model-hz1.min.js"></script>
+
 
         <!--  ASSETS-->
         <link rel="stylesheet" media="all" href="css/jquery-jvectormap-2.0.3.css" />
         <script src="js/assets/jquery-jvectormap-2.0.3.min.js"></script>
         <script src="js/assets/jquery-jvectormap-us-lcc-en.js"></script>
         <script src="js/assets/jquery-jvectormap-us-aea.js"></script>
+        <script src="http://spin.js.org/spin.min.js"></script>
 
         <script src="js/assets/big.js"></script>
 
@@ -39,22 +44,30 @@
     <body>
         <script type="text/javascript">
             $(document).ready(function() {
-                $("#zombie-instructions").load("html/zombies-instructions.html")
                 $("#zombie-settings").load("html/zombies-settings.html");
-
-                $('#showInstructions').click(function() {
-                    $('#instructionsModal').modal('show');
-                });
                 $("#showSettings").click(function() {
                     $('.ui.sidebar')
                         .sidebar('toggle');
                 });
-
-
             });
         </script>
 
-        <div id="zombie-instructions"></div>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+              tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']]
+              },
+              "HTML-CSS": { scale: 120, linebreaks: { automatic: true } },
+              CommonHTML: { scale: 130, linebreaks: { automatic: true } },
+              SVG: { linebreaks: { automatic:true } },
+              displayAlign: "left"
+            });
+        </script>
+
+        <div class="ui large modal" id="mathModal">
+            <div id="zombie-math-guide"></div>
+        </div>
+
         <div class="zombie">
             <div id="zombie-settings" class="zombiesettings"></div>
 
@@ -63,17 +76,16 @@
             <button id="calculateSubmit" class="ui inverted massive button">Launch</button>
         </div>
 
-
-
         <div id="div-runtime" style="margin: 10px; display: none">
             <button id="calculateReset" class="ui inverted medium button">Reset</button>
-            <div class="ui black label">
+            <div class="ui mini black label">
                 Current Time
                 <div class="inverted detail"><span id="curTimeValue">0</span></div>
             </div>
             <div id="slider-simulator" class="zombiesimslider"></div>
 
         </div>
+
 
     </body>
 

@@ -1,47 +1,60 @@
 <script>
-$(document).ready(function() {
-  $("#zombie-settings-params").load(zombieModel.paramSettingsHtmlFile, function(){
-    zombies.init();
-  })
-
-});
-
+    $(document).ready(function() {
+        $("#zombie-settings-params").load(zombieModel.paramSettingsHtmlFile, function() {
+            zombies.init();
+        })
+        $("#zombie-math-guide").load(zombieModel.mathGuideHtmlFile, function() {
+          $('#showMath').click(function() {
+              $('#mathModal').modal('show');
+          });
+        })
+    });
 </script>
 <p data-tooltip="Just like that!" data-position="bottom right">
     Confused?
     <br /> Hover over text for more info.
 </p>
 
-<h2 class="ui inverted header" data-tooltip="Set your parameters." data-position="top left">
+<button id="showMath" class="ui inverted button" data-tooltip="Show the math behind this simulation."  data-position="bottom left">
+  Explanation
+</button>
+
+<h3 class="ui inverted header" data-tooltip="Set your parameters." data-position="top left">
   Step 1
-</h2>
+</h3>
 
 <div id="zombie-settings-params"></div>
 
 
-<h2 class="ui inverted header"
-  data-tooltip="How long should the simulation go? Note: The higher this number is, the longer it takes to calculate."
-  data-position="top left">
+<h3 class="ui inverted header" data-tooltip="How long should the simulation go? Note: The higher this number is, the longer it takes to calculate." data-position="top left">
     Step 2
-</h2>
+</h3>
 
 <div class="ui inverted form">
-  <div class="inline field">
-    <div class="ui black label "
-      data-tooltip="How many iterations you want. Note: The higher this number is, the longer it takes to calculate."
-      data-position="top left">
-          Max Time
+    <div class="inline field">
+        <div class="ui mini black label " data-tooltip="How many days should the simulation last. Note: The higher this number is, the longer it takes to calculate." data-position="top left">
+            Number of days
+        </div>
+        <div class = "ui mini input">
+          <input type="number" id="timeMax" name="timeMax" min="1" max="1000" value="42">
+        </div>
     </div>
-          <input type="number" id="timeMax" name="timeMax" min="1" max="1000" value="4">
-      </div>
-  </div>
+    <div class="inline field">
+        <div class="ui mini black label " data-tooltip="How many zombies to add to a county with each click." data-position="top left">
+            Zombies Per Click
+        </div>
+        <div class = "ui mini input">
+          <input type="number" id="deltaClick" name="deltaClick" min="1" max="1000" value="100">
+        </div>
+    </div>
+</div>
 
 
 
 </div>
 
-<h2 class="ui inverted header" data-tooltip="Click on the states to increase the initial zombie population." data-position="top left">
-  Step 3</h2>
+<h3 class="ui inverted header" data-tooltip="Click on the states to increase the initial zombie population." data-position="top left">
+  Step 3</h3>
 <p>
     Set initial zombies.
 </p>

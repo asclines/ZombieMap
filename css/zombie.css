@@ -25,6 +25,7 @@ body {
     padding: 4px;
     width: auto;
     color: white;
+    display: inline-block;
 }
 
 .zombelinebreak {
@@ -41,4 +42,9 @@ body {
   background: white;
   width: 150;
   margin: 10px;
+}
+
+#zombie-math-guide{
+  padding:10px;
+
 }

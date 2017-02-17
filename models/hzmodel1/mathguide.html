@@ -1,0 +1,67 @@
+<div class="ui header" style="width:auto">Human Zombie Model</div>
+<div class="ui content" style="width:auto">
+    <p>
+        This model is a standard $HZ$ model that does not account for any cure (vaccine).
+    </p>
+    <h3 class="ui header">Parameters</h3>
+    <table class="ui table" cellpadding="5" cellspacing="5">
+        <tr>
+            <td>$\epsilon$</td>
+            <td>Rate humans and zombies encounter each other</td>
+        </tr>
+        <tr>
+            <td>$t$</td>
+            <td>Current time</td>
+        </tr>
+        <tr>
+            <td>$\beta_i$</td>
+            <td>Chance zombie bite infects human</td>
+        </tr>
+        <tr>
+            <td>$\beta_k$</td>
+            <td>Chance zombie bite kills human</td>
+            <td>Note: $\beta_k = 1 - \beta_i$</td>
+        </tr>
+        <tr>
+            <td>$\beta$</td>
+            <td>Chance zombie bites human in an encounter</td>
+        </tr>
+        <tr>
+            <td>$\kappa$</td>
+            <td>Chance human kills a zombie in an encounter</td>
+        </tr>
+        <tr>
+            <td>$b$</td>
+            <td>Human birth rate</td>
+        </tr>
+        <tr>
+            <td>$N_t$</td>
+            <td>Total population at time $t$</td>
+        </tr>
+        <tr>
+            <td>$S$</td>
+            <td>Spread, how many zombies cross county borders each time $t$</td>
+        </tr>
+    </table>
+    <h3 class="ui header" data-tooltip="These equations determine the population of humans and zombies on a per county basis." data-position="top left">Equations</h3>
+    Hover over parts of the equation to learn what that part does.
+    <br />
+    <br />
+    <span data-tooltip="Size of human population at time t+1" data-position="top left">$H_{t+1}$</span>
+    $=$
+    <span data-tooltip="Size of human population at time t" data-position="top left">$H_t$</span>
+    <span data-tooltip="How many humans are born at time t">$ + bH_t$</span>
+    <span data-tooltip="How many humans were bitten at time t">$- \frac{\beta \epsilon H_z}{N_t}$</span>
+    <span data-tooltip="How many humans were infected by zombies in neighbor counties.">$- S$</span>
+    <br />
+    <br />
+    <br />
+    <br />
+    <span data-tooltip="Size of zombie population at time t+1" data-position="top left">$Z_{t+1}$</span>
+    $=$
+    <span data-tooltip="Size of zombie population at time t" data-position="top left">$Z_t$</span>
+    <span data-tooltip="How many humans were infected (became zombies)" data-position="top left">$+ \frac{\epsilon \beta \beta_i H_t Z_t}{N_t}$</span>
+    <span data-tooltip="How many zombies were killed by a human during an encounter" data-position="top left">$- \frac{\epsilon \kappa H_t Z_t}{N_t}$</span>
+    <span data-tooltip="How many humans were infected by zombies in neighbor counties.">$+ S$</span>
+
+</div>
